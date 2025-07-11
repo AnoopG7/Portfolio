@@ -37,10 +37,30 @@
     margin: 0 auto;
     padding: 0 20px;
   }
-  
+
+  /* Common section styling */
   section {
-    padding: 100px 0;
     position: relative;
+    overflow: hidden;
+  }
+  
+  /* Common styling for all main sections */
+  section#about,
+  section#skills,
+  section#projects,
+  section#experience,
+  section#education,
+  section#contact {
+    position: relative;
+    background-color: var(--darker-bg);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+  }
+  
+  /* Ensure section content appears above the gradient background */
+  section .container {
+    position: relative;
+    z-index: 1;
   }
   
   h1, h2, h3 {
@@ -70,6 +90,7 @@
     overflow: hidden;
   }
   
+  /* Hero section inherits the general gradient styles */
   #hero::before {
     content: '';
     position: absolute;
@@ -224,8 +245,6 @@
   
   /* Executive Summary Section */
   #about {
-    background-color: var(--darker-bg);
-    border-radius: var(--border-radius);
     padding: 40px;
     position: relative;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -395,7 +414,7 @@
   
   /* Projects Section */
   #projects {
-    background-color: var(--dark-bg);
+    background-color: var(--darker-bg);
     border-radius: var(--border-radius);
     padding: 60px 40px;
   }
@@ -503,7 +522,7 @@
   
   /* Experience Section */
   #experience {
-    background-color: var(--dark-bg);
+    background-color: var(--darker-bg);
     padding: 60px 40px;
     border-radius: var(--border-radius);
   }

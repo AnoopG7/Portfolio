@@ -26,6 +26,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+     <!-- EmailJS - Using latest version -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <!-- Defer EmailJS initialization until DOM is fully loaded -->
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      (function() {
+        // Initialize EmailJS with your public key
+        emailjs.init("vCPDNa1HL8ZSK8u81");
+        console.log("EmailJS initialized");
+      })();
+    });
+  </script>
+  
 </head>
 <body>
     <div class="theme-toggle">
@@ -403,7 +417,6 @@
             <p>&copy; 2025 Anoop Gupta. All rights reserved.</p>
         </div>
     </footer>
-
 
     <script src="script.js"></script>
 
