@@ -1,0 +1,68 @@
+Anoop Gupta
+Full-Stack MERN Developer · Open to Freelance & Internships
+Phone : +91-7039386723  	   |	Email: gupta.anoop2006@gmail.com
+LinkedIn: https://www.linkedin.com/in/itsan00p/	    |     GitHub: https://github.com/AnoopG7
+Portfolio: https://anoopg7.github.io/Portfolio/
+ 
+PROFESSIONAL SUMMARY
+Full-stack developer specializing in the MERN stack with hands-on experience building production-ready web applications including role-based systems, activity tracking platforms, and client portfolio websites. Strong foundation in backend architecture, REST API design, authentication systems, and modern frontend state management. 
+ 
+EDUCATION
+Bachelor of Technology (B.Tech) in Computer Science Engineering
+ITM Skills University, Navi Mumbai, Maharashtra
+Graduation: 2028 	| 	CGPA: ~9.5 SKILLS
+
+Languages: C++, Python, Java, JavaScript, TypeScript
+Backend: Next.js, Node.js, Express.js, Zustand, REST APIs, WebSockets
+Frontend: React, Tailwind, Shadcn UI, Material UI (MUI), Zod, RHF, HTML5, CSS3 
+Databases: MongoDB, MySQL, Firebase, Supabase,
+Tools & Platforms: Git, GitHub, VS Code, Figma, n8n, Render, Vercel
+ 
+
+Projects
+
+AI-Powered Learning Management System (LMS) – Full-Stack MERN Application
+Tech: Node.js, Express 5, TypeScript, MongoDB, React 19, Socket.io, Groq AI
+Live: https://anoop-lms.vercel.app
+•	Developed a full-stack AI-driven LMS that converts uploaded study materials (PDF/DOCX/TXT) into flashcards and quizzes using Groq LLM integration.
+•	Designed modular backend architecture (MVC + service layer) with centralized error handling and middleware chain (auth, validation, rate limiting).
+•	Implemented JWT-based authentication with bcrypt hashing and secure file upload handling (Multer + document parsing).
+•	Built real-time collaborative chat system using Socket.io with room-based message broadcasting.
+•	Structured MongoDB schemas with relational references, compound indexing, and pagination for scalable querying.
+•	Implemented adaptive quiz system with attempt tracking, analytics dashboards, and difficulty-based question generation.
+ 
+
+SabdaSparsh – Bilingual Literary Portfolio Platform
+Tech: Next.js (App Router), React, TypeScript, MongoDB, NextAuth
+Live: https://sabdasparsh.vercel.app
+•	Developed a full-stack bilingual (Hindi & English) literary content platform with admin-based content management.
+•	Built secure authentication using NextAuth (JWT strategy) and protected admin dashboard.
+•	Designed RESTful API routes with structured error handling and MongoDB indexed schemas for optimized search.
+•	Integrated Vercel Blob storage for validated image uploads and implemented draft/publish workflow.
+•	Deployed on Vercel with environment-based configuration and production build optimization.
+
+ 
+
+Building Management System (BMS) – Residential Management Platform
+Tech: Node.js, Express, TypeScript, MongoDB, React 19
+Live: https://anoop-bms.vercel.app
+•	Built a full-stack residential society management system with role-based access (Admin, Owner, Tenant).
+•	Designed and implemented 57+ RESTful API endpoints with centralized error handling and validation.
+•	Structured MongoDB schemas across 9 collections with indexing and pagination for optimized queries.
+•	Implemented JWT authentication, bcrypt password hashing, and secure protected route middleware.
+•	Achieved 229+ unit and integration tests with automated API documentation (OpenAPI/Swagger).
+
+ 
+
+Day Tracker – Full-Stack Productivity & Analytics Application
+Tech: Node.js, Express 5, TypeScript, MongoDB, React 19, Zustand, React Query
+Live: https://anoop-day-tracker.vercel.app
+•	Developed a full-stack tracking system for daily activities, nutrition, expenses, and analytics.
+•	Designed RESTful APIs with modular middleware architecture (authentication, validation, error handling, rate limiting).
+•	Implemented JWT-based authentication with bcrypt hashing and protected route authorization.
+•	Integrated AI-powered nutrition estimation using Groq (LLaMA model) for real-time macro analysis from food inputs.
+•	Achieved 90%+ backend test coverage using Jest, Supertest, and MongoDB Memory Server.
+•	Built interactive analytics dashboards with multi-timeframe trend analysis and deployed backend on Render.
+
+ 
+
