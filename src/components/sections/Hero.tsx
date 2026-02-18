@@ -10,6 +10,7 @@ import {
   SiReact, SiNodedotjs, SiTypescript, SiMongodb,
   SiNextdotjs, SiTailwindcss, SiExpress, SiGit,
 } from "react-icons/si";
+import TextType from "@/components/reactbits/TextType";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,6 +23,12 @@ const TECH = [
   { icon: SiTailwindcss, label: "Tailwind", color: "#06B6D4" },
   { icon: SiExpress, label: "Express", color: "#ffffff" },
   { icon: SiGit, label: "Git", color: "#F05032" },
+];
+
+const SUBTITLE_PHRASES = [
+  "Crafting production-ready applications with the MERN stack",
+  "Building scalable full-stack web experiences",
+  "Turning ideas into deployed, working products",
 ];
 
 export default function Hero() {
@@ -92,9 +99,20 @@ export default function Hero() {
                 full-stack web apps
               </span>
             </h1>
-            <p className="hero-sub text-muted-foreground text-lg md:text-xl mt-8 max-w-2xl mx-auto leading-relaxed">
-              Crafting production-ready applications with the MERN stack
-            </p>
+            <div className="hero-sub mt-8 max-w-2xl mx-auto">
+              <TextType
+                text={SUBTITLE_PHRASES}
+                className="text-muted-foreground text-lg md:text-xl leading-relaxed"
+                typingSpeed={40}
+                deletingSpeed={25}
+                pauseDuration={3000}
+                loop
+                showCursor
+                cursorCharacter="|"
+                cursorClassName="text-accent"
+                startOnVisible
+              />
+            </div>
           </div>
         </div>
 
