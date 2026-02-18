@@ -1,81 +1,42 @@
-export const personalInfo = {
+// ── Navigation ──
+export const NAV_LINKS = [
+  { label: "About", href: "#about" },
+  { label: "Skills", href: "#skills" },
+  { label: "Projects", href: "#projects" },
+  { label: "Journey", href: "#journey" },
+  { label: "Contact", href: "#contact" },
+] as const;
+
+// ── Personal Info ──
+export const PERSONAL = {
   name: "Anoop Gupta",
   firstName: "Anoop",
   role: "Full-Stack Developer",
-  tagline: "I ship production-ready apps",
+  tagline: "I build full-stack apps that work",
+  bio: "A passionate full-stack developer specializing in the MERN stack with hands-on experience building production-ready web applications. Currently a 2nd year B.Tech CSE student at ITM Skills University, exploring the intersections of web development, AI/ML, and Data Science.",
   email: "gupta.anoop2006@gmail.com",
   phone: "+91-7039386723",
-  linkedin: "https://www.linkedin.com/in/itsan00p/",
-  github: "https://github.com/AnoopG7",
-  university: "ITM Skills University, Navi Mumbai",
-  degree: "B.Tech in Computer Science Engineering",
-  graduation: "2028",
-  cgpa: "9.5",
-};
-
-export const stats = [
-  { label: "Projects Shipped", value: 4 },
-  { label: "Tests Written", value: 500, suffix: "+" },
-  { label: "API Endpoints", value: 57, suffix: "+" },
-  { label: "CGPA", value: 9.5, decimals: 1 },
-];
-
-export interface Project {
-  title: string;
-  subtitle: string;
-  tech: string[];
-  highlights: string[];
-  liveUrl: string;
-  githubUrl?: string;
-}
-
-export const projects: Project[] = [
-  {
-    title: "AI-Powered LMS",
-    subtitle: "Full-Stack MERN + AI Integration",
-    tech: ["React", "Node.js", "Express", "TypeScript", "MongoDB", "Socket.io", "Groq AI"],
-    highlights: [
-      "Converts PDFs/DOCX into flashcards & quizzes via Groq LLM",
-      "Real-time collaborative chat with Socket.io",
-      "Adaptive quiz system with analytics dashboards",
-    ],
-    liveUrl: "https://anoop-lms.vercel.app",
+  education: {
+    degree: "B.Tech in Computer Science Engineering",
+    university: "ITM Skills University, Navi Mumbai",
+    graduation: "2028",
+    cgpa: "9.5",
   },
-  {
-    title: "SabdaSparsh",
-    subtitle: "Bilingual Literary Portfolio Platform",
-    tech: ["Next.js", "React", "TypeScript", "MongoDB", "NextAuth"],
-    highlights: [
-      "Bilingual Hindi & English content platform",
-      "Admin dashboard with draft/publish workflow",
-      "Vercel Blob storage for validated image uploads",
-    ],
-    liveUrl: "https://sabdasparsh.vercel.app",
+  socials: {
+    github: "https://github.com/AnoopG7",
+    linkedin: "https://www.linkedin.com/in/itsan00p/",
   },
-  {
-    title: "Building Management System",
-    subtitle: "Residential Society Platform",
-    tech: ["React", "Node.js", "Express", "TypeScript", "MongoDB"],
-    highlights: [
-      "Role-based access: Admin, Owner, Tenant",
-      "57+ RESTful API endpoints with OpenAPI docs",
-      "229+ unit and integration tests",
-    ],
-    liveUrl: "https://anoop-bms.vercel.app",
-  },
-  {
-    title: "Day Tracker",
-    subtitle: "Productivity & Analytics Application",
-    tech: ["React", "Node.js", "Express 5", "TypeScript", "MongoDB", "Zustand"],
-    highlights: [
-      "Track daily activities, nutrition, expenses & analytics",
-      "AI-powered nutrition estimation via Groq LLM",
-      "90%+ backend test coverage with interactive dashboards",
-    ],
-    liveUrl: "https://anoop-day-tracker.vercel.app",
-  },
-];
+} as const;
 
+// ── Stats ──
+export const STATS = [
+  { value: "4+", label: "Projects Built" },
+  { value: "9.5", label: "CGPA" },
+  { value: "500+", label: "Tests Written" },
+  { value: "57+", label: "API Endpoints" },
+] as const;
+
+// ── Skills ──
 export interface Skill {
   name: string;
   icon?: string;
@@ -86,18 +47,29 @@ export interface SkillCategory {
   skills: Skill[];
 }
 
-export const skillCategories: SkillCategory[] = [
+export const SKILLS: SkillCategory[] = [
+  {
+    category: "Languages",
+    skills: [
+      { name: "TypeScript" },
+      { name: "JavaScript" },
+      { name: "Python" },
+      { name: "C++" },
+      { name: "Java" },
+    ],
+  },
   {
     category: "Frontend",
     skills: [
       { name: "React" },
       { name: "Next.js" },
-      { name: "TypeScript" },
       { name: "Tailwind CSS" },
       { name: "Shadcn UI" },
       { name: "Material UI" },
       { name: "HTML5" },
       { name: "CSS3" },
+      { name: "Zod" },
+      { name: "React Hook Form" },
     ],
   },
   {
@@ -107,7 +79,9 @@ export const skillCategories: SkillCategory[] = [
       { name: "Express.js" },
       { name: "REST APIs" },
       { name: "WebSockets" },
+      { name: "Socket.io" },
       { name: "Zustand" },
+      { name: "React Query" },
     ],
   },
   {
@@ -128,34 +102,99 @@ export const skillCategories: SkillCategory[] = [
       { name: "Figma" },
       { name: "Vercel" },
       { name: "Render" },
+      { name: "n8n" },
     ],
   },
 ];
 
-export const journeyMilestones = [
+// ── Projects ──
+export interface Project {
+  title: string;
+  subtitle: string;
+  tech: string[];
+  live: string;
+  github?: string;
+  highlights: string[];
+}
+
+export const PROJECTS: Project[] = [
+  {
+    title: "AI-Powered LMS",
+    subtitle: "Full-Stack MERN + AI Integration",
+    tech: ["Node.js", "Express 5", "TypeScript", "MongoDB", "React 19", "Socket.io", "Groq AI"],
+    live: "https://anoop-lms.vercel.app",
+    highlights: [
+      "AI-driven flashcard & quiz generation from uploaded study materials",
+      "Real-time collaborative chat with Socket.io room-based broadcasting",
+      "Adaptive quiz system with analytics dashboards",
+    ],
+  },
+  {
+    title: "SabdaSparsh",
+    subtitle: "Bilingual Literary Portfolio Platform",
+    tech: ["Next.js", "React", "TypeScript", "MongoDB", "NextAuth"],
+    live: "https://sabdasparsh.vercel.app",
+    highlights: [
+      "Bilingual (Hindi & English) content platform with admin CMS",
+      "Secure auth with NextAuth + draft/publish workflow",
+      "Vercel Blob storage for validated image uploads",
+    ],
+  },
+  {
+    title: "Building Management System",
+    subtitle: "Residential Society Management Platform",
+    tech: ["Node.js", "Express", "TypeScript", "MongoDB", "React 19"],
+    live: "https://anoop-bms.vercel.app",
+    highlights: [
+      "Role-based access control (Admin, Owner, Tenant)",
+      "57+ RESTful API endpoints with OpenAPI/Swagger docs",
+      "229+ unit & integration tests with automated coverage",
+    ],
+  },
+  {
+    title: "Day Tracker",
+    subtitle: "Full-Stack Productivity & Analytics App",
+    tech: ["Node.js", "Express 5", "TypeScript", "MongoDB", "React 19", "Zustand"],
+    live: "https://anoop-day-tracker.vercel.app",
+    highlights: [
+      "Daily activity, nutrition, expense tracking with analytics",
+      "AI-powered nutrition estimation via Groq (LLaMA model)",
+      "90%+ backend test coverage with interactive trend dashboards",
+    ],
+  },
+];
+
+// ── Journey / Timeline ──
+export interface Milestone {
+  year: string;
+  title: string;
+  description: string;
+}
+
+export const JOURNEY: Milestone[] = [
   {
     year: "2024",
     title: "Started B.Tech CSE",
-    description: "Began Computer Science Engineering at ITM Skills University, Navi Mumbai",
+    description: "Began Computer Science Engineering at ITM Skills University, Navi Mumbai.",
   },
   {
     year: "2024",
     title: "First Full-Stack Projects",
-    description: "Built BMS and Day Tracker from scratch with MERN stack",
+    description: "Built Building Management System & Day Tracker — learning backend architecture and testing.",
   },
   {
     year: "2025",
     title: "Shipped Production Apps",
-    description: "Launched AI-Powered LMS and SabdaSparsh to production",
+    description: "Launched AI-Powered LMS and SabdaSparsh — integrating AI, real-time features, and CMS.",
   },
   {
     year: "2026",
     title: "Exploring AI/ML & DS",
-    description: "Diving into Machine Learning, Data Science, and AI integrations",
+    description: "Diving into Machine Learning, Data Science, and expanding into freelance & internships.",
   },
   {
-    year: "→ Next",
-    title: "What's Coming...",
-    description: "Open to internships, freelance, and building impactful products",
+    year: "Next →",
+    title: "What's coming...",
+    description: "More projects, deeper into AI/ML, and building things that matter.",
   },
 ];
