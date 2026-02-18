@@ -5,17 +5,16 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useSectionPin } from "@/hooks/useSectionPin";
 import CountUp from "@/components/reactbits/CountUp";
+import AnoopImg from "@/assets/Anoop.jpg";
 
-/** Parse "4+", "9.5", "500+", "57+" into { number, suffix } */
+/** Parse "10+", "9.5", "999+", "200+" into { number, suffix } */
 function parseStat(value: string) {
   const match = value.match(/^([\d.]+)(.*)$/);
   if (!match) return { number: 0, suffix: value };
   return { number: parseFloat(match[1]), suffix: match[2] };
 }
 
-/** Watches computed opacity — returns true once element is visible (opacity > 0).
- *  Needed because useSectionPin starts items at opacity:0 via GSAP,
- *  which IntersectionObserver can't detect. */
+/** Watches computed opacity — returns true once useSectionPin reveals element */
 function useOpacityVisible(ref: React.RefObject<HTMLElement | null>) {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -91,13 +90,12 @@ export default function About() {
             {/* Headshot */}
             <div data-pin-item className="md:col-span-2 flex justify-center md:justify-start">
               <Card className="w-64 h-72 md:w-72 md:h-80 border-border bg-card overflow-hidden group hover:border-accent/30 transition-colors duration-500">
-                <CardContent className="flex items-center justify-center h-full p-0">
-                  <div className="text-center space-y-3">
-                    <div className="w-20 h-20 mx-auto rounded-full bg-secondary flex items-center justify-center ring-2 ring-accent/20">
-                      <span className="font-display text-3xl font-bold text-accent">A</span>
-                    </div>
-                    <p className="text-muted-foreground text-sm">Headshot</p>
-                  </div>
+                <CardContent className="p-0 h-full">
+                  <img
+                    src={AnoopImg}
+                    alt={PERSONAL.name}
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                  />
                 </CardContent>
               </Card>
             </div>

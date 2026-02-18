@@ -28,13 +28,13 @@ export default function Navbar() {
     <>
       <nav
         className={cn(
-          "fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 rounded-full px-2 py-1",
+          "fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 rounded-full px-3 py-1.5",
           scrolled
-            ? "bg-background/70 backdrop-blur-xl border border-border/60 shadow-lg shadow-black/20"
-            : "bg-background/40 backdrop-blur-md border border-transparent"
+            ? "bg-white/[0.07] backdrop-blur-xl border border-white/[0.1] shadow-lg shadow-black/20"
+            : "bg-white/[0.04] backdrop-blur-md border border-transparent"
         )}
       >
-        <div className="flex items-center gap-1 px-3">
+        <div className="flex items-center gap-1.5 px-4">
           {/* Logo */}
           <a
             href="#"
@@ -42,20 +42,20 @@ export default function Navbar() {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="font-display font-bold text-lg tracking-tight text-foreground hover:text-accent transition-colors mr-4"
+            className="font-display font-bold text-xl tracking-tight text-foreground hover:text-accent transition-colors mr-5"
           >
             AG<span className="text-accent">.</span>
           </a>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-0.5">
+          <div className="hidden md:flex items-center gap-1">
             {NAV_LINKS.map((link) => (
               <Button
                 key={link.href}
                 asChild
                 variant="ghost"
                 size="sm"
-                className="text-muted-foreground hover:text-foreground hover:bg-white/5 text-xs font-medium tracking-wider uppercase rounded-full h-8"
+                className="text-muted-foreground hover:text-foreground hover:bg-white/5 text-[13px] font-medium tracking-wider uppercase rounded-full h-9 px-4"
               >
                 <a href={link.href} onClick={(e) => handleNavClick(e, link.href)}>
                   {link.label}
@@ -65,9 +65,9 @@ export default function Navbar() {
             <Button
               asChild
               size="sm"
-              className="ml-1 bg-accent text-accent-foreground hover:bg-accent/90 font-semibold text-xs rounded-full h-8"
+              className="ml-2 bg-accent text-accent-foreground hover:bg-accent/90 font-semibold text-[13px] rounded-full h-9 px-5"
             >
-              <a href="mailto:gupta.anoop2006@gmail.com">Let's Talk</a>
+              <a href="mailto:anoopgfortech@gmail.com">Let's Talk</a>
             </Button>
           </div>
 
@@ -129,7 +129,7 @@ export default function Navbar() {
             transition: "opacity 0.4s, transform 0.4s, color 0.2s",
           }}
         >
-          <a href="mailto:gupta.anoop2006@gmail.com">Let's Talk</a>
+          <a href="mailto:anoopgfortech@gmail.com">Let's Talk</a>
         </Button>
       </div>
     </>

@@ -190,7 +190,7 @@ app.get('/api', async (req, res) => {
             <Card className="bento-cell border-border bg-card/60 backdrop-blur-sm hover:border-accent/30 transition-colors duration-500 py-0">
               <CardContent className="flex flex-col items-center justify-center h-full p-4 text-center">
                 <Code2 className="size-5 text-accent mb-2" />
-                <p className="font-display text-3xl md:text-4xl font-bold text-foreground">4+</p>
+                <p className="font-display text-3xl md:text-4xl font-bold text-foreground">10+</p>
                 <p className="text-[11px] text-muted-foreground uppercase tracking-[0.15em] mt-1">Production Apps</p>
               </CardContent>
             </Card>

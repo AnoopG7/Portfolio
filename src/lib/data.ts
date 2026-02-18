@@ -14,7 +14,7 @@ export const PERSONAL = {
   role: "Full-Stack Developer",
   tagline: "I build full-stack apps that work",
   bio: "A passionate full-stack developer specializing in the MERN stack with hands-on experience building production-ready web applications. Currently a 2nd year B.Tech CSE student at ITM Skills University, exploring the intersections of web development, AI/ML, and Data Science.",
-  email: "gupta.anoop2006@gmail.com",
+  email: "anoopgfortech@gmail.com",
   phone: "+91-7039386723",
   education: {
     degree: "B.Tech in Computer Science Engineering",
@@ -25,15 +25,17 @@ export const PERSONAL = {
   socials: {
     github: "https://github.com/AnoopG7",
     linkedin: "https://www.linkedin.com/in/itsan00p/",
+    twitter: "https://twitter.com/itsan00p",
+    instagram: "https://instagram.com/itsan00p",
   },
 } as const;
 
 // ── Stats ──
 export const STATS = [
-  { value: "4+", label: "Projects Built" },
+  { value: "10+", label: "Projects Built" },
   { value: "9.5", label: "CGPA" },
-  { value: "500+", label: "Tests Written" },
-  { value: "57+", label: "API Endpoints" },
+  { value: "999+", label: "Tests Written" },
+  { value: "200+", label: "API Endpoints" },
 ] as const;
 
 // ── Skills ──
@@ -51,9 +53,9 @@ export const SKILLS: SkillCategory[] = [
   {
     category: "Languages",
     skills: [
+      { name: "Python" },
       { name: "TypeScript" },
       { name: "JavaScript" },
-      { name: "Python" },
       { name: "C++" },
       { name: "Java" },
     ],
@@ -70,6 +72,8 @@ export const SKILLS: SkillCategory[] = [
       { name: "CSS3" },
       { name: "Zod" },
       { name: "React Hook Form" },
+      { name: "Zustand" },
+      { name: "React Query" },
     ],
   },
   {
@@ -80,8 +84,6 @@ export const SKILLS: SkillCategory[] = [
       { name: "REST APIs" },
       { name: "WebSockets" },
       { name: "Socket.io" },
-      { name: "Zustand" },
-      { name: "React Query" },
     ],
   },
   {
