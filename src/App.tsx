@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Navbar from "@/components/common/Navbar";
 import ScrollProgress from "@/components/common/ScrollProgress";
 import Footer from "@/components/common/Footer";
+import GradientMesh from "@/components/common/GradientMesh";
 
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
@@ -45,9 +46,10 @@ export default function App() {
 
   return (
     <TooltipProvider>
+      <GradientMesh />
       <ScrollProgress />
       <Navbar />
-      <main>
+      <main className="relative z-[1]">
         <Hero />
         <About />
         <Skills />

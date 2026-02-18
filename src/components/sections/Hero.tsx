@@ -1,44 +1,37 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import HeroRibbon from "@/components/three/HeroRibbon";
 import { PERSONAL } from "@/lib/data";
 import { ArrowRight, GraduationCap, Code2, Layers } from "lucide-react";
 import {
-  SiReact,
-  SiNodedotjs,
-  SiTypescript,
-  SiMongodb,
-  SiNextdotjs,
-  SiTailwindcss,
+  SiReact, SiNodedotjs, SiTypescript, SiMongodb,
+  SiNextdotjs, SiTailwindcss, SiExpress, SiGit,
 } from "react-icons/si";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const TECH = [
-  { icon: SiReact, label: "React" },
-  { icon: SiNodedotjs, label: "Node" },
-  { icon: SiTypescript, label: "TS" },
-  { icon: SiMongodb, label: "Mongo" },
-  { icon: SiNextdotjs, label: "Next" },
-  { icon: SiTailwindcss, label: "TW" },
+  { icon: SiReact, label: "React", color: "#61DAFB" },
+  { icon: SiNodedotjs, label: "Node.js", color: "#339933" },
+  { icon: SiTypescript, label: "TypeScript", color: "#3178C6" },
+  { icon: SiMongodb, label: "MongoDB", color: "#47A248" },
+  { icon: SiNextdotjs, label: "Next.js", color: "#ffffff" },
+  { icon: SiTailwindcss, label: "Tailwind", color: "#06B6D4" },
+  { icon: SiExpress, label: "Express", color: "#ffffff" },
+  { icon: SiGit, label: "Git", color: "#F05032" },
 ];
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
-  const [loaded, setLoaded] = useState(false);
-
-  const onRibbonLoaded = useCallback(() => setLoaded(true), []);
 
   useEffect(() => {
     if (!containerRef.current || !viewportRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Initial states — everything hidden
       gsap.set(".hero-line-1", { opacity: 0, y: 60 });
       gsap.set(".hero-line-2", { opacity: 0, y: 80 });
       gsap.set(".hero-line-3", { opacity: 0, y: 80 });
@@ -46,7 +39,6 @@ export default function Hero() {
       gsap.set(".act-2", { visibility: "hidden" });
       gsap.set(".bento-cell", { opacity: 0, y: 50, scale: 0.92 });
 
-      // Scroll-linked timeline
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -62,22 +54,16 @@ export default function Hero() {
         .to(".hero-line-2", { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }, "+=0.3")
         .to(".hero-line-3", { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }, "+=0.3")
         .to(".hero-sub", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "+=0.2")
-        // Hold — let the viewer breathe
-        .to({}, { duration: 0.6 })
+        .to({}, { duration: 0.6 }) // breathe
 
-        // ── TRANSITION: Act 1 out, ribbon fades ──
+        // ── TRANSITION ──
         .to(".act-1-content", { opacity: 0, y: -80, duration: 1.2, ease: "power2.in" })
-        .to(".ribbon-wrap", { opacity: 0, duration: 1 }, "<")
 
-        // ── ACT 2: Bento grid stagger ──
+        // ── ACT 2: Bento grid ──
         .set(".act-2", { visibility: "visible" })
         .to(".bento-cell", {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          stagger: 0.15,
-          duration: 1,
-          ease: "power3.out",
+          opacity: 1, y: 0, scale: 1,
+          stagger: 0.15, duration: 1, ease: "power3.out",
         });
     }, containerRef);
 
@@ -86,29 +72,11 @@ export default function Hero() {
 
   return (
     <div ref={containerRef} id="hero" className="relative" style={{ height: "400vh" }}>
-      {/* ── Loading overlay ── */}
-      <div
-        className={`fixed inset-0 z-[100] bg-background flex items-center justify-center transition-opacity duration-700 ${
-          loaded ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
-      >
-        <div className="text-center space-y-4">
-          <div className="w-10 h-10 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-muted-foreground text-sm font-medium animate-pulse tracking-wide">
-            Loading experience…
-          </p>
-        </div>
-      </div>
-
-      {/* ── Pinned viewport ── */}
+      {/* Pinned viewport */}
       <div ref={viewportRef} className="h-screen w-full relative overflow-hidden">
-        {/* 3D Ribbon */}
-        <div className="ribbon-wrap absolute inset-0 z-0">
-          <HeroRibbon onLoaded={onRibbonLoaded} />
-        </div>
-
-        {/* Ambient glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-accent/[0.04] blur-[120px] pointer-events-none z-[1]" />
+        {/* Ambient glow orbs */}
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-accent/[0.03] blur-[150px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-accent/[0.02] blur-[120px] pointer-events-none" />
 
         {/* ── ACT 1 ── */}
         <div className="act-1 absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
@@ -132,18 +100,13 @@ export default function Hero() {
 
         {/* ── ACT 2: Bento Grid ── */}
         <div className="act-2 invisible absolute inset-0 z-10 flex items-center justify-center px-6 py-20">
-          <div
-            className="grid grid-cols-3 grid-rows-2 gap-3 md:gap-4 max-w-5xl w-full"
-            style={{ height: "min(420px, 55vh)" }}
-          >
+          <div className="grid grid-cols-3 grid-rows-2 gap-3 md:gap-4 max-w-5xl w-full" style={{ height: "min(420px, 55vh)" }}>
+
             {/* Cell 1 — Status + CTAs (span 2) */}
             <Card className="bento-cell col-span-2 border-border bg-card/60 backdrop-blur-sm hover:border-accent/30 transition-colors duration-500 overflow-hidden relative py-0">
               <div className="absolute top-0 right-0 w-48 h-48 bg-accent/[0.03] rounded-full blur-3xl" />
               <CardContent className="flex flex-col justify-center h-full p-6 md:p-8 relative z-10">
-                <Badge
-                  variant="outline"
-                  className="w-fit mb-4 px-3 py-1 text-xs bg-card/60 border-border text-muted-foreground"
-                >
+                <Badge variant="outline" className="w-fit mb-4 px-3 py-1 text-xs bg-card/60 border-border text-muted-foreground">
                   <span className="relative flex h-2 w-2 mr-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
@@ -157,21 +120,10 @@ export default function Hero() {
                   Full-stack developer specializing in MERN applications
                 </p>
                 <div className="flex gap-3 pointer-events-auto">
-                  <Button
-                    asChild
-                    size="sm"
-                    className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold shadow-[0_0_20px_rgba(232,168,56,0.15)]"
-                  >
-                    <a href="#projects">
-                      View Projects <ArrowRight className="ml-1 size-3.5" />
-                    </a>
+                  <Button asChild size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold shadow-[0_0_20px_rgba(232,168,56,0.15)]">
+                    <a href="#projects">View Projects <ArrowRight className="ml-1 size-3.5" /></a>
                   </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="sm"
-                    className="border-border hover:border-accent/40 hover:text-accent"
-                  >
+                  <Button asChild variant="outline" size="sm" className="border-border hover:border-accent/40 hover:text-accent">
                     <a href="#contact">Contact Me</a>
                   </Button>
                 </div>
@@ -188,27 +140,28 @@ export default function Hero() {
                   <span className="text-[10px] text-muted-foreground/60 ml-2 font-mono">server.ts</span>
                 </div>
                 <pre className="text-[11px] md:text-xs font-mono text-muted-foreground leading-relaxed flex-1 overflow-hidden">
-                  <code>
-{`const app = express()
+                  <code>{`const app = express()
 
 app.get('/api', async (req, res) => {
   const data = await db.find()
   res.json({ success: true, data })
-})`}
-                  </code>
+})`}</code>
                 </pre>
               </CardContent>
             </Card>
 
-            {/* Cell 3 — Tech stack */}
+            {/* Cell 3 — Tech stack with colored icons */}
             <Card className="bento-cell border-border bg-card/60 backdrop-blur-sm hover:border-accent/30 transition-colors duration-500 py-0">
-              <CardContent className="flex flex-col items-center justify-center h-full p-4 gap-3">
+              <CardContent className="flex flex-col items-center justify-center h-full p-4 gap-2">
                 <Layers className="size-4 text-accent" />
-                <div className="grid grid-cols-3 gap-3">
-                  {TECH.map(({ icon: Icon, label }) => (
-                    <div key={label} className="flex flex-col items-center gap-1">
-                      <Icon className="size-5 text-muted-foreground" />
-                      <span className="text-[9px] text-muted-foreground/70 font-mono uppercase">{label}</span>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-[0.15em] font-semibold">Tech Stack</p>
+                <div className="grid grid-cols-4 gap-2.5 mt-1">
+                  {TECH.map(({ icon: Icon, label, color }) => (
+                    <div key={label} className="flex flex-col items-center gap-1 group">
+                      <Icon className="size-5 transition-colors duration-300" style={{ color }} />
+                      <span className="text-[8px] text-muted-foreground/60 font-mono uppercase group-hover:text-muted-foreground transition-colors">
+                        {label}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -220,9 +173,7 @@ app.get('/api', async (req, res) => {
               <CardContent className="flex flex-col items-center justify-center h-full p-4 text-center">
                 <Code2 className="size-5 text-accent mb-2" />
                 <p className="font-display text-3xl md:text-4xl font-bold text-foreground">4+</p>
-                <p className="text-[11px] text-muted-foreground uppercase tracking-[0.15em] mt-1">
-                  Production Apps
-                </p>
+                <p className="text-[11px] text-muted-foreground uppercase tracking-[0.15em] mt-1">Production Apps</p>
               </CardContent>
             </Card>
 
@@ -230,17 +181,12 @@ app.get('/api', async (req, res) => {
             <Card className="bento-cell border-border bg-card/60 backdrop-blur-sm hover:border-accent/30 transition-colors duration-500 py-0">
               <CardContent className="flex flex-col items-center justify-center h-full p-4 text-center">
                 <GraduationCap className="size-5 text-accent mb-2" />
-                <p className="font-display text-sm font-bold text-foreground">
-                  {PERSONAL.education.degree}
-                </p>
-                <p className="text-accent font-display font-bold text-2xl mt-1">
-                  {PERSONAL.education.cgpa}
-                </p>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-[0.12em] mt-0.5">
-                  CGPA • {PERSONAL.education.graduation}
-                </p>
+                <p className="font-display text-sm font-bold text-foreground">{PERSONAL.education.degree}</p>
+                <p className="text-accent font-display font-bold text-2xl mt-1">{PERSONAL.education.cgpa}</p>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-[0.12em] mt-0.5">CGPA • {PERSONAL.education.graduation}</p>
               </CardContent>
             </Card>
+
           </div>
         </div>
       </div>

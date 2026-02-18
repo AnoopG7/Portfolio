@@ -4,11 +4,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ExternalLink } from "lucide-react";
-import { useScrollReveal } from "@/lib/animations";
+import { useSectionPin } from "@/hooks/useSectionPin";
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
-    <Card data-reveal className="group border-border bg-card/60 hover:border-accent/30 hover:bg-card transition-all duration-500">
+    <Card className="group border-border bg-card/60 hover:border-accent/30 hover:bg-card transition-all duration-500">
       <CardHeader>
         <div>
           <Badge variant="outline" className="font-mono text-[10px] text-accent border-accent/20 bg-accent/5 mb-3 px-2 py-0.5">
@@ -85,33 +85,45 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 }
 
 export default function Projects() {
-  const sectionRef = useScrollReveal<HTMLElement>({ stagger: 0.15 });
+  // 6 items: header, subtitle, card1, card2, card3, card4
+  // shiftAfter=4 means only cards 3+4 trigger shift (they're in the second grid row)
+  const { containerRef, viewportRef } = useSectionPin({
+    duration: 1.2,
+    gap: 0.6,
+    hold: 0.6,
+    shiftPerItem: 160,
+    shiftAfter: 4,
+  });
 
   return (
-    <section ref={sectionRef} id="projects" className="py-28 md:py-36">
-      <div className="max-w-6xl mx-auto px-6 md:px-10">
-        {/* Section header */}
-        <div data-reveal className="flex items-center gap-4 mb-4">
-          <Badge variant="outline" className="font-mono text-xs text-accent border-accent/30 bg-accent/5 px-3 py-1">
-            03
-          </Badge>
-          <Separator className="flex-1 bg-border" />
-        </div>
-        <div data-reveal className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16">
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-            Featured Projects
-          </h2>
-          <p className="text-muted-foreground text-sm max-w-xs">
-            Production-ready applications built with modern technologies
-          </p>
-        </div>
+    <div ref={containerRef} id="projects" style={{ height: "450vh" }}>
+      <div ref={viewportRef} className="h-screen w-full overflow-hidden">
+        <div data-pin-content className="max-w-6xl mx-auto px-6 md:px-10 w-full pt-32">
+          {/* Section header */}
+          <div data-pin-item className="flex items-center gap-4 mb-4">
+            <Badge variant="outline" className="font-mono text-xs text-accent border-accent/30 bg-accent/5 px-3 py-1">
+              03
+            </Badge>
+            <Separator className="flex-1 bg-border" />
+          </div>
+          <div data-pin-item className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+              Featured Projects
+            </h2>
+            <p className="text-muted-foreground text-sm max-w-xs">
+              Production-ready applications built with modern technologies
+            </p>
+          </div>
 
-        <div className="grid md:grid-cols-2 gap-5">
-          {PROJECTS.map((project, i) => (
-            <ProjectCard key={project.title} project={project} index={i} />
-          ))}
+          <div className="grid md:grid-cols-2 gap-5">
+            {PROJECTS.map((project, i) => (
+              <div key={project.title} data-pin-item>
+                <ProjectCard project={project} index={i} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
