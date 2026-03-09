@@ -46,6 +46,14 @@ export default function Hero() {
       gsap.set(".act-2", { visibility: "hidden" });
       gsap.set(".bento-cell", { opacity: 0, y: 50, scale: 0.92 });
 
+      // ── ACT 1 plays immediately on load ──
+      gsap.timeline({ delay: 0.2 })
+        .to(".hero-line-1", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" })
+        .to(".hero-line-2", { opacity: 1, y: 0, duration: 0.9, ease: "power2.out" }, "-=0.3")
+        .to(".hero-line-3", { opacity: 1, y: 0, duration: 0.9, ease: "power2.out" }, "-=0.3")
+        .to(".hero-sub",    { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, "-=0.2");
+
+      // ── Scroll controls ACT 1 → ACT 2 transition only ──
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -56,16 +64,9 @@ export default function Hero() {
         },
       });
 
-      // ── ACT 1: Cinematic text reveal ──
-      tl.to(".hero-line-1", { opacity: 1, y: 0, duration: 1, ease: "power2.out" })
-        .to(".hero-line-2", { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }, "+=0.3")
-        .to(".hero-line-3", { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }, "+=0.3")
-        .to(".hero-sub", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "+=0.2")
-        .to({}, { duration: 0.6 }) // breathe
-
+      tl.to({}, { duration: 1 }) // hold so user sees ACT 1 before scrolling away
         // ── TRANSITION ──
         .to(".act-1-content", { opacity: 0, y: -80, duration: 1.2, ease: "power2.in" })
-
         // ── ACT 2: Bento grid ──
         .set(".act-2", { visibility: "visible" })
         .to(".bento-cell", {
