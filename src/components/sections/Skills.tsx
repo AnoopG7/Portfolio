@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import gsap from "gsap";
-import { SKILLS } from "@/lib/data";
+import { SKILLS, CURRENTLY_EXPLORING } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -10,14 +10,16 @@ import {
   SiTypescript, SiJavascript, SiPython, SiCplusplus,
   SiReact, SiNextdotjs, SiTailwindcss, SiShadcnui,
   SiMui, SiHtml5, SiCss3, SiZod,
-  SiNodedotjs, SiExpress, SiSocketdotio, SiReactquery,
-  SiMongodb, SiMysql, SiFirebase, SiSupabase,
-  SiGit, SiGithub, SiFigma, SiVercel, SiRender, SiN8N,
+  SiNodedotjs, SiExpress, SiSocketdotio, SiReactquery, SiFastapi,
+  SiMongodb, SiMysql, SiFirebase, SiSupabase, SiPostgresql,
+  SiGit, SiGithub, SiFigma, SiVercel, SiRender, SiN8N, SiDocker,
+  SiNumpy, SiPandas, SiScikitlearn, SiTensorflow, SiPytorch,
+  SiHuggingface, SiLangchain, SiJupyter,
 } from "react-icons/si";
 import { TbApi, TbBrandSocketIo } from "react-icons/tb";
 import { BiLogoJava } from "react-icons/bi";
 import { VscCode } from "react-icons/vsc";
-import { TbAtom } from "react-icons/tb";
+import { TbAtom, TbChartScatter } from "react-icons/tb";
 
 // ── Icon map: skill name → react-icon ──
 const SKILL_ICONS: Record<string, IconType> = {
@@ -37,6 +39,7 @@ const SKILL_ICONS: Record<string, IconType> = {
   "React Hook Form":SiReact,
   "Node.js":        SiNodedotjs,
   "Express.js":     SiExpress,
+  FastAPI:          SiFastapi,
   "REST APIs":      TbApi,
   WebSockets:       TbBrandSocketIo,
   "Socket.io":      SiSocketdotio,
@@ -44,15 +47,26 @@ const SKILL_ICONS: Record<string, IconType> = {
   "React Query":    SiReactquery,
   MongoDB:          SiMongodb,
   MySQL:            SiMysql,
+  PostgreSQL:       SiPostgresql,
   Firebase:         SiFirebase,
   Supabase:         SiSupabase,
   Git:              SiGit,
   GitHub:           SiGithub,
+  Docker:           SiDocker,
   "VS Code":        VscCode,
   Figma:            SiFigma,
   Vercel:           SiVercel,
   Render:           SiRender,
   n8n:              SiN8N,
+  NumPy:            SiNumpy,
+  Pandas:           SiPandas,
+  Matplotlib:       TbChartScatter,
+  "Scikit-learn":   SiScikitlearn,
+  TensorFlow:       SiTensorflow,
+  PyTorch:          SiPytorch,
+  "Hugging Face":   SiHuggingface,
+  LangChain:        SiLangchain,
+  Jupyter:          SiJupyter,
 };
 
 export default function Skills() {
@@ -158,7 +172,7 @@ export default function Skills() {
                 <p className="text-base relative z-10">
                   <span className="text-accent font-semibold font-display">Currently exploring</span>
                   <span className="mx-2.5 text-border">—</span>
-                  <span className="text-muted-foreground">Artificial Intelligence, Machine Learning &amp; Data Science</span>
+                  <span className="text-muted-foreground">{CURRENTLY_EXPLORING}</span>
                 </p>
               </CardContent>
             </Card>

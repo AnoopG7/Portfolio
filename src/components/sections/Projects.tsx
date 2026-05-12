@@ -1,14 +1,18 @@
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PROJECTS, type Project } from "@/lib/data";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription, CardAction } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ExternalLink } from "lucide-react";
-import { useSectionPin } from "@/hooks/useSectionPin";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
-    <Card className="group border-border bg-card/60 hover:border-accent/30 hover:bg-card transition-all duration-500">
+    <Card className="group border-border bg-card/60 hover:border-accent/30 hover:bg-card transition-all duration-500 h-full flex flex-col">
       <CardHeader>
         <div>
           <Badge variant="outline" className="font-mono text-[10px] text-accent border-accent/20 bg-accent/5 mb-3 px-2 py-0.5">
@@ -33,7 +37,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </CardAction>
       </CardHeader>
 
-      <CardContent className="space-y-5">
+      <CardContent className="space-y-5 flex-1">
         <div className="flex flex-wrap gap-1.5">
           {project.tech.map((t) => (
             <Badge
@@ -57,16 +61,26 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       </CardContent>
 
       <CardFooter className="border-t border-border pt-4 gap-3">
-        <Button
-          asChild
-          size="sm"
-          className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold shadow-[0_0_15px_rgba(232,168,56,0.1)] hover:shadow-[0_0_25px_rgba(232,168,56,0.2)] transition-all duration-300"
-        >
-          <a href={project.live} target="_blank" rel="noopener noreferrer">
-            Live Demo
-            <ExternalLink className="ml-1 size-3.5" />
-          </a>
-        </Button>
+        {project.live && project.live !== "#" ? (
+          <Button
+            asChild
+            size="sm"
+            className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold shadow-[0_0_15px_rgba(232,168,56,0.1)] hover:shadow-[0_0_25px_rgba(232,168,56,0.2)] transition-all duration-300"
+          >
+            <a href={project.live} target="_blank" rel="noopener noreferrer">
+              Live Demo
+              <ExternalLink className="ml-1 size-3.5" />
+            </a>
+          </Button>
+        ) : (
+          <Button
+            disabled
+            size="sm"
+            className="bg-accent/40 text-accent-foreground/60 font-semibold cursor-not-allowed"
+          >
+            Private Project
+          </Button>
+        )}
         {project.github && (
           <Button
             asChild
@@ -85,45 +99,65 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 }
 
 export default function Projects() {
-  // 6 items: header, subtitle, card1, card2, card3, card4
-  // shiftAfter=4 means only cards 3+4 trigger shift (they're in the second grid row)
-  const { containerRef, viewportRef } = useSectionPin({
-    duration: 1.2,
-    gap: 0.6,
-    hold: 0.6,
-    shiftPerItem: 160,
-    shiftAfter: 4,
-  });
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const ctx = gsap.context(() => {
+      const cards = section.querySelectorAll<HTMLElement>("[data-reveal]");
+
+      cards.forEach((card) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 60, scale: 0.95, filter: "blur(4px)" },
+          {
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              end: "top 40%",
+              scrub: 1,
+            },
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            filter: "blur(0px)",
+            ease: "power3.out",
+          },
+        );
+      });
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <div ref={containerRef} id="projects" style={{ height: "450vh" }}>
-      <div ref={viewportRef} className="h-screen w-full overflow-hidden">
-        <div data-pin-content className="max-w-6xl mx-auto px-6 md:px-10 w-full pt-32">
-          {/* Section header */}
-          <div data-pin-item className="flex items-center gap-4 mb-4">
-            <Badge variant="outline" className="font-mono text-xs text-accent border-accent/30 bg-accent/5 px-3 py-1">
-              03
-            </Badge>
-            <Separator className="flex-1 bg-border" />
-          </div>
-          <div data-pin-item className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-              Featured Projects
-            </h2>
-            <p className="text-muted-foreground text-sm max-w-xs">
-              Production-ready applications built with modern technologies
-            </p>
-          </div>
+    <section ref={sectionRef} id="projects" className="relative py-24 md:py-32">
+      <div className="max-w-6xl mx-auto px-6 md:px-10 w-full">
+        <div className="flex items-center gap-4 mb-4">
+          <Badge variant="outline" className="font-mono text-xs text-accent border-accent/30 bg-accent/5 px-3 py-1">
+            03
+          </Badge>
+          <Separator className="flex-1 bg-border" />
+        </div>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+            Featured Projects
+          </h2>
+          <p className="text-muted-foreground text-sm max-w-xs">
+            AI-powered and production-ready applications
+          </p>
+        </div>
 
-          <div className="grid md:grid-cols-2 gap-5">
-            {PROJECTS.map((project, i) => (
-              <div key={project.title} data-pin-item>
-                <ProjectCard project={project} index={i} />
-              </div>
-            ))}
-          </div>
+        <div className="grid md:grid-cols-2 gap-5">
+          {PROJECTS.map((project, i) => (
+            <div key={project.title} data-reveal className="h-full">
+              <ProjectCard project={project} index={i} />
+            </div>
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

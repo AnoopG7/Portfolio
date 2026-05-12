@@ -4,31 +4,25 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { PERSONAL } from "@/lib/data";
+import { PERSONAL, HERO } from "@/lib/data";
 import { ArrowRight, GraduationCap, Code2, Layers } from "lucide-react";
 import {
   SiReact, SiNodedotjs, SiTypescript, SiMongodb,
-  SiNextdotjs, SiTailwindcss, SiExpress, SiGit,
+  SiPython, SiPytorch, SiTensorflow, SiScikitlearn,
 } from "react-icons/si";
 import TextType from "@/components/reactbits/TextType";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const TECH = [
+  { icon: SiPython, label: "Python", color: "#3776AB" },
+  { icon: SiPytorch, label: "PyTorch", color: "#EE4C2C" },
+  { icon: SiTensorflow, label: "TensorFlow", color: "#FF6F00" },
+  { icon: SiScikitlearn, label: "Scikit-learn", color: "#F7931E" },
+  { icon: SiTypescript, label: "TypeScript", color: "#3178C6" },
   { icon: SiReact, label: "React", color: "#61DAFB" },
   { icon: SiNodedotjs, label: "Node.js", color: "#339933" },
-  { icon: SiTypescript, label: "TypeScript", color: "#3178C6" },
   { icon: SiMongodb, label: "MongoDB", color: "#47A248" },
-  { icon: SiNextdotjs, label: "Next.js", color: "#ffffff" },
-  { icon: SiTailwindcss, label: "Tailwind", color: "#06B6D4" },
-  { icon: SiExpress, label: "Express", color: "#ffffff" },
-  { icon: SiGit, label: "Git", color: "#F05032" },
-];
-
-const SUBTITLE_PHRASES = [
-  "Crafting production-ready applications with the MERN stack",
-  "Building scalable full-stack web experiences",
-  "Turning ideas into deployed, working products",
 ];
 
 export default function Hero() {
@@ -90,19 +84,19 @@ export default function Hero() {
         <div className="act-1 absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
           <div className="act-1-content text-center px-6 max-w-5xl" style={{ perspective: "800px" }}>
             <p className="hero-line-1 text-muted-foreground text-xl md:text-2xl font-medium tracking-[0.2em] uppercase mb-8">
-              Hi, I'm Anoop
+              {HERO.greeting}
             </p>
             <h1 className="font-display font-extrabold leading-[1.05] tracking-tight">
               <span className="hero-line-2 block text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] text-foreground mb-2">
-                I design &amp; build
+                {HERO.headingLine1}
               </span>
               <span className="hero-line-3 block text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] text-gradient">
-                full-stack web apps
+                {HERO.headingLine2}
               </span>
             </h1>
             <div className="hero-sub mt-8 max-w-2xl mx-auto">
               <TextType
-                text={SUBTITLE_PHRASES}
+                text={[...HERO.subtitlePhrases]}
                 className="text-muted-foreground text-lg md:text-xl leading-relaxed"
                 typingSpeed={40}
                 deletingSpeed={25}
@@ -130,13 +124,13 @@ export default function Hero() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
                   </span>
-                  Open to freelance &amp; internships
+                  {HERO.status}
                 </Badge>
                 <p className="font-display text-xl md:text-2xl font-bold text-foreground mb-1">
-                  Let's build something amazing
+                  {HERO.ctaHeading}
                 </p>
                 <p className="text-muted-foreground text-sm mb-5">
-                  Full-stack developer specializing in MERN applications
+                  {HERO.ctaSubtitle}
                 </p>
                 <div className="flex gap-3 pointer-events-auto">
                   <Button asChild size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold shadow-[0_0_20px_rgba(232,168,56,0.15)]">
@@ -149,22 +143,25 @@ export default function Hero() {
               </CardContent>
             </Card>
 
-            {/* Cell 2 — Code snippet */}
+            {/* Cell 2 — Code snippet (Python AI) */}
             <Card className="bento-cell border-border bg-card/60 backdrop-blur-sm hover:border-accent/30 transition-colors duration-500 overflow-hidden py-0">
               <CardContent className="flex flex-col h-full p-4 md:p-5">
                 <div className="flex items-center gap-1.5 mb-3">
                   <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
                   <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
                   <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
-                  <span className="text-[10px] text-muted-foreground/60 ml-2 font-mono">server.ts</span>
+                  <span className="text-[10px] text-muted-foreground/60 ml-2 font-mono">rag.py</span>
                 </div>
                 <pre className="text-[11px] md:text-xs font-mono text-muted-foreground leading-relaxed flex-1 overflow-hidden">
-                  <code>{`const app = express()
+                  <code>{`from openai import OpenAI
 
-app.get('/api', async (req, res) => {
-  const data = await db.find()
-  res.json({ success: true, data })
-})`}</code>
+response = client.chat.completions.create(
+  model="gpt-4o",
+  messages=[{"role": "user",
+    "content": query}],
+  tools=tools
+)
+print(response.choices[0].message)`}</code>
                 </pre>
               </CardContent>
             </Card>
@@ -191,8 +188,8 @@ app.get('/api', async (req, res) => {
             <Card className="bento-cell border-border bg-card/60 backdrop-blur-sm hover:border-accent/30 transition-colors duration-500 py-0">
               <CardContent className="flex flex-col items-center justify-center h-full p-4 text-center">
                 <Code2 className="size-5 text-accent mb-2" />
-                <p className="font-display text-3xl md:text-4xl font-bold text-foreground">10+</p>
-                <p className="text-[11px] text-muted-foreground uppercase tracking-[0.15em] mt-1">Production Apps</p>
+                <p className="font-display text-3xl md:text-4xl font-bold text-foreground">{HERO.projectCount}</p>
+                <p className="text-[11px] text-muted-foreground uppercase tracking-[0.15em] mt-1">{HERO.projectCountLabel}</p>
               </CardContent>
             </Card>
 
@@ -200,8 +197,9 @@ app.get('/api', async (req, res) => {
             <Card className="bento-cell border-border bg-card/60 backdrop-blur-sm hover:border-accent/30 transition-colors duration-500 py-0">
               <CardContent className="flex flex-col items-center justify-center h-full p-4 text-center">
                 <GraduationCap className="size-5 text-accent mb-2" />
-                <p className="font-display text-sm font-bold text-foreground">{PERSONAL.education.degree}</p>
-                <p className="text-accent font-display font-bold text-2xl mt-1">{PERSONAL.education.cgpa}</p>
+                <p className="font-display text-sm font-bold text-foreground leading-snug">{PERSONAL.education.degree}</p>
+                <p className="text-muted-foreground text-[10px] mt-1.5 uppercase tracking-[0.1em] font-medium">{PERSONAL.education.university}</p>
+                <p className="text-accent font-display font-bold text-2xl mt-2">{PERSONAL.education.cgpa}</p>
                 <p className="text-[10px] text-muted-foreground uppercase tracking-[0.12em] mt-0.5">CGPA • {PERSONAL.education.graduation}</p>
               </CardContent>
             </Card>

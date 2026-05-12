@@ -1,25 +1,58 @@
 Anoop Gupta
-Full-Stack MERN Developer · Open to Freelance & Internships
+AI/ML Engineer & Full-Stack Developer · Open to Freelance & Internships
 Phone : +91-7039386723  	   |	Email: gupta.anoop2006@gmail.com
 LinkedIn: https://www.linkedin.com/in/itsan00p/	    |     GitHub: https://github.com/AnoopG7
 Portfolio: https://anoopg7.github.io/Portfolio/
  
 PROFESSIONAL SUMMARY
-Full-stack developer specializing in the MERN stack with hands-on experience building production-ready web applications including role-based systems, activity tracking platforms, and client portfolio websites. Strong foundation in backend architecture, REST API design, authentication systems, and modern frontend state management. 
+AI/ML engineer and full-stack developer building intelligent, data-driven applications with Python, ML frameworks, and the MERN stack. Experienced in shipping production-ready AI products — from LLM-powered RAG systems and multi-agent architectures to predictive models — all running on zero-cost infrastructure.
  
 EDUCATION
 Bachelor of Technology (B.Tech) in Computer Science Engineering
 ITM Skills University, Navi Mumbai, Maharashtra
 Graduation: 2028 	| 	CGPA: ~9.5 SKILLS
 
-Languages: C++, Python, Java, JavaScript, TypeScript
-Backend: Next.js, Node.js, Express.js, Zustand, REST APIs, WebSockets
-Frontend: React, Tailwind, Shadcn UI, Material UI (MUI), Zod, RHF, HTML5, CSS3 
-Databases: MongoDB, MySQL, Firebase, Supabase,
-Tools & Platforms: Git, GitHub, VS Code, Figma, n8n, Render, Vercel
- 
+Languages: Python, TypeScript, JavaScript, C++, Java
+AI/ML: OpenAI, NumPy, Pandas, Scikit-learn, TensorFlow, PyTorch, LangChain, Ollama, Groq LLM
+Backend: FastAPI, Node.js, Express.js, REST APIs, WebSockets, SQLAlchemy
+Frontend: React, Next.js, Tailwind CSS, Shadcn UI
+Databases: PostgreSQL 16, Supabase (pgvector), MongoDB, MySQL
+Tools: Git, GitHub, Docker, Vercel, Render, pgvector, APScheduler
 
 Projects
+
+AI-Powered Lead Generation Platform – SaaS for PropTech Lead Capture
+Tech: FastAPI, Python 3.12, PostgreSQL 16, OpenAI SDK, React, TypeScript, Tailwind v4, Docker, SQLAlchemy async, Meta Graph API
+Live: N/A (Production deployment)
+•	Designed and deployed a deterministic AI agent orchestration engine using raw OpenAI function calling — 8 custom tools, 10-turn autonomous execution loop with 429 retry backoff and JSON recovery, configurable between hosted and local LLM providers (Groq / Ollama) via a single env variable.
+•	Built and deployed a complete async-first FastAPI backend — async SQLAlchemy ORM with PostgreSQL, Alembic migrations, custom JWT auth (bcrypt + jose), structlog logging, CORS, SMTP, and comprehensive REST API (leads, properties, meetings, users, conversations, webhooks).
+•	Built and shipped a CRM admin dashboard in React + TypeScript + Tailwind v4 + shadcn/ui — login, lead management, property CRUD, meeting scheduler, conversation history viewer, and analytics (Zustand, React Hook Form, Zod).
+•	Architected a 16-table relational database schema (leads, properties, meetings, users, conversations, audit logs, ad leads) with foreign keys, enums, timezone-aware timestamps, and Alembic migrations.
+•	Integrated Meta Lead Ads webhook pipeline — Facebook Graph API lead retrieval, token management, and automatic AI agent invocation on new lead capture.
+•	Reduced API costs by ~60% compared to OpenAI-equivalent models using Groq Llama-3 inference (~2100 tokens/call) with fallback to local Ollama for development.
+•	Authored comprehensive system documentation — API reference, deployment guide, architecture docs, ERD diagrams, and production runbooks.
+•	Implemented reliability engineering patterns — session rebuild after data changes, conversation history capping for token budgeting, Decimal for monetary precision, and structured logging across all layers.
+
+TutorX – AI-Powered CBSE Tutoring System
+Tech: React 19, TypeScript, FastAPI, Python, Supabase (pgvector), Groq LLM (Mixtral 8x7B), Ollama
+Live: https://anoop-tutorx.vercel.app
+•	Built a full-stack RAG (Retrieval-Augmented Generation) AI tutoring platform for CBSE students (Grades 9–12) — delivers accurate, context-aware explanations by referencing NCERT textbooks directly, aligned to the curriculum for better exam preparation.
+•	Designed a 3-strategy retrieval system — pgvector cosine similarity over 768-dim embeddings, LLM query reformulation for poor matches, and LLM chunk enrichment — reducing Groq API calls from 14+ to 1 per query (~2s latency).
+•	Engineered personalized AI agent adapting to each student's grade, subjects, weak/strong topics, and 4 teaching style preferences (Definition-First, Analogy-First, Example-First, Socratic).
+•	Implemented Supabase Auth (JWT, email verification), auto-profile creation, real-time session management, and conversation history.
+•	Built Telegram bot integration (python-telegram-bot) sharing the same agent loop for cross-platform mobile Q&A.
+•	Architected Supabase PostgreSQL schema with pgvector extension, IVFFlat indexes, 8 tables, and Row-Level Security.
+•	Built automated PDF ingestion pipeline: 9 subjects × 2 grades, 450-token chunks with 50-token overlap, embedding via nomic-embed-text.
+
+TaskFlow – AI-Powered Proactive Task Management
+Tech: React 19, TypeScript, FastAPI, Python, Groq LLM (Llama 3.3 70B), Supabase, Telegram Bot, APScheduler
+Live: https://anoop-taskflow.vercel.app
+•	Built a full-stack AI "Chief of Staff" — autonomously managing tasks, detecting risks, estimating time, and sending proactive Telegram reminders.
+•	Engineered multi-action AI agent: single LLM call returns structured JSON with 10 action types (create/complete/delete/link tasks and projects, batch ops) executed atomically.
+•	Implemented self-improving time estimation: bias tracking across last 30 tasks (bias = avg(actual/estimated)), auto-injected into every LLM prompt for self-correction.
+•	Built proactive APScheduler system — daily morning briefs via LLM (top-3 priorities + motivation) + hourly due date checks with Telegram alerts (🔴 overdue, 🟡 due within 24h).
+•	Designed multi-channel interaction: React SPA (Dashboard, Tasks, Projects, Chat, Settings) + natural language Telegram commands (/today, /brief, /help).
+•	Architected 9-table Supabase schema with RLS policies, per-user timezone/work hours/DND settings, and 30 REST API endpoints.
 
 AI-Powered Learning Management System (LMS) – Full-Stack MERN Application
 Tech: Node.js, Express 5, TypeScript, MongoDB, React 19, Socket.io, Groq AI

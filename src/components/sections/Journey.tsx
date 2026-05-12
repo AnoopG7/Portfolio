@@ -10,12 +10,12 @@ export default function Journey() {
     duration: 1.1,
     gap: 0.5,
     hold: 0.5,
-    shiftPerItem: 90,
+    shiftPerItem: 120,
     shiftAfter: 5,
   });
 
   return (
-    <div ref={containerRef} id="journey" style={{ height: "350vh" }}>
+    <div ref={containerRef} id="journey" style={{ height: "400vh" }}>
       <div ref={viewportRef} className="h-screen w-full overflow-hidden">
         <div data-pin-content className="max-w-4xl mx-auto px-6 md:px-10 w-full pt-32">
           {/* Section header */}
