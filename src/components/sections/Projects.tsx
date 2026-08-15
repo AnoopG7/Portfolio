@@ -1,115 +1,112 @@
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PROJECTS, type Project } from "@/lib/data";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription, CardAction } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardAction,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ExternalLink, Play } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+function ProjectCard({
+  project,
+  index,
+  isFeatured,
+}: {
+  project: Project;
+  index: number;
+  isFeatured: boolean;
+}) {
   return (
-    <Card className="group border-border bg-card/60 hover:border-accent/30 hover:bg-card transition-all duration-500 h-full flex flex-col">
-      <CardHeader>
-        <div>
-          <Badge variant="outline" className="font-mono text-[10px] text-accent border-accent/20 bg-accent/5 mb-3 px-2 py-0.5">
-            PROJECT {String(index + 1).padStart(2, "0")}
-          </Badge>
-          <CardTitle className="font-display text-xl md:text-2xl font-bold group-hover:text-accent transition-colors duration-300">
-            {project.title}
-          </CardTitle>
-          <CardDescription className="mt-1">{project.subtitle}</CardDescription>
-        </div>
-        <CardAction>
-          {project.live && project.live !== "#" ? (
-            <Button
-              asChild
-              variant="outline"
-              size="icon"
-              className="rounded-full border-border text-muted-foreground hover:border-accent hover:text-accent hover:bg-accent/10"
-            >
-              <a href={project.live} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.title}`}>
-                <ExternalLink className="size-4" />
-              </a>
-            </Button>
-          ) : null}
-        </CardAction>
-      </CardHeader>
-
-      <CardContent className="space-y-5 flex-1">
-        <div className="flex flex-wrap gap-1.5">
-          {project.tech.map((t) => (
+    <Link to={`/project/${project.slug}`} className="block h-full group/link">
+      <Card
+        className={`group border-border bg-card/60 hover:border-accent/30 hover:bg-card transition-all duration-500 h-full flex flex-col ${
+          isFeatured ? "ring-1 ring-accent/10" : ""
+        }`}
+      >
+        <CardHeader>
+          <div>
             <Badge
-              key={t}
-              variant="secondary"
-              className="text-[10px] font-mono font-medium uppercase tracking-wider bg-background border border-border text-muted-foreground rounded-md px-2 py-0.5"
+              variant="outline"
+              className="font-mono text-[10px] text-accent border-accent/20 bg-accent/5 mb-3 px-2 py-0.5"
             >
-              {t}
+              {isFeatured ? "FEATURED" : `PROJECT ${String(index + 1).padStart(2, "0")}`}
             </Badge>
-          ))}
-        </div>
+            <CardTitle className="font-display text-lg sm:text-xl md:text-2xl font-bold group-hover:text-accent transition-colors duration-300">
+              {project.title}
+            </CardTitle>
+            <CardDescription className="mt-1 text-xs sm:text-sm">
+              {project.subtitle}
+            </CardDescription>
+          </div>
+          <CardAction>
+            {project.live && project.live !== "#" ? (
+              <Button
+                asChild
+                variant="outline"
+                size="icon"
+                className="rounded-full border-border text-muted-foreground hover:border-accent hover:text-accent hover:bg-accent/10"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit ${project.title}`}
+                >
+                  <ExternalLink className="size-4" />
+                </a>
+              </Button>
+            ) : null}
+          </CardAction>
+        </CardHeader>
 
-        <ul className="space-y-2.5">
-          {project.highlights.map((h, i) => (
-            <li key={i} className="text-muted-foreground text-sm flex items-start gap-3">
-              <span className="text-accent text-xs mt-1.5 shrink-0">▸</span>
-              <span className="leading-relaxed">{h}</span>
-            </li>
-          ))}
-        </ul>
-      </CardContent>
+        <CardContent className="space-y-4 sm:space-y-5 flex-1">
+          <div className="flex flex-wrap gap-1 sm:gap-1.5">
+            {project.tech.map((t) => (
+              <Badge
+                key={t}
+                variant="secondary"
+                className="text-[9px] sm:text-[10px] font-mono font-medium uppercase tracking-wider bg-background border border-border text-muted-foreground rounded-md px-1.5 sm:px-2 py-0.5"
+              >
+                {t}
+              </Badge>
+            ))}
+          </div>
 
-      <CardFooter className="border-t border-border pt-4 gap-3">
-        {project.live && project.live !== "#" ? (
-          <Button
-            asChild
-            size="sm"
-            className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold shadow-[0_0_15px_rgba(217,126,22,0.2)] hover:shadow-[0_0_25px_rgba(217,126,22,0.3)] transition-all duration-300"
-          >
-            <a href={project.live} target="_blank" rel="noopener noreferrer">
-              Live Demo
-              <ExternalLink className="ml-1 size-3.5" />
-            </a>
-          </Button>
-        ) : (
-          <Button
-            disabled
-            size="sm"
-            className="bg-accent/40 text-accent-foreground/60 font-semibold cursor-not-allowed"
-          >
-            Private Project
-          </Button>
-        )}
-        {project.demo && (
-          <Button
-            asChild
-            variant="outline"
-            size="sm"
-            className="border-border text-muted-foreground hover:border-accent/40 hover:text-accent"
-          >
-            <a href={project.demo} target="_blank" rel="noopener noreferrer">
-              Demo Video
-              <Play className="ml-1 size-3.5" />
-            </a>
-          </Button>
-        )}
-        {project.github && (
-          <Button
-            asChild
-            variant="outline"
-            size="sm"
-            className="border-border text-muted-foreground hover:border-accent/40 hover:text-accent"
-          >
-            <a href={project.github} target="_blank" rel="noopener noreferrer">
-              Source Code
-            </a>
-          </Button>
-        )}
-      </CardFooter>
-    </Card>
+          <ul className="space-y-2 sm:space-y-2.5">
+            {project.highlights.slice(0, isFeatured ? 4 : 3).map((h, i) => (
+              <li
+                key={i}
+                className="text-muted-foreground text-xs sm:text-sm flex items-start gap-2 sm:gap-3"
+              >
+                <span className="text-accent text-[10px] sm:text-xs mt-1 sm:mt-1.5 shrink-0">
+                  ▸
+                </span>
+                <span className="leading-relaxed">{h}</span>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+
+        <CardFooter className="border-t border-border pt-3 sm:pt-4 gap-2 sm:gap-3 flex-wrap">
+          <span className="text-xs sm:text-sm text-accent font-medium group-hover/link:underline flex items-center gap-1">
+            View Details <ArrowRight className="size-3.5" />
+          </span>
+        </CardFooter>
+      </Card>
+    </Link>
   );
 }
 
@@ -145,31 +142,61 @@ export default function Projects() {
     return () => ctx.revert();
   }, []);
 
+  const featured = PROJECTS.filter((p) => p.featured);
+  const others = PROJECTS.filter((p) => !p.featured);
+
   return (
-    <section ref={sectionRef} id="projects" className="relative py-24 md:py-32">
-      <div className="max-w-6xl mx-auto px-6 md:px-10 w-full">
+    <section ref={sectionRef} id="projects" className="relative py-16 sm:py-24 md:py-32">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 w-full">
         <div className="flex items-center gap-4 mb-4">
-          <Badge variant="outline" className="font-mono text-xs text-accent border-accent/30 bg-accent/5 px-3 py-1">
+          <Badge
+            variant="outline"
+            className="font-mono text-xs text-accent border-accent/30 bg-accent/5 px-3 py-1"
+          >
             04
           </Badge>
           <Separator className="flex-1 bg-border" />
         </div>
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 md:gap-4 mb-8 sm:mb-12">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
             Featured Projects
           </h2>
-          <p className="text-muted-foreground text-sm max-w-xs">
+          <p className="text-muted-foreground text-xs sm:text-sm max-w-xs">
             AI-powered and production-ready applications
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-5">
-          {PROJECTS.map((project, i) => (
-            <div key={project.title} data-reveal className="h-full">
-              <ProjectCard project={project} index={i} />
+        {/* Featured projects */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mb-8 sm:mb-12">
+          {featured.map((project, i) => (
+            <div key={project.slug} data-reveal className="h-full">
+              <ProjectCard project={project} index={i} isFeatured />
             </div>
           ))}
         </div>
+
+        {/* Other projects */}
+        {others.length > 0 && (
+          <>
+            <div className="flex items-center gap-4 mb-6 sm:mb-8">
+              <h3 className="font-display text-lg sm:text-xl font-bold text-foreground shrink-0">
+                More Projects
+              </h3>
+              <Separator className="flex-1 bg-border/50" />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+              {others.map((project, i) => (
+                <div key={project.slug} data-reveal className="h-full">
+                  <ProjectCard
+                    project={project}
+                    index={featured.length + i}
+                    isFeatured={false}
+                  />
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

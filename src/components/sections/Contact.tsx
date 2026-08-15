@@ -5,7 +5,8 @@ import { PERSONAL } from "@/lib/data";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { SiGithub, SiLinkedin, SiX } from "react-icons/si";
+import { SiGithub, SiX } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa6";
 import { Mail, Phone, ArrowUpRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -46,15 +47,15 @@ export default function Contact() {
     { href: `mailto:${PERSONAL.email}`, label: "Email", handle: PERSONAL.email, icon: <Mail className="size-5 text-accent" />, external: false },
     { href: `tel:${PERSONAL.phone}`, label: "Phone", handle: PERSONAL.phone, icon: <Phone className="size-5 text-accent" />, external: false },
     { href: PERSONAL.socials.github, label: "GitHub", handle: "@AnoopG7", icon: <SiGithub className="size-5 text-accent" />, external: true },
-    { href: PERSONAL.socials.linkedin, label: "LinkedIn", handle: "@itsan00p", icon: <SiLinkedin className="size-5 text-accent" />, external: true },
+    { href: PERSONAL.socials.linkedin, label: "LinkedIn", handle: "@itsan00p", icon: <FaLinkedin className="size-5 text-accent" />, external: true },
     { href: PERSONAL.socials.twitter, label: "Twitter / X", handle: "@itsan00p", icon: <SiX className="size-4 text-accent" />, external: true },
   ];
 
   return (
-    <section ref={sectionRef} id="contact" className="relative py-24 md:py-32">
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[500px] bg-accent/[0.07] rounded-full blur-[150px] pointer-events-none" />
+    <section ref={sectionRef} id="contact" className="relative py-16 sm:py-24 md:py-32">
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[300px] sm:w-[600px] h-[300px] sm:h-[500px] bg-accent/[0.07] rounded-full blur-[100px] sm:blur-[150px] pointer-events-none" />
 
-      <div className="max-w-5xl mx-auto px-6 md:px-10 text-center relative z-10 w-full">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-10 text-center relative z-10 w-full">
         <div data-reveal className="flex items-center justify-center gap-4 mb-4">
           <Badge variant="outline" className="font-mono text-xs text-accent border-accent/30 bg-accent/5 px-3 py-1">
             06
@@ -62,10 +63,10 @@ export default function Contact() {
           <Separator className="w-12 bg-border" />
         </div>
 
-        <h2 data-reveal className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+        <h2 data-reveal className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6">
           Let's Connect
         </h2>
-        <p data-reveal className="text-muted-foreground text-lg mb-14 max-w-lg mx-auto leading-relaxed">
+        <p data-reveal className="text-muted-foreground text-base sm:text-lg mb-8 sm:mb-14 max-w-lg mx-auto leading-relaxed">
           Got a project idea, freelance opportunity, or just want to chat?
           I'd love to hear from you.
         </p>

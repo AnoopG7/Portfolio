@@ -49,15 +49,15 @@ export default function Achievements() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="achievements" className="relative py-24 md:py-32">
-      <div className="max-w-6xl mx-auto px-6 md:px-10 w-full">
+    <section ref={sectionRef} id="achievements" className="relative py-16 sm:py-24 md:py-32">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 w-full">
         <div data-reveal className="flex items-center gap-4 mb-4">
           <Badge variant="outline" className="font-mono text-xs text-accent border-accent/30 bg-accent/5 px-3 py-1">
             03
           </Badge>
           <Separator className="flex-1 bg-border" />
         </div>
-        <h2 data-reveal className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-12">
+        <h2 data-reveal className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 sm:mb-12">
           Achievements
         </h2>
 

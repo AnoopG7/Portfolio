@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -16,10 +17,41 @@ import Achievements from "@/components/sections/Achievements";
 import Projects from "@/components/sections/Projects";
 import Journey from "@/components/sections/Journey";
 import Contact from "@/components/sections/Contact";
+import Hero3DPreview from "@/components/hero/Hero3DPreview";
+import type { HeroPlacement, HeroVariant } from "@/components/hero/Hero3D";
+
+const ProjectDetail = lazy(
+  () => import("@/components/sections/ProjectDetail")
+);
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function App() {
+function HomePage() {
+  // Dev-only selection state for the 3D hero element.
+  // This will be removed once a variant is chosen.
+  const [heroVariant, setHeroVariant] = useState<HeroVariant>("neural");
+  const [heroPlacement, setHeroPlacement] = useState<HeroPlacement>("centerpiece");
+
+  return (
+    <main className="relative z-[1]">
+      <Hero variant={heroVariant} placement={heroPlacement} />
+      <Hero3DPreview
+        selected={heroVariant}
+        placement={heroPlacement}
+        onSelect={setHeroVariant}
+        onPlacementChange={setHeroPlacement}
+      />
+      <About />
+      <Skills />
+      <Achievements />
+      <Projects />
+      <Journey />
+      <Contact />
+    </main>
+  );
+}
+
+function AppShell() {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
@@ -51,16 +83,34 @@ export default function App() {
       <GradientMesh />
       <ScrollProgress />
       <Navbar />
-      <main className="relative z-[1]">
-        <Hero />
-        <About />
-        <Skills />
-        <Achievements />
-        <Projects />
-        <Journey />
-        <Contact />
-      </main>
+      <Suspense
+        fallback={
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="size-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
+          </div>
+        }
+      >
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/project/:slug"
+            element={
+              <main className="relative z-[1]">
+                <ProjectDetail />
+              </main>
+            }
+          />
+        </Routes>
+      </Suspense>
       <Footer />
     </TooltipProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppShell />
+    </BrowserRouter>
   );
 }

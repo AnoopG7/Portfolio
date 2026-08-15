@@ -291,10 +291,36 @@ body::before {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    color: transparent;
+}
+
+/* Ensure gradient works on flex containers with child spans */
+.text-gradient > * {
+    -webkit-text-fill-color: inherit;
 }
 
 /* ── Links ── */
 a {
     color: inherit;
     text-decoration: none;
+}
+
+/* ── Scroll offset for fixed navbar ── */
+html {
+    scroll-padding-top: 80px;
+}
+
+/* ── Safe area for notched devices ── */
+body {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ── Hero floating icons animation ── */
+@keyframes heroFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-16px);
+    }
 }

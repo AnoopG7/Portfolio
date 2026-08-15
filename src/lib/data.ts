@@ -181,21 +181,29 @@ export const ACHIEVEMENTS: Achievement[] = [
 
 // ── Projects ──
 export interface Project {
+  slug: string;
   title: string;
   subtitle: string;
+  description: string;
   tech: string[];
   live: string;
   github?: string;
   demo?: string;
   highlights: string[];
+  featured: boolean;
+  screenshots?: string[];
+  videoUrl?: string;
 }
 
 export const PROJECTS: Project[] = [
   {
+    slug: "ai-lead-gen",
     title: "AI Lead Gen Platform",
     subtitle: "AI-Powered Lead Generation SaaS — WhatsApp Conversational Agent",
+    description: "A production SaaS platform that captures, qualifies, and nurtures real estate leads through an autonomous AI agent on WhatsApp. The system handles the complete lead lifecycle — from Meta Lead Ads capture to intelligent conversation and CRM management.",
     tech: ["FastAPI", "Python", "PostgreSQL 16", "OpenAI", "React", "TypeScript", "Docker", "Meta Graph API"],
     live: "#",
+    featured: true,
     highlights: [
       "Deterministic AI agent orchestration engine using raw OpenAI function calling — 8 custom tools, 10-turn autonomous loop with 429 retry backoff & JSON recovery",
       "Async-first FastAPI backend with SQLAlchemy async ORM, Alembic migrations, custom JWT auth, structlog logging, and comprehensive REST API",
@@ -206,10 +214,13 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    slug: "tutorx",
     title: "TutorX",
     subtitle: "AI-Powered CBSE Tutoring System",
+    description: "A full-stack RAG-based AI tutoring platform for CBSE students (Grades 9-12). Delivers accurate, curriculum-aligned explanations by referencing NCERT textbooks directly, with personalized teaching styles and cross-platform availability.",
     tech: ["React", "TypeScript", "FastAPI", "Python", "Supabase", "Groq LLM", "pgvector"],
     live: "https://anoop-tutorx.vercel.app/",
+    featured: true,
     highlights: [
       "RAG-based tutor that references NCERT textbooks directly — delivering accurate, context-aware explanations aligned with the CBSE curriculum for better exam prep",
       "3-strategy retrieval (pgvector cosine search, LLM query reformulation, chunk enrichment) reducing API calls from 14+ to 1 per query",
@@ -220,10 +231,13 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    slug: "taskflow",
     title: "TaskFlow",
     subtitle: "AI-Powered Proactive Task Management",
+    description: "An AI 'Chief of Staff' that autonomously manages tasks, detects risks, estimates time, and sends proactive reminders via Telegram. Features multi-action AI agents and self-improving time estimation.",
     tech: ["React", "TypeScript", "FastAPI", "Python", "Groq LLM", "Supabase", "Telegram Bot"],
     live: "https://anoop-taskflow.vercel.app/",
+    featured: true,
     highlights: [
       "Multi-action AI agent — single LLM call executes 10 action types atomically",
       "Self-improving time estimation with bias tracking across last 30 completed tasks",
@@ -233,10 +247,13 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    slug: "ai-lms",
     title: "AI-Powered LMS",
     subtitle: "Full-Stack MERN + AI Integration",
+    description: "A learning management system that converts uploaded study materials into AI-generated flashcards and quizzes, with real-time collaborative chat and adaptive difficulty.",
     tech: ["Node.js", "Express 5", "TypeScript", "MongoDB", "React 19", "Socket.io", "Groq AI"],
     live: "https://anoop-lms.vercel.app",
+    featured: false,
     highlights: [
       "AI-driven flashcard & quiz generation from uploaded study materials",
       "Real-time collaborative chat with Socket.io room-based broadcasting",
@@ -244,10 +261,13 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    slug: "sabdasparsh",
     title: "SabdaSparsh",
     subtitle: "Bilingual NLP Literary Platform",
+    description: "A bilingual Hindi & English literary content platform with admin-based content management, secure authentication, and image upload workflows.",
     tech: ["Next.js", "React", "TypeScript", "MongoDB", "NextAuth"],
     live: "https://sabdasparsh.vercel.app",
+    featured: false,
     highlights: [
       "Bilingual (Hindi & English) NLP-driven content platform with admin CMS",
       "Secure auth with NextAuth + draft/publish workflow",
@@ -255,10 +275,13 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    slug: "bms",
     title: "Building Management System",
     subtitle: "Smart Society Management Platform",
+    description: "A full-stack residential society management system with role-based access control, comprehensive REST APIs, and extensive automated testing.",
     tech: ["Node.js", "Express", "TypeScript", "MongoDB", "React 19"],
     live: "https://anoop-bms.vercel.app",
+    featured: false,
     highlights: [
       "Role-based access control (Admin, Owner, Tenant) with smart notifications",
       "57+ RESTful API endpoints with OpenAPI/Swagger docs",
@@ -266,10 +289,13 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    slug: "day-tracker",
     title: "Day Tracker",
     subtitle: "AI-Enhanced Productivity & Analytics App",
+    description: "A daily tracking system for activities, nutrition, and expenses with AI-powered nutrition estimation and interactive analytics dashboards.",
     tech: ["Node.js", "Express 5", "TypeScript", "MongoDB", "React 19", "Zustand"],
     live: "https://anoop-day-tracker.vercel.app",
+    featured: false,
     highlights: [
       "Daily activity, nutrition, expense tracking with analytics",
       "AI-powered nutrition estimation via Groq (LLaMA model)",
