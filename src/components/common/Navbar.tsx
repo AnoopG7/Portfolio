@@ -2,10 +2,27 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/data";
 import { Button } from "@/components/ui/button";
+import { Sun, Moon } from "lucide-react";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isDark, setIsDark] = useState(() =>
+    typeof document !== "undefined" && document.documentElement.classList.contains("dark")
+  );
+
+  const toggleTheme = () => {
+    setIsDark((prev) => {
+      const next = !prev;
+      document.documentElement.classList.toggle("dark", next);
+      try {
+        localStorage.setItem("theme", next ? "dark" : "light");
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -30,8 +47,8 @@ export default function Navbar() {
         className={cn(
           "fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 rounded-full px-3 py-1.5",
           scrolled
-            ? "bg-white/[0.07] backdrop-blur-xl border border-white/[0.1] shadow-lg shadow-black/20"
-            : "bg-white/[0.04] backdrop-blur-md border border-transparent"
+            ? "bg-background/70 backdrop-blur-xl border border-border shadow-lg shadow-black/5"
+            : "bg-background/40 backdrop-blur-md border border-transparent"
         )}
       >
         <div className="flex items-center gap-1.5 px-4">
@@ -49,13 +66,13 @@ export default function Navbar() {
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map((link) => (
+            {NAV_LINKS.filter((link) => link.href !== "#contact").map((link) => (
               <Button
                 key={link.href}
                 asChild
                 variant="ghost"
                 size="sm"
-                className="text-muted-foreground hover:text-foreground hover:bg-white/5 text-[13px] font-medium tracking-wider uppercase rounded-full h-9 px-4"
+                className="text-muted-foreground hover:text-foreground hover:bg-foreground/5 text-[13px] font-medium tracking-wider uppercase rounded-full h-9 px-4"
               >
                 <a href={link.href} onClick={(e) => handleNavClick(e, link.href)}>
                   {link.label}
@@ -65,9 +82,20 @@ export default function Navbar() {
             <Button
               asChild
               size="sm"
-              className="ml-2 bg-accent text-accent-foreground hover:bg-accent/90 font-semibold text-[13px] rounded-full h-9 px-5"
+              className="ml-1 bg-accent text-accent-foreground hover:bg-accent/90 font-semibold text-[13px] rounded-full h-9 px-5"
             >
-              <a href="mailto:anoopgfortech@gmail.com">Let's Talk</a>
+              <a href="#contact" onClick={(e) => handleNavClick(e, "#contact")}>
+                Contact
+              </a>
+            </Button>
+            <Button
+              onClick={toggleTheme}
+              variant="outline"
+              size="icon"
+              aria-label="Toggle theme"
+              className="ml-1 rounded-full h-9 w-9 border-border text-muted-foreground hover:text-foreground hover:border-accent/40 hover:bg-accent/5"
+            >
+              {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
             </Button>
           </div>
 
@@ -118,19 +146,24 @@ export default function Navbar() {
             {link.label}
           </a>
         ))}
-        <Button
-          asChild
-          size="lg"
-          className="mt-4 bg-accent text-accent-foreground hover:bg-accent/90 font-semibold rounded-full"
-          style={{
-            transitionDelay: mobileOpen ? `${NAV_LINKS.length * 75}ms` : "0ms",
-            opacity: mobileOpen ? 1 : 0,
-            transform: mobileOpen ? "translateY(0)" : "translateY(20px)",
-            transition: "opacity 0.4s, transform 0.4s, color 0.2s",
-          }}
-        >
-          <a href="mailto:anoopgfortech@gmail.com">Let's Talk</a>
-        </Button>
+        <div className="flex items-center gap-4">
+          <Button
+            onClick={toggleTheme}
+            variant="outline"
+            size="lg"
+            className="rounded-full border-border text-foreground"
+            aria-label="Toggle theme"
+            style={{
+              transitionDelay: mobileOpen ? `${NAV_LINKS.length * 75}ms` : "0ms",
+              opacity: mobileOpen ? 1 : 0,
+              transform: mobileOpen ? "translateY(0)" : "translateY(20px)",
+              transition: "opacity 0.4s, transform 0.4s, color 0.2s",
+            }}
+          >
+            {isDark ? <Sun className="size-4 mr-2" /> : <Moon className="size-4 mr-2" />}
+            {isDark ? "Light Mode" : "Dark Mode"}
+          </Button>
+        </div>
       </div>
     </>
   );

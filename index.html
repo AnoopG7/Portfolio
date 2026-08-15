@@ -38,8 +38,19 @@
     <meta name="twitter:creator" content="@itsan00p" />
 
     <!-- Theme -->
-    <meta name="theme-color" content="#0a0a0a" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#FFF8F2" />
+    <meta name="color-scheme" content="light" />
+
+    <!-- Restore saved theme before paint (default: light) -->
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
 
     <!-- Preconnect for perf -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

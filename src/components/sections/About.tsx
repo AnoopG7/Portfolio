@@ -1,47 +1,47 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PERSONAL, STATS } from "@/lib/data";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { useSectionPin } from "@/hooks/useSectionPin";
 import CountUp from "@/components/reactbits/CountUp";
 
-/** Parse "10+", "9.5", "999+", "200+" into { number, suffix } */
+gsap.registerPlugin(ScrollTrigger);
+
 function parseStat(value: string) {
   const match = value.match(/^([\d.]+)(.*)$/);
   if (!match) return { number: 0, suffix: value };
   return { number: parseFloat(match[1]), suffix: match[2] };
 }
 
-/** Watches computed opacity — returns true once useSectionPin reveals element */
-function useOpacityVisible(ref: React.RefObject<HTMLElement | null>) {
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    if (visible) return;
-    let raf: number;
-    const check = () => {
-      if (ref.current && parseFloat(getComputedStyle(ref.current).opacity) > 0) {
-        setVisible(true);
-        return;
-      }
-      raf = requestAnimationFrame(check);
-    };
-    raf = requestAnimationFrame(check);
-    return () => cancelAnimationFrame(raf);
-  }, [ref, visible]);
-  return visible;
-}
-
-/** Individual stat card with its own visibility-gated CountUp */
 function StatCard({ value, label }: { value: string; label: string }) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const isVisible = useOpacityVisible(cardRef);
+  const [visible, setVisible] = useState(false);
   const { number, suffix } = parseStat(value);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <Card
       ref={cardRef}
-      data-pin-item
+      data-reveal
       className="group border-border bg-card/50 hover:border-accent/30 hover:bg-card transition-all duration-300 py-4"
     >
       <CardContent className="p-0 px-5">
@@ -50,7 +50,7 @@ function StatCard({ value, label }: { value: string; label: string }) {
             to={number}
             from={0}
             duration={2.5}
-            startWhen={isVisible}
+            startWhen={visible}
             className="tabular-nums"
           />
           {suffix}
@@ -64,64 +64,83 @@ function StatCard({ value, label }: { value: string; label: string }) {
 }
 
 export default function About() {
-  const { containerRef, viewportRef } = useSectionPin({
-    duration: 1.2,
-    gap: 0.5,
-    hold: 0.6,
-  });
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const ctx = gsap.context(() => {
+      const items = section.querySelectorAll<HTMLElement>("[data-reveal]");
+
+      gsap.set(items, { opacity: 0, y: 50, scale: 0.97, filter: "blur(3px)" });
+
+      items.forEach((item) => {
+        gsap.to(item, {
+          scrollTrigger: {
+            trigger: item,
+            start: "top 85%",
+            once: true,
+          },
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: "blur(0px)",
+          duration: 0.8,
+          ease: "power3.out",
+        });
+      });
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <div ref={containerRef} id="about" style={{ height: "350vh" }}>
-      <div ref={viewportRef} className="h-screen w-full overflow-hidden">
-        <div data-pin-content className="max-w-6xl mx-auto px-6 md:px-10 w-full pt-32">
-          {/* Section header */}
-          <div data-pin-item className="flex items-center gap-4 mb-4">
-            <Badge variant="outline" className="font-mono text-xs text-accent border-accent/30 bg-accent/5 px-3 py-1">
-              01
-            </Badge>
-            <Separator className="flex-1 bg-border" />
-          </div>
-          <h2 data-pin-item className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-16">
-            About me
-          </h2>
+    <section ref={sectionRef} id="about" className="relative py-24 md:py-32">
+      <div className="max-w-6xl mx-auto px-6 md:px-10 w-full">
+        <div data-reveal className="flex items-center gap-4 mb-4">
+          <Badge variant="outline" className="font-mono text-xs text-accent border-accent/30 bg-accent/5 px-3 py-1">
+            01
+          </Badge>
+          <Separator className="flex-1 bg-border" />
+        </div>
+        <h2 data-reveal className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-16">
+          About me
+        </h2>
 
-          <div className="grid md:grid-cols-5 gap-12 lg:gap-16 items-start">
-            {/* Headshot */}
-            <div data-pin-item className="md:col-span-2 flex justify-center md:justify-start">
-              <Card className="w-64 h-72 md:w-72 md:h-80 border-border bg-card overflow-hidden group hover:border-accent/30 transition-colors duration-500">
-                <CardContent className="flex items-center justify-center h-full p-0">
-                  <div className="w-20 h-20 mx-auto rounded-full bg-secondary flex items-center justify-center ring-2 ring-accent/20">
-                    <span className="font-display text-3xl font-bold text-accent">A</span>
-                  </div>
-                </CardContent>
-              </Card>
+        <div className="grid md:grid-cols-5 gap-12 lg:gap-16 items-start">
+          <div data-reveal className="md:col-span-2 flex justify-center md:justify-start">
+            <Card className="w-64 h-72 md:w-72 md:h-80 border-border bg-card overflow-hidden group hover:border-accent/30 transition-colors duration-500">
+              <CardContent className="flex items-center justify-center h-full p-0">
+                <div className="w-20 h-20 mx-auto rounded-full bg-secondary flex items-center justify-center ring-2 ring-accent/20">
+                  <span className="font-display text-3xl font-bold text-accent">A</span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="md:col-span-3 space-y-8">
+            <div data-reveal className="space-y-4">
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                {PERSONAL.bio}
+              </p>
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                Pursuing{" "}
+                <span className="text-foreground font-medium">{PERSONAL.education.degree}</span> at{" "}
+                <span className="text-foreground font-medium">{PERSONAL.education.university}</span>,
+                graduating in{" "}
+                <span className="text-accent font-semibold">{PERSONAL.education.graduation}</span>.
+              </p>
             </div>
 
-            {/* Bio + Stats */}
-            <div className="md:col-span-3 space-y-8">
-              <div data-pin-item className="space-y-4">
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  {PERSONAL.bio}
-                </p>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  Pursuing{" "}
-                  <span className="text-foreground font-medium">{PERSONAL.education.degree}</span> at{" "}
-                  <span className="text-foreground font-medium">{PERSONAL.education.university}</span>,
-                  graduating in{" "}
-                  <span className="text-accent font-semibold">{PERSONAL.education.graduation}</span>.
-                </p>
-              </div>
-
-              {/* Stats — each card detects its own visibility for CountUp */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                {STATS.map((stat) => (
-                  <StatCard key={stat.label} value={stat.value} label={stat.label} />
-                ))}
-              </div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              {STATS.map((stat) => (
+                <StatCard key={stat.label} value={stat.value} label={stat.label} />
+              ))}
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

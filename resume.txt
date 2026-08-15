@@ -10,7 +10,7 @@ AI/ML engineer and full-stack developer building intelligent, data-driven applic
 EDUCATION
 Bachelor of Technology (B.Tech) in Computer Science Engineering
 ITM Skills University, Navi Mumbai, Maharashtra
-Graduation: 2028 	| 	CGPA: ~9.5 SKILLS
+Graduation: 2028 	| 	CGPA: ~9.55 SKILLS
 
 Languages: Python, TypeScript, JavaScript, C++, Java
 AI/ML: OpenAI, NumPy, Pandas, Scikit-learn, TensorFlow, PyTorch, LangChain, Ollama, Groq LLM

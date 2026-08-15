@@ -23,12 +23,12 @@ export default function GradientMesh() {
     resize();
     window.addEventListener("resize", resize);
 
-    // Blob definitions — dark, muted tones that don't overwhelm
+    // Blob definitions — soft warm tones that complement the light cream background
     const blobs = [
-      { x: 0.2, y: 0.3, r: 350, color: "rgba(232, 168, 56, 0.03)", vx: 0.00008, vy: 0.00012, phase: 0 },
-      { x: 0.7, y: 0.2, r: 400, color: "rgba(56, 100, 180, 0.025)", vx: -0.00006, vy: 0.0001, phase: 1.5 },
-      { x: 0.5, y: 0.7, r: 300, color: "rgba(232, 168, 56, 0.02)", vx: 0.00007, vy: -0.00009, phase: 3 },
-      { x: 0.8, y: 0.8, r: 280, color: "rgba(120, 60, 180, 0.02)", vx: -0.00005, vy: -0.00007, phase: 4.5 },
+      { x: 0.2, y: 0.3, r: 350, color: "rgba(232, 168, 56, 0.07)", vx: 0.00008, vy: 0.00012, phase: 0 },
+      { x: 0.7, y: 0.2, r: 400, color: "rgba(217, 126, 22, 0.05)", vx: -0.00006, vy: 0.0001, phase: 1.5 },
+      { x: 0.5, y: 0.7, r: 300, color: "rgba(184, 85, 42, 0.05)", vx: 0.00007, vy: -0.00009, phase: 3 },
+      { x: 0.8, y: 0.8, r: 280, color: "rgba(201, 154, 62, 0.05)", vx: -0.00005, vy: -0.00007, phase: 4.5 },
     ];
 
     const animate = (time: number) => {

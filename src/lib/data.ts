@@ -2,8 +2,8 @@
 export const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
+  { label: "Achievements", href: "#achievements" },
   { label: "Projects", href: "#projects" },
-  { label: "Journey", href: "#journey" },
   { label: "Contact", href: "#contact" },
 ] as const;
 
@@ -17,10 +17,10 @@ export const PERSONAL = {
   email: "anoopgfortech@gmail.com",
   phone: "+91-7039386723",
   education: {
-    degree: "B.Tech in Computer Science Engineering",
+    degree: "B.Tech in Computer Science Engineering (AI & ML Specialization)",
     university: "ITM Skills University, Navi Mumbai",
     graduation: "2028",
-    cgpa: "9.5",
+    cgpa: "9.55",
   },
   socials: {
     github: "https://github.com/AnoopG7",
@@ -35,11 +35,9 @@ export const HERO = {
   greeting: "Hi, I'm Anoop",
   headingLine1: "I design & build",
   headingLine2: "AI-powered systems",
-  status: "Open to freelance & internships",
+  status: "Open to AI/ML internships & freelance",
   ctaHeading: "Let's build something amazing",
-  ctaSubtitle: "AI & full-stack developer — Python, MERN, and ML",
-  projectCount: "15+",
-  projectCountLabel: "AI & Full-Stack Apps",
+  ctaSubtitle: "AI & full-stack developer — Python, FastAPI, and the MERN stack",
   subtitlePhrases: [
     "Building AI-powered applications with Python & MERN",
     "Turning data into intelligent, production-ready systems",
@@ -47,13 +45,35 @@ export const HERO = {
   ],
 } as const;
 
-// ── Currently Exploring ──
-export const CURRENTLY_EXPLORING = "Artificial Intelligence, Machine Learning & Data Science" as const;
+// ── Hero Focus Areas ──
+export const FOCUS_AREAS = [
+  "RAG pipelines",
+  "AI agents",
+  "Context-aware agents",
+  "Full-stack",
+] as const;
+
+// ── Hero Impact Points ──
+export interface ImpactPoint {
+  pre: string;
+  strong: string;
+  post?: string;
+}
+
+export const HERO_METRICS: ImpactPoint[] = [
+  { pre: "Cut AI running costs by", strong: "60%" },
+  { pre: "Use", strong: "14×", post: "fewer AI calls per answer" },
+  { pre: "Ground AI answers in", strong: "real data", post: "to stop hallucinations" },
+  { pre: "Managed ", strong: "Evals", post: "without compromising production" },
+] as const;
+
+// ── Current Focus ──
+export const CURRENTLY_EXPLORING = "Artificial Intelligence, Machine Learning & building production-ready AI systems" as const;
 
 // ── Stats ──
 export const STATS = [
   { value: "15+", label: "AI & Full-Stack Projects" },
-  { value: "9.5", label: "CGPA" },
+  { value: "9.55", label: "CGPA" },
   { value: "10+", label: "AI-Powered Apps" },
   { value: "5+", label: "ML Models Built" },
 ] as const;
@@ -147,6 +167,18 @@ export const SKILLS: SkillCategory[] = [
   },
 ];
 
+// ── Achievements ──
+export interface Achievement {
+  title: string;
+  tag: string;
+}
+
+export const ACHIEVEMENTS: Achievement[] = [
+  { title: "Academic Excellence Award", tag: "Academic" },
+  { title: "AWS Certificate", tag: "AWS Cloud" },
+  { title: "Machine Learning Specialization", tag: "DeepLearning.AI" },
+];
+
 // ── Projects ──
 export interface Project {
   title: string;
@@ -154,6 +186,7 @@ export interface Project {
   tech: string[];
   live: string;
   github?: string;
+  demo?: string;
   highlights: string[];
 }
 
@@ -275,7 +308,7 @@ export const JOURNEY: Milestone[] = [
   },
   {
     year: "Next →",
-    title: "What's coming...",
-    description: "More projects, deeper into AI/ML, and building things that matter.",
+    title: "What's next...",
+    description: "Building more RAG pipelines, autonomous agents, and AI-powered apps that solve real problems.",
   },
 ];

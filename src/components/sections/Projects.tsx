@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription, 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Play } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,16 +24,18 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <CardDescription className="mt-1">{project.subtitle}</CardDescription>
         </div>
         <CardAction>
-          <Button
-            asChild
-            variant="outline"
-            size="icon"
-            className="rounded-full border-border text-muted-foreground hover:border-accent hover:text-accent hover:bg-accent/10"
-          >
-            <a href={project.live} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.title}`}>
-              <ExternalLink className="size-4" />
-            </a>
-          </Button>
+          {project.live && project.live !== "#" ? (
+            <Button
+              asChild
+              variant="outline"
+              size="icon"
+              className="rounded-full border-border text-muted-foreground hover:border-accent hover:text-accent hover:bg-accent/10"
+            >
+              <a href={project.live} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.title}`}>
+                <ExternalLink className="size-4" />
+              </a>
+            </Button>
+          ) : null}
         </CardAction>
       </CardHeader>
 
@@ -65,7 +67,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <Button
             asChild
             size="sm"
-            className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold shadow-[0_0_15px_rgba(232,168,56,0.1)] hover:shadow-[0_0_25px_rgba(232,168,56,0.2)] transition-all duration-300"
+            className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold shadow-[0_0_15px_rgba(217,126,22,0.2)] hover:shadow-[0_0_25px_rgba(217,126,22,0.3)] transition-all duration-300"
           >
             <a href={project.live} target="_blank" rel="noopener noreferrer">
               Live Demo
@@ -79,6 +81,19 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             className="bg-accent/40 text-accent-foreground/60 font-semibold cursor-not-allowed"
           >
             Private Project
+          </Button>
+        )}
+        {project.demo && (
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="border-border text-muted-foreground hover:border-accent/40 hover:text-accent"
+          >
+            <a href={project.demo} target="_blank" rel="noopener noreferrer">
+              Demo Video
+              <Play className="ml-1 size-3.5" />
+            </a>
           </Button>
         )}
         {project.github && (
@@ -108,24 +123,22 @@ export default function Projects() {
     const ctx = gsap.context(() => {
       const cards = section.querySelectorAll<HTMLElement>("[data-reveal]");
 
+      gsap.set(cards, { opacity: 0, y: 60, scale: 0.95, filter: "blur(4px)" });
+
       cards.forEach((card) => {
-        gsap.fromTo(
-          card,
-          { opacity: 0, y: 60, scale: 0.95, filter: "blur(4px)" },
-          {
-            scrollTrigger: {
-              trigger: card,
-              start: "top 85%",
-              end: "top 40%",
-              scrub: 1,
-            },
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            filter: "blur(0px)",
-            ease: "power3.out",
+        gsap.to(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            once: true,
           },
-        );
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: "blur(0px)",
+          duration: 0.8,
+          ease: "power3.out",
+        });
       });
     }, section);
 
@@ -137,7 +150,7 @@ export default function Projects() {
       <div className="max-w-6xl mx-auto px-6 md:px-10 w-full">
         <div className="flex items-center gap-4 mb-4">
           <Badge variant="outline" className="font-mono text-xs text-accent border-accent/30 bg-accent/5 px-3 py-1">
-            03
+            04
           </Badge>
           <Separator className="flex-1 bg-border" />
         </div>
