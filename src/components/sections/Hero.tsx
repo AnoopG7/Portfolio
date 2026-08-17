@@ -1,29 +1,26 @@
 import { lazy, Suspense, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { HERO } from "@/lib/data";
 import { ArrowRight } from "lucide-react";
 
-import CursorGlow from "@/components/hero/CursorGlow";
-import FloatingIcons from "@/components/hero/FloatingIcons";
-import type { HeroPlacement, HeroVariant } from "@/components/hero/Hero3D";
 
-// Lazy-loaded so three.js ships in its own async chunk, not the main bundle.
-const Hero3D = lazy(() => import("@/components/hero/Hero3D"));
+// Lazy-load so three.js ships in its own async chunk
+const NeuralNetwork = lazy(() => import("@/components/hero/NeuralNetwork"));
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Split text into word groups, each word containing individual character spans.
  * This preserves natural word-wrapping while enabling per-character animation.
+ *
+ * When `gradient` is true the `.text-gradient` class is placed on every character
+ * instead of the parent block.  This lets the per-character stagger reveal work
+ * correctly — a parent-level background-clip:text would paint through still-hidden
+ * characters and make the line appear solid immediately.
  */
 function splitIntoWords(text: string, charClass: string, gradient = false) {
-  // When `gradient` is true, the gradient must live on each character
-  // (not the parent block) so the per-character stagger reveal works.
-  // A parent-level background-clip:text paints the whole gradient through
-  // the still-hidden characters, making the line appear solid instead.
   const charBaseClass = gradient ? `${charClass} text-gradient` : charClass;
 
   return text.split(" ").map((word, wi) => (
@@ -37,7 +34,6 @@ function splitIntoWords(text: string, charClass: string, gradient = false) {
           {char}
         </span>
       ))}
-      {/* Whitespace between words — regular space so wrapping works */}
       {wi < text.split(" ").length - 1 && (
         <span className={`${charBaseClass} inline-block`}>&nbsp;</span>
       )}
@@ -45,13 +41,7 @@ function splitIntoWords(text: string, charClass: string, gradient = false) {
   ));
 }
 
-export default function Hero({
-  variant,
-  placement,
-}: {
-  variant: HeroVariant;
-  placement: HeroPlacement;
-}) {
+export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -59,11 +49,10 @@ export default function Hero({
     if (!container) return;
 
     const ctx = gsap.context(() => {
-      // ── Character-level stagger animation for headings ──
       const heading1Chars = container.querySelectorAll<HTMLElement>(".hero-char-1");
       const heading2Chars = container.querySelectorAll<HTMLElement>(".hero-char-2");
 
-      gsap.set([".hero-greeting", ".hero-ctas", ".hero-status"], {
+      gsap.set([".hero-greeting", ".hero-ctas"], {
         opacity: 0,
         y: 30,
       });
@@ -80,7 +69,7 @@ export default function Hero({
         ease: "power2.out",
       });
 
-      // Heading line 1 — character stagger
+      // Heading line 1
       tl.to(
         heading1Chars,
         {
@@ -95,7 +84,7 @@ export default function Hero({
         "-=0.2"
       );
 
-      // Heading line 2 — character stagger
+      // Heading line 2
       tl.to(
         heading2Chars,
         {
@@ -110,16 +99,11 @@ export default function Hero({
         "-=0.25"
       );
 
-      // Status + CTAs
-      tl.to(
-        ".hero-status",
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
-        "-=0.1"
-      );
+      // CTAs
       tl.to(
         ".hero-ctas",
         { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
-        "-=0.3"
+        "-=0.1"
       );
     }, container);
 
@@ -137,18 +121,11 @@ export default function Hero({
   return (
     <div ref={containerRef} id="hero" className="relative">
       <section className="relative min-h-screen w-full overflow-hidden flex items-center justify-center pt-20 pb-8">
-        {/* Cursor glow effect */}
-        <CursorGlow />
 
-        {/* Floating tech icons */}
-        <FloatingIcons />
-
-        {/* 3D background element (behind content) */}
-        {placement === "background" && (
-          <Suspense fallback={null}>
-            <Hero3D variant={variant} placement="background" />
-          </Suspense>
-        )}
+        {/* 3D Neural Network — lazy-loaded */}
+        <Suspense fallback={null}>
+          <NeuralNetwork />
+        </Suspense>
 
         {/* Ambient glow orbs */}
         <div className="absolute top-1/3 left-1/4 w-[250px] sm:w-[400px] md:w-[500px] h-[250px] sm:h-[400px] md:h-[500px] rounded-full bg-accent/[0.06] blur-[100px] md:blur-[150px] pointer-events-none" />
@@ -160,41 +137,15 @@ export default function Hero({
             {HERO.greeting}
           </p>
 
-          {/* Heading with character stagger — word groups for proper wrapping */}
+          {/* Heading — word-grouped char stagger */}
           <h1 className="font-display font-extrabold leading-[1.1] tracking-tight">
             <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] text-foreground mb-1 md:mb-2 flex flex-wrap justify-center">
               {splitIntoWords(HERO.headingLine1, "hero-char-1")}
             </span>
-            {/*
-              Gradient line: the gradient is applied per character (via the
-              `gradient` flag) so the per-character stagger reveal works.
-              Keep text-align:center with inline children for wrapping.
-            */}
             <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] text-center">
               {splitIntoWords(HERO.headingLine2, "hero-char-2", true)}
             </span>
           </h1>
-
-          {/* 3D centerpiece element (in content flow, below heading) */}
-          {placement === "centerpiece" && (
-            <Suspense fallback={null}>
-              <Hero3D variant={variant} placement="centerpiece" />
-            </Suspense>
-          )}
-
-          {/* Status badge */}
-          <div className="hero-status mt-5 md:mt-7 flex justify-center">
-            <Badge
-              variant="outline"
-              className="px-3 py-1.5 text-xs bg-card/60 border-border text-muted-foreground"
-            >
-              <span className="relative flex h-2 w-2 mr-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-              </span>
-              {HERO.status}
-            </Badge>
-          </div>
 
           {/* CTAs */}
           <div className="hero-ctas flex flex-col sm:flex-row items-center justify-center gap-3 mt-4 md:mt-5">

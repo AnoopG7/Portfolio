@@ -53,7 +53,7 @@ export default function Achievements() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 w-full">
         <div data-reveal className="flex items-center gap-4 mb-4">
           <Badge variant="outline" className="font-mono text-xs text-accent border-accent/30 bg-accent/5 px-3 py-1">
-            03
+            04
           </Badge>
           <Separator className="flex-1 bg-border" />
         </div>

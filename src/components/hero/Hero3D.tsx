@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Line } from "@react-three/drei";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Float, Line, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import type { Line2, LineMaterial } from "three-stdlib";
 import { cn } from "@/lib/utils";
@@ -66,6 +66,7 @@ function Pulse({
   offset,
   speed,
   accent,
+  radius,
   reduced,
 }: {
   a: THREE.Vector3;
@@ -73,6 +74,7 @@ function Pulse({
   offset: number;
   speed: number;
   accent: string;
+  radius?: number;
   reduced: boolean;
 }) {
   const ref = useRef<THREE.Mesh>(null);
@@ -85,13 +87,60 @@ function Pulse({
   });
   return (
     <mesh ref={ref}>
-      <sphereGeometry args={[0.04, 12, 12]} />
-      <meshBasicMaterial color={accent} />
+      <sphereGeometry args={[radius ?? 0.05, 14, 14]} />
+      <meshBasicMaterial
+        color={accent}
+        transparent
+        opacity={0.95}
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+      />
     </mesh>
   );
 }
 
 // ── Variant: neural network ──
+function NeuralNode({
+  position,
+  radius,
+  accent,
+  phase,
+  reduced,
+}: {
+  position: THREE.Vector3;
+  radius: number;
+  accent: string;
+  phase: number;
+  reduced: boolean;
+}) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const matRef = useRef<THREE.MeshStandardMaterial>(null);
+
+  useFrame(({ clock }) => {
+    const m = meshRef.current;
+    const mat = matRef.current;
+    if (!m || !mat) return;
+    const t = reduced ? 0 : clock.elapsedTime;
+    const wave = 0.5 + 0.5 * Math.sin(t * 1.6 + phase);
+    m.scale.setScalar(1 + wave * 0.12);
+    mat.emissiveIntensity = 0.18 + wave * 0.3;
+  });
+
+  return (
+    <mesh ref={meshRef} position={position}>
+      <sphereGeometry args={[radius, 28, 28]} />
+      <meshStandardMaterial
+        ref={matRef}
+        color={accent}
+        emissive={accent}
+        emissiveIntensity={0.18}
+        roughness={0.25}
+        metalness={0.15}
+      />
+    </mesh>
+  );
+}
+
 function NeuralNet({
   accent,
   dim,
@@ -101,21 +150,27 @@ function NeuralNet({
   dim: string;
   reduced: boolean;
 }) {
-  const layers = useMemo(() => [3, 4, 4, 3], []);
+  const layers = useMemo(() => [14, 26, 26, 14], []);
 
   const nodes = useMemo(() => {
-    const arr: { pos: THREE.Vector3 }[] = [];
+    const arr: { pos: THREE.Vector3; radius: number }[] = [];
     layers.forEach((count, li) => {
+      const isOutput = li === layers.length - 1;
       for (let j = 0; j < count; j++) {
-        const x = (li - (layers.length - 1) / 2) * 1.55;
-        const y = (j - (count - 1) / 2) * 0.8;
-        const z = (mulberry(li * 10 + j) - 0.5) * 0.35;
-        arr.push({ pos: new THREE.Vector3(x, y, z) });
+        const x = (li - (layers.length - 1) / 2) * 0.9;
+        const y = (j - (count - 1) / 2) * 0.13;
+        const z = (mulberry(li * 10 + j) - 0.5) * 0.5;
+        arr.push({
+          pos: new THREE.Vector3(x, y, z),
+          radius: isOutput ? 0.05 : 0.035,
+        });
       }
     });
     return arr;
   }, [layers]);
 
+  // Fully connected between layers — every neuron links to every neuron in the
+  // next layer. 14×26 + 26×26 + 26×14 = ~1400 thin connections = dense NN web.
   const edges = useMemo(() => {
     const list: { a: THREE.Vector3; b: THREE.Vector3 }[] = [];
     let idx = 0;
@@ -134,6 +189,20 @@ function NeuralNet({
     return list;
   }, [layers, nodes]);
 
+  // All edges in one LineSegments geometry — a single draw call.
+  const edgePositions = useMemo(() => {
+    const pts = new Float32Array(edges.length * 6);
+    edges.forEach((e, i) => {
+      pts[i * 6] = e.a.x;
+      pts[i * 6 + 1] = e.a.y;
+      pts[i * 6 + 2] = e.a.z;
+      pts[i * 6 + 3] = e.b.x;
+      pts[i * 6 + 4] = e.b.y;
+      pts[i * 6 + 5] = e.b.z;
+    });
+    return pts;
+  }, [edges]);
+
   const pulses = useMemo(() => {
     const arr: {
       a: THREE.Vector3;
@@ -141,13 +210,13 @@ function NeuralNet({
       offset: number;
       speed: number;
     }[] = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 26; i++) {
       const e = edges[Math.floor(mulberry(i + 99) * edges.length)];
       arr.push({
         a: e.a,
         b: e.b,
         offset: mulberry(i * 3 + 7),
-        speed: 0.4 + mulberry(i + 5) * 0.5,
+        speed: 0.45 + mulberry(i + 5) * 0.55,
       });
     }
     return arr;
@@ -155,26 +224,20 @@ function NeuralNet({
 
   return (
     <group>
+      <lineSegments>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[edgePositions, 3]} />
+        </bufferGeometry>
+        <lineBasicMaterial color={dim} transparent opacity={0.06} />
+      </lineSegments>
       {nodes.map((n, i) => (
-        <mesh key={i} position={n.pos}>
-          <sphereGeometry args={[0.1, 20, 20]} />
-          <meshStandardMaterial
-            color={accent}
-            emissive={accent}
-            emissiveIntensity={0.35}
-            roughness={0.3}
-            metalness={0.15}
-          />
-        </mesh>
-      ))}
-      {edges.map((e, i) => (
-        <Line
+        <NeuralNode
           key={i}
-          points={[e.a, e.b]}
-          color={dim}
-          lineWidth={1}
-          transparent
-          opacity={0.45}
+          position={n.pos}
+          radius={n.radius}
+          accent={accent}
+          phase={mulberry(i + 31) * Math.PI * 2}
+          reduced={reduced}
         />
       ))}
       {pulses.map((p, i) => (
@@ -185,6 +248,7 @@ function NeuralNet({
           offset={p.offset}
           speed={p.speed}
           accent={accent}
+          radius={0.05}
           reduced={reduced}
         />
       ))}
@@ -193,61 +257,151 @@ function NeuralNet({
 }
 
 // ── Variant: RAG knowledge graph ──
-function HaloRing({ accent, reduced }: { accent: string; reduced: boolean }) {
+// Shared cycle rate — keeps edge glow, retrieval pulses and node brightness in sync.
+const GRAPH_CYCLE = 0.16;
+
+function QueryNode({ accent, reduced }: { accent: string; reduced: boolean }) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const matRef = useRef<THREE.MeshStandardMaterial>(null);
+
+  useFrame(({ clock }) => {
+    const m = meshRef.current;
+    const mat = matRef.current;
+    if (!m || !mat) return;
+    const t = reduced ? 0 : clock.elapsedTime;
+    const pulse = 0.5 + 0.5 * Math.sin(t * 2);
+    mat.emissiveIntensity = 0.5 + pulse * 0.5;
+    m.scale.setScalar(1 + pulse * 0.06);
+  });
+
+  return (
+    <group>
+      {/* Soft halo around the query node */}
+      <mesh>
+        <sphereGeometry args={[0.24, 24, 24]} />
+        <meshBasicMaterial color={accent} transparent opacity={0.12} />
+      </mesh>
+      <mesh ref={meshRef}>
+        <sphereGeometry args={[0.16, 28, 28]} />
+        <meshStandardMaterial
+          ref={matRef}
+          color={accent}
+          emissive={accent}
+          emissiveIntensity={0.6}
+          roughness={0.2}
+          metalness={0.1}
+        />
+      </mesh>
+    </group>
+  );
+}
+
+function SonarRing({
+  accent,
+  reduced,
+  phase,
+}: {
+  accent: string;
+  reduced: boolean;
+  phase: number;
+}) {
   const ref = useRef<THREE.Mesh>(null);
+
   useFrame(({ clock }) => {
     const m = ref.current;
-    if (!m) return;
-    const t = reduced ? 0 : clock.elapsedTime;
-    m.scale.setScalar(1 + Math.sin(t * 1.5) * 0.1);
+    if (!m || reduced) return;
+    const cycle = (clock.elapsedTime * 0.3 + phase) % 1;
+    m.scale.setScalar(0.9 + cycle * 2.6);
     const mat = m.material as THREE.MeshBasicMaterial;
-    mat.opacity = 0.35 + (reduced ? 0 : Math.sin(t * 1.5) * 0.2);
+    mat.opacity = (1 - cycle) * 0.45;
   });
+
   return (
     <mesh ref={ref} rotation={[Math.PI / 2, 0, 0]}>
-      <ringGeometry args={[0.28, 0.34, 48]} />
+      <ringGeometry args={[0.3, 0.36, 48]} />
       <meshBasicMaterial
         color={accent}
         transparent
-        opacity={0.4}
+        opacity={0.45}
         side={THREE.DoubleSide}
       />
     </mesh>
   );
 }
 
-function GraphEdge({
+function SatelliteNode({
+  position,
+  radius,
+  accent,
+  offset,
+  reduced,
+}: {
+  position: THREE.Vector3;
+  radius: number;
+  accent: string;
+  offset: number;
+  reduced: boolean;
+}) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const matRef = useRef<THREE.MeshStandardMaterial>(null);
+
+  useFrame(({ clock }) => {
+    const m = meshRef.current;
+    const mat = matRef.current;
+    if (!m || !mat) return;
+    const t = reduced ? 0.3 : (clock.elapsedTime * GRAPH_CYCLE + offset) % 1;
+    const glow = Math.sin(t * Math.PI);
+    mat.emissiveIntensity = 0.12 + glow * 0.75;
+    m.scale.setScalar(1 + glow * 0.3);
+  });
+
+  return (
+    <mesh ref={meshRef} position={position}>
+      <sphereGeometry args={[radius, 20, 20]} />
+      <meshStandardMaterial
+        ref={matRef}
+        color={accent}
+        emissive={accent}
+        emissiveIntensity={0.12}
+        roughness={0.3}
+        metalness={0.1}
+      />
+    </mesh>
+  );
+}
+
+function RetrievalEdge({
   a,
   b,
   accent,
-  dim,
   offset,
   reduced,
 }: {
   a: THREE.Vector3;
   b: THREE.Vector3;
   accent: string;
-  dim: string;
   offset: number;
   reduced: boolean;
 }) {
   const ref = useRef<Line2 | null>(null);
+
   useFrame(({ clock }) => {
     const mat = ref.current?.material as LineMaterial | undefined;
     if (!mat) return;
-    const t = reduced ? 0.5 : (clock.elapsedTime * 0.22 + offset) % 1;
-    const glow = 0.5 + 0.5 * Math.sin(t * Math.PI * 2);
-    mat.opacity = 0.2 + glow * 0.8;
+    const t = reduced ? 0.3 : (clock.elapsedTime * GRAPH_CYCLE + offset) % 1;
+    const glow = Math.sin(t * Math.PI);
+    mat.opacity = 0.12 + glow * 0.9;
     mat.color.set(accent);
   });
+
   return (
     <Line
       ref={ref}
       points={[a, b]}
-      color={dim}
+      color={accent}
       lineWidth={1.2}
       transparent
-      opacity={0.25}
+      opacity={0.12}
     />
   );
 }
@@ -264,67 +418,61 @@ function KnowledgeGraph({
   const query = useMemo(() => new THREE.Vector3(0, 0, 0), []);
 
   const satellites = useMemo(() => {
-    const arr: { pos: THREE.Vector3; phase: number }[] = [];
-    const n = 12;
+    const arr: { pos: THREE.Vector3; radius: number; offset: number }[] = [];
+    const n = 24;
     for (let i = 0; i < n; i++) {
       const theta = mulberry(i) * Math.PI * 2;
       const phi = Math.acos(2 * mulberry(i + 100) - 1);
-      const r = 1.3 + mulberry(i + 200) * 0.8;
+      const r = 1.15 + mulberry(i + 200) * 0.8;
       arr.push({
         pos: new THREE.Vector3(
           r * Math.sin(phi) * Math.cos(theta),
           r * Math.sin(phi) * Math.sin(theta) * 0.7,
           r * Math.cos(phi),
         ),
-        phase: mulberry(i + 7) * Math.PI * 2,
+        radius: 0.035 + mulberry(i + 300) * 0.025,
+        offset: mulberry(i + 7),
       });
     }
     return arr;
   }, []);
 
+  // Static web of inter-satellite links (dim, dashed).
   const crossEdges = useMemo(() => {
     const list: { a: THREE.Vector3; b: THREE.Vector3 }[] = [];
     for (let i = 0; i < satellites.length; i++) {
       const j = (i * 3 + 1) % satellites.length;
+      const k = (i * 5 + 2) % satellites.length;
       if (j !== i) list.push({ a: satellites[i].pos, b: satellites[j].pos });
+      if (k !== i && k !== j) {
+        list.push({ a: satellites[i].pos, b: satellites[k].pos });
+      }
     }
     return list;
   }, [satellites]);
 
   return (
     <group>
-      {/* Query node */}
-      <mesh>
-        <sphereGeometry args={[0.18, 24, 24]} />
-        <meshStandardMaterial
-          color={accent}
-          emissive={accent}
-          emissiveIntensity={0.55}
-          roughness={0.25}
-          metalness={0.1}
-        />
-      </mesh>
-      <HaloRing accent={accent} reduced={reduced} />
+      <QueryNode accent={accent} reduced={reduced} />
+      <SonarRing accent={accent} reduced={reduced} phase={0} />
+      <SonarRing accent={accent} reduced={reduced} phase={0.5} />
       {satellites.map((s, i) => (
-        <mesh key={i} position={s.pos}>
-          <sphereGeometry args={[0.07, 16, 16]} />
-          <meshStandardMaterial
-            color={accent}
-            emissive={accent}
-            emissiveIntensity={0.3}
-            roughness={0.35}
-            metalness={0.1}
-          />
-        </mesh>
+        <SatelliteNode
+          key={i}
+          position={s.pos}
+          radius={s.radius}
+          accent={accent}
+          offset={s.offset}
+          reduced={reduced}
+        />
       ))}
       {satellites.map((s, i) => (
-        <GraphEdge
+        <RetrievalEdge
           key={i}
           a={query}
           b={s.pos}
           accent={accent}
-          dim={dim}
-          offset={s.phase / (Math.PI * 2)}
+          offset={s.offset}
           reduced={reduced}
         />
       ))}
@@ -335,10 +483,22 @@ function KnowledgeGraph({
           color={dim}
           lineWidth={1}
           transparent
-          opacity={0.28}
+          opacity={0.22}
           dashed
           dashSize={0.08}
           gapSize={0.06}
+        />
+      ))}
+      {satellites.map((s, i) => (
+        <Pulse
+          key={`pulse-${i}`}
+          a={query}
+          b={s.pos}
+          offset={s.offset}
+          speed={GRAPH_CYCLE}
+          accent={accent}
+          radius={0.045}
+          reduced={reduced}
         />
       ))}
     </group>
@@ -409,26 +569,58 @@ function ParticleStream({ accent, reduced }: { accent: string; reduced: boolean 
   );
 }
 
-// ── Scene: auto-rotate + cursor parallax + idle float ──
+// ── Scene: idle float + parallax + user orbit controls ──
+// Scales content so its full extent always fits the visible area (background mode).
+const BACKGROUND_EXTENT: Record<HeroVariant, { x: number; y: number }> = {
+  neural: { x: 1.4, y: 1.7 },
+  graph: { x: 2.05, y: 1.5 },
+  particles: { x: 1.15, y: 1.9 },
+};
+
+function FitFrame({
+  extentX,
+  extentY,
+  children,
+}: {
+  extentX: number;
+  extentY: number;
+  children: ReactNode;
+}) {
+  const viewport = useThree((s) => s.viewport);
+  const ref = useRef<THREE.Group>(null);
+
+  useEffect(() => {
+    const g = ref.current;
+    if (!g) return;
+    const scale = Math.min(
+      (viewport.width * 0.8) / (extentX * 2),
+      (viewport.height * 0.8) / (extentY * 2),
+    );
+    g.scale.setScalar(Math.max(0.4, Math.min(scale, 2)));
+  }, [viewport, extentX, extentY]);
+
+  return <group ref={ref}>{children}</group>;
+}
+
 function Scene({
   variant,
   accent,
   dim,
   reduced,
+  interacted,
+  onInteract,
 }: {
   variant: HeroVariant;
   accent: string;
   dim: string;
   reduced: boolean;
+  interacted: boolean;
+  onInteract: () => void;
 }) {
-  const rotRef = useRef<THREE.Group>(null);
   const parRef = useRef<THREE.Group>(null);
 
-  useFrame((state, delta) => {
-    if (!reduced && rotRef.current) {
-      rotRef.current.rotation.y += delta * 0.14;
-    }
-    if (!reduced && parRef.current) {
+  useFrame((state) => {
+    if (!reduced && !interacted && parRef.current) {
       const tx = state.pointer.y * 0.18;
       const ty = state.pointer.x * 0.3;
       parRef.current.rotation.x += (tx - parRef.current.rotation.x) * 0.05;
@@ -437,7 +629,7 @@ function Scene({
   });
 
   return (
-    <group ref={rotRef}>
+    <>
       <group ref={parRef}>
         <Float
           speed={1.6}
@@ -456,7 +648,18 @@ function Scene({
           )}
         </Float>
       </group>
-    </group>
+      {/* Idle auto-rotate until the user grabs it — then it becomes their own. */}
+      <OrbitControls
+        makeDefault
+        enablePan={false}
+        enableZoom={false}
+        enableDamping
+        dampingFactor={0.08}
+        autoRotate={!reduced && !interacted}
+        autoRotateSpeed={1.2}
+        onStart={onInteract}
+      />
+    </>
   );
 }
 
@@ -472,13 +675,17 @@ export default function Hero3D({
   const accent = isDark ? ACCENT_DARK : ACCENT_LIGHT;
   const dim = isDark ? DIM_DARK : DIM_LIGHT;
   const isBackground = placement === "background";
+  const [interacted, setInteracted] = useState(false);
 
   return (
     <div
       className={cn(
         isBackground
           ? "absolute inset-0 pointer-events-none"
-          : cn("relative w-full max-w-md mx-auto pointer-events-none", heightClass),
+          : cn(
+              "relative w-full max-w-md mx-auto cursor-grab active:cursor-grabbing touch-none",
+              heightClass,
+            ),
         className,
       )}
       style={isBackground ? { opacity: backgroundOpacity } : undefined}
@@ -493,9 +700,29 @@ export default function Hero3D({
         <ambientLight intensity={0.8} />
         <directionalLight position={[5, 6, 5]} intensity={1.1} />
         <directionalLight position={[-5, -3, -4]} intensity={0.35} color={accent} />
-        <group scale={isBackground ? 1.6 : 1.05}>
-          <Scene variant={variant} accent={accent} dim={dim} reduced={reduced} />
-        </group>
+        {isBackground ? (
+          <FitFrame extentX={BACKGROUND_EXTENT[variant].x} extentY={BACKGROUND_EXTENT[variant].y}>
+            <Scene
+              variant={variant}
+              accent={accent}
+              dim={dim}
+              reduced={reduced}
+              interacted={interacted}
+              onInteract={() => setInteracted(true)}
+            />
+          </FitFrame>
+        ) : (
+          <group scale={0.85}>
+            <Scene
+              variant={variant}
+              accent={accent}
+              dim={dim}
+              reduced={reduced}
+              interacted={interacted}
+              onInteract={() => setInteracted(true)}
+            />
+          </group>
+        )}
       </Canvas>
     </div>
   );

@@ -58,7 +58,7 @@ export default function Contact() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-10 text-center relative z-10 w-full">
         <div data-reveal className="flex items-center justify-center gap-4 mb-4">
           <Badge variant="outline" className="font-mono text-xs text-accent border-accent/30 bg-accent/5 px-3 py-1">
-            06
+            07
           </Badge>
           <Separator className="w-12 bg-border" />
         </div>

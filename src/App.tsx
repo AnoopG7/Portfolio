@@ -1,10 +1,11 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
+import CursorGlow from "@/components/hero/CursorGlow";
 import Navbar from "@/components/common/Navbar";
 import ScrollProgress from "@/components/common/ScrollProgress";
 import Footer from "@/components/common/Footer";
@@ -12,13 +13,12 @@ import GradientMesh from "@/components/common/GradientMesh";
 
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
+import Experience from "@/components/sections/Experience";
 import Skills from "@/components/sections/Skills";
 import Achievements from "@/components/sections/Achievements";
 import Projects from "@/components/sections/Projects";
 import Journey from "@/components/sections/Journey";
 import Contact from "@/components/sections/Contact";
-import Hero3DPreview from "@/components/hero/Hero3DPreview";
-import type { HeroPlacement, HeroVariant } from "@/components/hero/Hero3D";
 
 const ProjectDetail = lazy(
   () => import("@/components/sections/ProjectDetail")
@@ -27,21 +27,11 @@ const ProjectDetail = lazy(
 gsap.registerPlugin(ScrollTrigger);
 
 function HomePage() {
-  // Dev-only selection state for the 3D hero element.
-  // This will be removed once a variant is chosen.
-  const [heroVariant, setHeroVariant] = useState<HeroVariant>("neural");
-  const [heroPlacement, setHeroPlacement] = useState<HeroPlacement>("centerpiece");
-
   return (
     <main className="relative z-[1]">
-      <Hero variant={heroVariant} placement={heroPlacement} />
-      <Hero3DPreview
-        selected={heroVariant}
-        placement={heroPlacement}
-        onSelect={setHeroVariant}
-        onPlacementChange={setHeroPlacement}
-      />
+      <Hero />
       <About />
+      <Experience />
       <Skills />
       <Achievements />
       <Projects />
@@ -80,6 +70,7 @@ function AppShell() {
 
   return (
     <TooltipProvider>
+      <CursorGlow />
       <GradientMesh />
       <ScrollProgress />
       <Navbar />

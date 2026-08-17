@@ -153,7 +153,7 @@ export default function Projects() {
             variant="outline"
             className="font-mono text-xs text-accent border-accent/30 bg-accent/5 px-3 py-1"
           >
-            04
+            05
           </Badge>
           <Separator className="flex-1 bg-border" />
         </div>

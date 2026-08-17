@@ -140,6 +140,7 @@ export default function SplitText({
   };
 
   return (
+    // @ts-expect-error — dynamic tag type from ElementType prop
     <Tag ref={ref} style={style} className={`split-parent ${className}`}>
       {text}
     </Tag>

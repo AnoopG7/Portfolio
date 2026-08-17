@@ -1,4 +1,4 @@
-import {
+import React, {
   useEffect,
   useRef,
   useState,
@@ -32,7 +32,7 @@ interface TextTypeProps {
 
 export default function TextType({
   text,
-  as: Component = "div",
+  as: Component = "div" as any, // eslint-disable-line @typescript-eslint/no-explicit-any
   typingSpeed = 50,
   initialDelay = 0,
   pauseDuration = 2000,
@@ -158,21 +158,21 @@ export default function TextType({
     hideCursorWhileTyping &&
     (currentCharIndex < textArray[currentTextIndex].length || isDeleting);
 
-  return (
-    <Component
-      ref={containerRef}
-      className={`text-type ${className}`}
-    >
-      <span style={{ color: getCurrentTextColor() }}>{displayedText}</span>
-      {showCursor && (
-        <span
-          ref={cursorRef}
-          className={`text-type-cursor ${cursorClassName}`}
-          style={{ opacity: shouldHideCursor ? 0 : 1 }}
-        >
-          {cursorCharacter}
-        </span>
-      )}
-    </Component>
+  // Use createElement to bypass TS limitation with dynamic ElementType tags
+  return React.createElement(
+    Component,
+    { ref: containerRef, className: `text-type ${className}` },
+    React.createElement("span", { style: { color: getCurrentTextColor() } }, displayedText),
+    showCursor
+      ? React.createElement(
+          "span",
+          {
+            ref: cursorRef,
+            className: `text-type-cursor ${cursorClassName}`,
+            style: { opacity: shouldHideCursor ? 0 : 1 },
+          },
+          cursorCharacter
+        )
+      : null
   );
 }
