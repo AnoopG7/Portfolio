@@ -14,14 +14,14 @@ export const PERSONAL = {
   firstName: "Anoop",
   role: "AI/ML Engineer & Full-Stack Developer",
   tagline: "I build AI-powered apps that learn",
-  bio: "A passionate AI/ML engineer and full-stack developer building intelligent, data-driven applications. Experienced in Python, ML frameworks, and the MERN stack — shipping production-ready AI products from LLM-powered features to predictive models. Currently a 2nd year B.Tech CSE student at ITM Skills University, diving deep into Machine Learning, Deep Learning, and Data Science.",
-  email: "anoopgfortech@gmail.com",
+  bio: "AI/ML engineer and full-stack developer with hands-on experience building production-grade AI systems, RAG architectures, multi-agent workflows, and scalable SaaS platforms. Skilled in LLM applications, backend architecture, cloud deployment, and production reliability.",
+  email: "gupta.anoop2006@gmail.com",
   phone: "+91-7039386723",
   education: {
     degree: "B.Tech in Computer Science Engineering (AI & ML Specialization)",
     university: "ITM Skills University, Navi Mumbai",
     graduation: "2028",
-    cgpa: "9.55",
+    cgpa: "9.5",
   },
   socials: {
     github: "https://github.com/AnoopG7",
@@ -36,9 +36,8 @@ export const HERO = {
   greeting: "Hi, I'm Anoop",
   headingLine1: "I design & build",
   headingLine2: "AI-powered systems",
-  status: "Open to AI/ML internships & freelance",
   ctaHeading: "Let's build something amazing",
-  ctaSubtitle: "AI & full-stack developer — Python, FastAPI, and the MERN stack",
+  ctaSubtitle: "AI & full-stack developer: Python, FastAPI, and the MERN stack",
   subtitlePhrases: [
     "Building AI-powered applications with Python & MERN",
     "Turning data into intelligent, production-ready systems",
@@ -93,34 +92,34 @@ export interface Experience {
 
 export const EXPERIENCE: Experience[] = [
   {
-    role: "AI/ML Engineering Intern",
-    company: "Your Company 1",
+    role: "AI Engineer Intern",
+    company: "Shovihini Tech LLP",
     location: "Remote",
-    period: "Jun 2025 – Aug 2025",
+    period: "Apr 2026 – Jun 2026",
     type: "Internship",
     description:
-      "Worked on building and optimizing AI/ML pipelines for production applications.",
+      "Built AI-powered applications using LLMs, RAG pipelines, vector embeddings, and NLP workflows.",
     highlights: [
-      "Built and deployed AI agent orchestration engine with 8 custom tools",
-      "Reduced API costs by ~60% using Groq Llama-3 inference with fallback to local models",
-      "Designed 16-table relational database schema with Alembic migrations",
+      "Built AI-powered applications using LLMs, RAG pipelines, vector embeddings, and NLP workflows",
+      "Developed scalable backend services for AI inference and data processing using Python and FastAPI",
+      "Improved retrieval accuracy, latency, and response quality through prompt and pipeline optimization",
     ],
-    tech: ["Python", "FastAPI", "PostgreSQL", "OpenAI SDK", "Docker"],
+    tech: ["Python", "FastAPI", "LLMs", "RAG", "Vector Embeddings", "NLP"],
   },
   {
-    role: "Full-Stack Developer Intern",
-    company: "Your Company 2",
+    role: "Web Development Intern",
+    company: "CodeDev Verse",
     location: "Remote",
-    period: "Jan 2025 – Mar 2025",
+    period: "May 2025 – Jul 2025",
     type: "Internship",
     description:
-      "Developed full-stack web applications with AI-powered features.",
+      "Developed responsive full-stack web applications using modern frontend and backend technologies.",
     highlights: [
-      "Built a full-stack RAG tutoring platform for CBSE students (Grades 9–12)",
-      "Engineered 3-strategy retrieval system reducing API calls from 14+ to 1 per query",
-      "Implemented real-time session management and cross-platform Telegram bot",
+      "Developed responsive full-stack web applications using modern frontend and backend technologies",
+      "Built APIs, integrated databases, and implemented authentication workflows",
+      "Contributed to debugging, testing, deployment, and performance optimization",
     ],
-    tech: ["React", "TypeScript", "FastAPI", "Supabase", "pgvector"],
+    tech: ["React", "Node.js", "REST APIs", "Database Integration", "Authentication"],
   },
 ];
 

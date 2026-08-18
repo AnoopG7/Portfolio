@@ -234,9 +234,9 @@ function NetworkGroup({ shells }: { shells: ShellDef }) {
 
   useFrame(({ clock }) => {
     if (!groupRef.current) return;
-    groupRef.current.rotation.y = clock.getElapsedTime() * 0.035;
+    groupRef.current.rotation.y = clock.getElapsedTime() * 0.08;
     groupRef.current.rotation.x =
-      Math.sin(clock.getElapsedTime() * 0.02) * 0.06;
+      Math.sin(clock.getElapsedTime() * 0.03) * 0.08;
   });
 
   return (

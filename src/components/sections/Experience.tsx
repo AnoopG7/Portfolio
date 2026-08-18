@@ -81,7 +81,7 @@ export default function Experience() {
                 {/* Timeline dot */}
                 <div className="absolute left-2.5 sm:left-4.5 top-2 size-3 rounded-full bg-accent ring-4 ring-background" />
 
-                <Card className="border-border bg-card/60 backdrop-blur-sm hover:border-accent/30 transition-colors duration-300">
+                <Card data-no-glow className="border-border bg-card/60 backdrop-blur-sm hover:border-accent/30 transition-colors duration-300">
                   <CardContent className="p-4 sm:p-6">
                     {/* Header */}
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">

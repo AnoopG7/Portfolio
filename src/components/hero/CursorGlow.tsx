@@ -26,6 +26,8 @@ export default function CursorGlow() {
   const points = useRef<TrailPoint[]>([]);
   const rafRef = useRef<number>(0);
   const lastSpawn = useRef(0);
+  const paused = useRef(false);
+  const drawRef = useRef<(ts: number) => void>(() => {});
 
   const draw = useCallback((timestamp: number) => {
     const canvas = canvasRef.current;
@@ -37,39 +39,60 @@ export default function CursorGlow() {
     const dt = 1 / 60; // approximate
     const { x, y } = mouse.current;
 
-    // Spawn new trail points as mouse moves
-    const dx = x - prevMouse.current.x;
-    const dy = y - prevMouse.current.y;
-    const speed = Math.sqrt(dx * dx + dy * dy);
-
-    if (
-      x > 0 &&
-      y > 0 &&
-      speed > 3 &&
-      timestamp - lastSpawn.current > 40
-    ) {
-      // Scatter slightly perpendicular to movement direction
-      const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 1.8;
-      const scatter = 8 + Math.random() * 15;
-
-      points.current.push({
-        x: x + Math.cos(angle) * scatter,
-        y: y + Math.sin(angle) * scatter,
-        age: 0,
-        vx: (Math.random() - 0.5) * 12,
-        vy: (Math.random() - 0.5) * 12,
+    // When paused (hovering over a card), let existing points fade out then stop
+    if (paused.current) {
+      points.current = points.current.filter((p) => {
+        p.age += dt;
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        p.vx *= 0.96;
+        p.vy *= 0.96;
+        return p.age < POINT_LIFETIME;
       });
 
-      // Trim old points
-      if (points.current.length > MAX_POINTS) {
-        points.current.shift();
-      }
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      lastSpawn.current = timestamp;
+      if (points.current.length === 0) {
+        rafRef.current = requestAnimationFrame(drawRef.current);
+        return;
+      }
     }
 
-    prevMouse.current.x = x;
-    prevMouse.current.y = y;
+    // Spawn new trail points as mouse moves (skip when paused)
+    if (!paused.current) {
+      const dx = x - prevMouse.current.x;
+      const dy = y - prevMouse.current.y;
+      const speed = Math.sqrt(dx * dx + dy * dy);
+
+      if (
+        x > 0 &&
+        y > 0 &&
+        speed > 3 &&
+        timestamp - lastSpawn.current > 40
+      ) {
+        // Scatter slightly perpendicular to movement direction
+        const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 1.8;
+        const scatter = 8 + Math.random() * 15;
+
+        points.current.push({
+          x: x + Math.cos(angle) * scatter,
+          y: y + Math.sin(angle) * scatter,
+          age: 0,
+          vx: (Math.random() - 0.5) * 12,
+          vy: (Math.random() - 0.5) * 12,
+        });
+
+        // Trim old points
+        if (points.current.length > MAX_POINTS) {
+          points.current.shift();
+        }
+
+        lastSpawn.current = timestamp;
+      }
+
+      prevMouse.current.x = x;
+      prevMouse.current.y = y;
+    }
 
     // Update points
     points.current = points.current.filter((p) => {
@@ -142,7 +165,7 @@ export default function CursorGlow() {
       ctx.fill();
     }
 
-    rafRef.current = requestAnimationFrame(draw);
+    rafRef.current = requestAnimationFrame(drawRef.current);
   }, []);
 
   useEffect(() => {
@@ -156,6 +179,9 @@ export default function CursorGlow() {
     ) {
       return;
     }
+
+    // Keep drawRef in sync so the paused early-return can self-schedule
+    drawRef.current = draw;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -177,6 +203,20 @@ export default function CursorGlow() {
     document.addEventListener("mousemove", handleMove);
     document.addEventListener("mouseleave", handleLeave);
 
+    // Pause cursor glow when hovering over [data-no-glow] elements
+    const onEnter = () => { paused.current = true; };
+    const onLeave = () => { paused.current = false; };
+    const bindGlowElements = () => {
+      document.querySelectorAll<HTMLElement>("[data-no-glow]").forEach((el) => {
+        el.addEventListener("pointerenter", onEnter);
+        el.addEventListener("pointerleave", onLeave);
+      });
+    };
+    bindGlowElements();
+    // Re-bind after lazy content loads
+    const mo = new MutationObserver(bindGlowElements);
+    mo.observe(document.body, { childList: true, subtree: true });
+
     rafRef.current = requestAnimationFrame(draw);
 
     return () => {
@@ -184,6 +224,11 @@ export default function CursorGlow() {
       window.removeEventListener("resize", resize);
       document.removeEventListener("mousemove", handleMove);
       document.removeEventListener("mouseleave", handleLeave);
+      mo.disconnect();
+      document.querySelectorAll<HTMLElement>("[data-no-glow]").forEach((el) => {
+        el.removeEventListener("pointerenter", onEnter);
+        el.removeEventListener("pointerleave", onLeave);
+      });
     };
   }, [draw]);
 

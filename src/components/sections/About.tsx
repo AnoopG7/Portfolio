@@ -5,6 +5,8 @@ import { PERSONAL, STATS } from "@/lib/data";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Download, ExternalLink } from "lucide-react";
 import CountUp from "@/components/reactbits/CountUp";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -109,14 +111,42 @@ export default function About() {
         </h2>
 
         <div className="grid md:grid-cols-5 gap-8 sm:gap-12 lg:gap-16 items-start">
-          <div data-reveal className="md:col-span-2 flex justify-center md:justify-start">
-            <Card className="w-48 h-56 sm:w-64 sm:h-72 md:w-72 md:h-80 border-border bg-card overflow-hidden group hover:border-accent/30 transition-colors duration-500">
-              <CardContent className="flex items-center justify-center h-full p-0">
-                <div className="w-20 h-20 mx-auto rounded-full bg-secondary flex items-center justify-center ring-2 ring-accent/20">
-                  <span className="font-display text-3xl font-bold text-accent">A</span>
-                </div>
-              </CardContent>
-            </Card>
+          <div data-reveal className="md:col-span-2 flex flex-col items-center md:items-start gap-4">
+            <div data-no-glow className="w-48 h-56 sm:w-64 sm:h-72 md:w-72 md:h-80 rounded-xl overflow-hidden group hover:ring-accent/30 hover:ring-2 transition-all duration-500">
+              <img
+                src="/Pfp.jpeg"
+                alt="Anoop Gupta"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="flex flex-col md:flex-row flex-wrap gap-2 w-full md:w-auto">
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="border-border hover:border-accent/40 hover:text-accent w-full md:w-auto h-11 text-sm md:h-9 md:text-[13px]"
+              >
+                <a href="/Anoop_Gupta_Resume.pdf" download>
+                  <Download className="mr-1.5 size-4 md:size-3.5" />
+                  Download Resume
+                </a>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="border-border hover:border-accent/40 hover:text-accent w-full md:w-auto h-11 text-sm md:h-9 md:text-[13px]"
+              >
+                <a
+                  href="https://docs.google.com/document/d/1di2IGkJID1psMzqXX5-PzDiuE_yoht4M/edit#heading=h.faq9awsjk3sr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ExternalLink className="mr-1.5 size-4 md:size-3.5" />
+                  View Resume
+                </a>
+              </Button>
+            </div>
           </div>
 
           <div className="md:col-span-3 space-y-8">
@@ -124,13 +154,12 @@ export default function About() {
               <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
                 {PERSONAL.bio}
               </p>
-              <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
-                Pursuing{" "}
-                <span className="text-foreground font-medium">{PERSONAL.education.degree}</span> at{" "}
-                <span className="text-foreground font-medium">{PERSONAL.education.university}</span>,
-                graduating in{" "}
-                <span className="text-accent font-semibold">{PERSONAL.education.graduation}</span>.
-              </p>
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm sm:text-base text-muted-foreground">
+                <span>B.Tech CSE (AI & ML) from</span>
+                <span className="text-foreground font-medium">{PERSONAL.education.university}</span>
+                <span>|</span>
+                <span>Graduating {PERSONAL.education.graduation}</span>
+              </div>
             </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">

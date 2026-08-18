@@ -54,6 +54,10 @@ function AppShell() {
 
     lenisRef.current = lenis;
 
+    // Expose Lenis globally so Navbar can use lenis.scrollTo()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).__lenis = lenis;
+
     // Connect Lenis ↔ GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
 

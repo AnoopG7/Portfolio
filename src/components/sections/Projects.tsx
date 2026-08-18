@@ -31,6 +31,7 @@ function ProjectCard({
   return (
     <Link to={`/project/${project.slug}`} className="block h-full group/link">
       <Card
+        data-no-glow
         className={`group border-border bg-card/60 hover:border-accent/30 hover:bg-card transition-all duration-500 h-full flex flex-col ${
           isFeatured ? "ring-1 ring-accent/10" : ""
         }`}

@@ -38,7 +38,16 @@ export default function Navbar() {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setMobileOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    const el = document.querySelector(href);
+    if (!el) return;
+    // Use Lenis scrollTo if available, otherwise fall back to native
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lenis = (window as any).__lenis as { scrollTo: (target: Element | string, opts?: { offset?: number; duration?: number }) => void } | undefined;
+    if (lenis) {
+      lenis.scrollTo(el, { offset: -80, duration: 1.5 });
+    } else {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -57,7 +66,13 @@ export default function Navbar() {
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              window.scrollTo({ top: 0, behavior: "smooth" });
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const lenis = (window as any).__lenis as { scrollTo: (target: number, opts?: { duration?: number }) => void } | undefined;
+              if (lenis) {
+                lenis.scrollTo(0, { duration: 1.5 });
+              } else {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
             }}
             className="font-display font-bold text-xl tracking-tight text-foreground hover:text-accent transition-colors mr-5"
           >

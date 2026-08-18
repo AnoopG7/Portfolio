@@ -5,15 +5,23 @@ import { ACHIEVEMENTS, type Achievement } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Trophy, Cloud, BrainCircuit } from "lucide-react";
+import { Trophy, Cloud, Brain, Bot } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const ACHIEVEMENT_ICONS: Record<string, LucideIcon> = {
   "Academic Excellence Award": Trophy,
-  "AWS Certificate": Cloud,
-  "Machine Learning Specialization": BrainCircuit,
+  "AWS Cloud Practitioner Essentials": Cloud,
+  "Machine Learning Specialization": Brain,
+  "Fullstack Generative & Agentic AI": Bot,
+};
+
+const ACHIEVEMENT_ICON_COLORS: Record<string, string> = {
+  "Academic Excellence Award": "#f97316",
+  "AWS Cloud Practitioner Essentials": "#f97316",
+  "Machine Learning Specialization": "#f97316",
+  "Fullstack Generative & Agentic AI": "#f97316",
 };
 
 export default function Achievements() {
@@ -61,7 +69,7 @@ export default function Achievements() {
           Achievements
         </h2>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {ACHIEVEMENTS.map((achievement) => (
             <AchievementCard key={achievement.title} achievement={achievement} />
           ))}
@@ -77,14 +85,14 @@ function AchievementCard({ achievement }: { achievement: Achievement }) {
   return (
     <div data-reveal className="h-full">
       <Card className="h-full group border-border bg-card/60 hover:border-accent/30 hover:bg-card transition-all duration-500">
-        <CardContent className="flex flex-col items-center justify-center h-full p-6 md:p-8 text-center gap-3">
-          <div className="size-12 rounded-xl bg-accent/10 flex items-center justify-center ring-1 ring-accent/20 group-hover:bg-accent/15 group-hover:ring-accent/30 transition-colors duration-300">
-            {Icon && <Icon className="size-6 text-accent" />}
+        <CardContent className="flex flex-col items-center justify-center h-full p-4 md:p-5 text-center gap-2.5">
+          <div className="size-10 rounded-xl bg-accent/10 flex items-center justify-center ring-1 ring-accent/20 group-hover:bg-accent/15 group-hover:ring-accent/30 transition-colors duration-300">
+            {Icon && <Icon className="size-5" style={{ color: ACHIEVEMENT_ICON_COLORS[achievement.title] }} />}
           </div>
-          <h3 className="font-display text-lg md:text-xl font-bold text-foreground group-hover:text-accent transition-colors duration-300 leading-snug">
+          <h3 className="font-display text-sm md:text-base font-bold text-foreground group-hover:text-accent transition-colors duration-300 leading-snug">
             {achievement.title}
           </h3>
-          <span className="text-[10px] text-muted-foreground uppercase tracking-[0.15em] font-mono">
+          <span className="text-[9px] text-muted-foreground uppercase tracking-[0.15em] font-mono">
             {achievement.tag}
           </span>
         </CardContent>
