@@ -1,6 +1,7 @@
 // ── Navigation ──
 export const NAV_LINKS = [
   { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
   { label: "Skills", href: "#skills" },
   { label: "Achievements", href: "#achievements" },
   { label: "Projects", href: "#projects" },
@@ -77,6 +78,51 @@ export const STATS = [
   { value: "10+", label: "AI-Powered Apps" },
   { value: "5+", label: "ML Models Built" },
 ] as const;
+
+// ── Experience ──
+export interface Experience {
+  role: string;
+  company: string;
+  location: string;
+  period: string;
+  type: "Internship" | "Full-time" | "Freelance" | "Contract";
+  description: string;
+  highlights: string[];
+  tech: string[];
+}
+
+export const EXPERIENCE: Experience[] = [
+  {
+    role: "AI/ML Engineering Intern",
+    company: "Your Company 1",
+    location: "Remote",
+    period: "Jun 2025 – Aug 2025",
+    type: "Internship",
+    description:
+      "Worked on building and optimizing AI/ML pipelines for production applications.",
+    highlights: [
+      "Built and deployed AI agent orchestration engine with 8 custom tools",
+      "Reduced API costs by ~60% using Groq Llama-3 inference with fallback to local models",
+      "Designed 16-table relational database schema with Alembic migrations",
+    ],
+    tech: ["Python", "FastAPI", "PostgreSQL", "OpenAI SDK", "Docker"],
+  },
+  {
+    role: "Full-Stack Developer Intern",
+    company: "Your Company 2",
+    location: "Remote",
+    period: "Jan 2025 – Mar 2025",
+    type: "Internship",
+    description:
+      "Developed full-stack web applications with AI-powered features.",
+    highlights: [
+      "Built a full-stack RAG tutoring platform for CBSE students (Grades 9–12)",
+      "Engineered 3-strategy retrieval system reducing API calls from 14+ to 1 per query",
+      "Implemented real-time session management and cross-platform Telegram bot",
+    ],
+    tech: ["React", "TypeScript", "FastAPI", "Supabase", "pgvector"],
+  },
+];
 
 // ── Skills ──
 export interface Skill {
