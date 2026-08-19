@@ -15,100 +15,197 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ArrowRight, ExternalLink } from "lucide-react";
+import { ArrowRight, ExternalLink, Github } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 function ProjectCard({
   project,
-  index,
   isFeatured,
 }: {
   project: Project;
-  index: number;
   isFeatured: boolean;
 }) {
-  return (
-    <Link to={`/project/${project.slug}`} className="block h-full group/link">
-      <Card
-        data-no-glow
-        className={`group border-border bg-card/60 hover:border-accent/30 hover:bg-card transition-all duration-500 h-full flex flex-col ${
-          isFeatured ? "ring-1 ring-accent/10" : ""
-        }`}
-      >
-        <CardHeader>
-          <div>
-            <Badge
-              variant="outline"
-              className="font-mono text-[10px] text-accent border-accent/20 bg-accent/5 mb-3 px-2 py-0.5"
-            >
-              {isFeatured ? "FEATURED" : `PROJECT ${String(index + 1).padStart(2, "0")}`}
-            </Badge>
-            <CardTitle className="font-display text-lg sm:text-xl md:text-2xl font-bold group-hover:text-accent transition-colors duration-300">
-              {project.title}
-            </CardTitle>
-            <CardDescription className="mt-1 text-xs sm:text-sm">
-              {project.subtitle}
-            </CardDescription>
-          </div>
+  const card = (
+    <Card
+      data-no-glow
+      className={`group border-border bg-card/60 hover:border-accent/30 hover:bg-card transition-all duration-500 h-full flex flex-col ${
+        isFeatured ? "ring-1 ring-accent/10" : ""
+      }`}
+    >
+      <CardHeader>
+        <div className="min-w-0">
+          <Badge
+            variant="outline"
+            className="font-mono text-[10px] text-accent border-accent/20 bg-accent/5 mb-3 px-2 py-0.5"
+          >
+            {isFeatured ? "FEATURED" : "PROJECT"}
+          </Badge>
+          <CardTitle className="font-display text-lg sm:text-xl md:text-2xl font-bold group-hover:text-accent transition-colors duration-300">
+            {project.title}
+          </CardTitle>
+          <CardDescription className="mt-1 text-xs sm:text-sm">
+            {project.subtitle}
+          </CardDescription>
+        </div>
+        {isFeatured && (
           <CardAction>
-            {project.live && project.live !== "#" ? (
-              <Button
-                asChild
-                variant="outline"
-                size="icon"
-                className="rounded-full border-border text-muted-foreground hover:border-accent hover:text-accent hover:bg-accent/10"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <a
-                  href={project.live}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Visit ${project.title}`}
+            <div className="flex gap-1.5">
+              {project.github && (
+                <Button
+                  asChild
+                  variant="outline"
+                  size="icon"
+                  className="rounded-full size-8 border-border text-muted-foreground hover:border-accent hover:text-accent hover:bg-accent/10"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  <ExternalLink className="size-4" />
-                </a>
-              </Button>
-            ) : null}
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${project.title} source code`}
+                  >
+                    <Github className="size-3.5" />
+                  </a>
+                </Button>
+              )}
+              {project.live && project.live !== "#" ? (
+                <Button
+                  asChild
+                  variant="outline"
+                  size="icon"
+                  className="rounded-full size-8 border-border text-muted-foreground hover:border-accent hover:text-accent hover:bg-accent/10"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visit ${project.title}`}
+                  >
+                    <ExternalLink className="size-3.5" />
+                  </a>
+                </Button>
+              ) : null}
+            </div>
           </CardAction>
-        </CardHeader>
+        )}
+      </CardHeader>
 
-        <CardContent className="space-y-4 sm:space-y-5 flex-1">
-          <div className="flex flex-wrap gap-1 sm:gap-1.5">
-            {project.tech.map((t) => (
-              <Badge
-                key={t}
-                variant="secondary"
-                className="text-[9px] sm:text-[10px] font-mono font-medium uppercase tracking-wider bg-background border border-border text-muted-foreground rounded-md px-1.5 sm:px-2 py-0.5"
-              >
-                {t}
-              </Badge>
-            ))}
-          </div>
+      <CardContent className={`space-y-3 flex-1 ${!isFeatured ? "flex flex-col gap-3" : ""}`}>
+        {/* Tagline */}
+        <p className="text-muted-foreground text-sm leading-relaxed">
+          {project.tagline}
+        </p>
 
-          <ul className="space-y-2 sm:space-y-2.5">
-            {project.highlights.slice(0, isFeatured ? 4 : 3).map((h, i) => (
+        {/* Tech badges */}
+        <div className="flex flex-wrap gap-1 sm:gap-1.5">
+          {project.tech.map((t) => (
+            <Badge
+              key={t}
+              variant="secondary"
+              className="text-[9px] sm:text-[10px] font-mono font-medium uppercase tracking-wider bg-background border border-border text-muted-foreground rounded-md px-1.5 sm:px-2 py-0.5"
+            >
+              {t}
+            </Badge>
+          ))}
+        </div>
+
+        {/* Impact highlights */}
+        {project.impact && project.impact.length > 0 && (
+          <ul className="space-y-1.5">
+            {project.impact.slice(0, 3).map((h, i) => (
               <li
                 key={i}
-                className="text-muted-foreground text-xs sm:text-sm flex items-start gap-2 sm:gap-3"
+                className="text-muted-foreground text-xs flex items-start gap-2"
               >
-                <span className="text-accent text-[10px] sm:text-xs mt-1 sm:mt-1.5 shrink-0">
+                <span className="text-accent text-[10px] mt-0.5 shrink-0">
                   ▸
                 </span>
                 <span className="leading-relaxed">{h}</span>
               </li>
             ))}
           </ul>
-        </CardContent>
+        )}
 
+        {/* Features for non-featured cards */}
+        {!isFeatured && project.features && project.features.length > 0 && (
+          <ul className="space-y-1.5">
+            {project.features.slice(0, 3).map((f, i) => {
+              const title = f.split(" - ")[0];
+              return (
+                <li
+                  key={i}
+                  className="text-muted-foreground text-xs flex items-start gap-2"
+                >
+                  <span className="text-accent/60 text-[10px] mt-0.5 shrink-0">
+                    ●
+                  </span>
+                  <span className="leading-relaxed">{title}</span>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+
+        {/* Proper buttons for non-featured cards */}
+        {!isFeatured && (
+          <div className="flex gap-2 mt-auto pt-3">
+            {project.live && project.live !== "#" ? (
+              <Button
+                asChild
+                variant="outline"
+                className="flex-1 h-11 text-sm border-border text-muted-foreground hover:border-accent hover:text-accent hover:bg-accent/10"
+              >
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ExternalLink className="mr-1.5 size-3.5" />
+                  Live Demo
+                </a>
+              </Button>
+            ) : null}
+            {project.github && (
+              <Button
+                asChild
+                variant="outline"
+                className="flex-1 h-11 text-sm border-border text-muted-foreground hover:border-accent hover:text-accent hover:bg-accent/10"
+              >
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Github className="mr-1.5 size-3.5" />
+                  Source
+                </a>
+              </Button>
+            )}
+          </div>
+        )}
+      </CardContent>
+
+      {isFeatured && (
         <CardFooter className="border-t border-border pt-3 sm:pt-4 gap-2 sm:gap-3 flex-wrap">
           <span className="text-xs sm:text-sm text-accent font-medium group-hover/link:underline flex items-center gap-1">
-            View Details <ArrowRight className="size-3.5" />
+            View Case Study <ArrowRight className="size-3.5" />
           </span>
         </CardFooter>
-      </Card>
-    </Link>
+      )}
+    </Card>
   );
+
+  if (isFeatured) {
+    return (
+      <Link to={`/project/${project.slug}`} className="block h-full group/link">
+        {card}
+      </Link>
+    );
+  }
+
+  return <div className="h-full">{card}</div>;
 }
 
 export default function Projects() {
@@ -169,9 +266,9 @@ export default function Projects() {
 
         {/* Featured projects */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mb-8 sm:mb-12">
-          {featured.map((project, i) => (
+          {featured.map((project) => (
             <div key={project.slug} data-reveal className="h-full">
-              <ProjectCard project={project} index={i} isFeatured />
+              <ProjectCard project={project} isFeatured />
             </div>
           ))}
         </div>
@@ -186,13 +283,9 @@ export default function Projects() {
               <Separator className="flex-1 bg-border/50" />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-              {others.map((project, i) => (
+              {others.map((project) => (
                 <div key={project.slug} data-reveal className="h-full">
-                  <ProjectCard
-                    project={project}
-                    index={featured.length + i}
-                    isFeatured={false}
-                  />
+                  <ProjectCard project={project} isFeatured={false} />
                 </div>
               ))}
             </div>

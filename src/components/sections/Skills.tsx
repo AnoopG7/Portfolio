@@ -7,19 +7,26 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import type { IconType } from "react-icons";
 import {
-  SiTypescript, SiJavascript, SiPython, SiCplusplus,
+  SiTypescript, SiJavascript, SiPython,
   SiReact, SiNextdotjs, SiTailwindcss, SiShadcnui,
-  SiMui, SiHtml5, SiCss, SiZod,
+  SiMui,
   SiNodedotjs, SiExpress, SiSocketdotio, SiReactquery, SiFastapi,
   SiMongodb, SiMysql, SiFirebase, SiSupabase, SiPostgresql,
-  SiGit, SiGithub, SiFigma, SiVercel, SiRender, SiN8N, SiDocker,
+  SiGit, SiGithub, SiDocker,
   SiNumpy, SiPandas, SiScikitlearn, SiTensorflow, SiPytorch,
-  SiHuggingface, SiLangchain, SiJupyter,
+  SiHuggingface, SiLangchain,
+  SiKubernetes, SiNginx,
+  SiPrometheus, SiGrafana, SiGitlab, SiTerraform,
+  SiCplusplus, SiOpenjdk, SiHtml5, SiCss, SiZod,
+  SiFigma, SiVercel, SiRender, SiN8N, SiVscodium,
 } from "react-icons/si";
-import { TbApi, TbBrandSocketIo } from "react-icons/tb";
-import { BiLogoJava } from "react-icons/bi";
-import { VscCode } from "react-icons/vsc";
-import { TbAtom, TbChartScatter } from "react-icons/tb";
+import {
+  TbApi, TbBrandSocketIo,
+  TbAtom,
+  TbBrain, TbRobot, TbKey, TbCloud,
+  TbServer, TbNetwork, TbRoute, TbSpeedboat,
+  TbTerminal, TbGitBranch,
+} from "react-icons/tb";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,8 +34,6 @@ const SKILL_ICONS: Record<string, IconType> = {
   TypeScript:       SiTypescript,
   JavaScript:       SiJavascript,
   Python:           SiPython,
-  "C++":            SiCplusplus,
-  Java:             BiLogoJava,
   React:            SiReact,
   "Next.js":        SiNextdotjs,
   "Tailwind CSS":   SiTailwindcss,
@@ -51,23 +56,41 @@ const SKILL_ICONS: Record<string, IconType> = {
   PostgreSQL:       SiPostgresql,
   Firebase:         SiFirebase,
   Supabase:         SiSupabase,
+  pgvector:         SiPostgresql,
   Git:              SiGit,
   GitHub:           SiGithub,
   Docker:           SiDocker,
-  "VS Code":        VscCode,
-  Figma:            SiFigma,
-  Vercel:           SiVercel,
-  Render:           SiRender,
-  n8n:              SiN8N,
+  Kubernetes:       SiKubernetes,
+  "GitHub Actions": SiGitlab,
+  "CI/CD":          TbGitBranch,
+  Linux:            TbTerminal,
+  Nginx:            SiNginx,
+  Prometheus:       SiPrometheus,
+  Grafana:          SiGrafana,
+  AWS:              TbCloud,
+  Terraform:        SiTerraform,
+  "RAG Systems":    TbBrain,
+  "Multi-Agent Workflows": TbRobot,
+  "JWT Authentication": TbKey,
+  "Distributed Systems": TbNetwork,
+  Microservices:    TbServer,
+  "API Design":     TbRoute,
+  Caching:          TbSpeedboat,
+  "Load Balancing": TbCloud,
   NumPy:            SiNumpy,
   Pandas:           SiPandas,
-  Matplotlib:       TbChartScatter,
   "Scikit-learn":   SiScikitlearn,
   TensorFlow:       SiTensorflow,
   PyTorch:          SiPytorch,
   "Hugging Face":   SiHuggingface,
   LangChain:        SiLangchain,
-  Jupyter:          SiJupyter,
+  "C++":            SiCplusplus,
+  Java:             SiOpenjdk,
+  Figma:            SiFigma,
+  Vercel:           SiVercel,
+  Render:           SiRender,
+  n8n:              SiN8N,
+  "VS Code":        SiVscodium,
 };
 
 export default function Skills() {

@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Sun, Moon } from "lucide-react";
 
 export default function Navbar() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isProjectPage = location.pathname.startsWith("/project/");
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isDark, setIsDark] = useState(() =>

@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -41,15 +41,32 @@ function HomePage() {
   );
 }
 
+/** Reset scroll to top on every route change — works with Lenis */
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    // Reset Lenis if available
+    const lenis = (window as any).__lenis as Lenis | undefined;
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    }
+    // Also reset native scroll as fallback
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 function AppShell() {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 2.4,
+      duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       touchMultiplier: 1.5,
-      wheelMultiplier: 0.7,
+      wheelMultiplier: 1.2,
     });
 
     lenisRef.current = lenis;
@@ -85,6 +102,7 @@ function AppShell() {
           </div>
         }
       >
+      <ScrollToTop />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route
