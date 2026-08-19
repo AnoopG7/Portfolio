@@ -296,6 +296,7 @@ export const PROJECTS: Project[] = [
     live: "#",
     github: "https://github.com/AnoopG7/TSRL",
     featured: true,
+    videoUrl: "https://mjbaxi8ucrntv7pk.private.blob.vercel-storage.com/TSRL?vercel-blob-delegation=eyJzdG9yZUlkIjoic3RvcmVfbWpiYVhpOFVDUm5UdjdQayIsIm93bmVySWQiOiJ0ZWFtX1RUUGZyY1o3MlBhN3hkdmlPYUdUMnhKViIsInBhdGhuYW1lIjoiKiIsIm9wZXJhdGlvbnMiOlsiZ2V0IiwiaGVhZCJdLCJ2YWxpZFVudGlsIjoxNzg3MTY0MzIzOTQ4LCJpYXQiOjE3ODcxMjExMjQwNzR9.llgi72UKROqinKGP8lIs_cPDgna2QhYS_6_21A5ZUPQ&vercel-blob-signature=4bw8P2oSFcKlHrTsLJq5qSo36lGnG54yNW8_WlZa8Mk",
 
     problem:
       "Retail traders are flying blind. They don't have access to the institutional-grade backtesting, strategy optimization, and risk analytics that hedge funds use daily. Existing retail tools either cost hundreds per month or are too simplistic to validate whether a strategy actually works before risking real capital.",
@@ -366,6 +367,7 @@ export const PROJECTS: Project[] = [
     live: "https://anoop-tutorx.vercel.app",
     github: "https://github.com/AnoopG7/TutorX",
     featured: true,
+    videoUrl: "https://mjbaxi8ucrntv7pk.private.blob.vercel-storage.com/TutorX.mov?vercel-blob-delegation=eyJzdG9yZUlkIjoic3RvcmVfbWpiYVhpOFVDUm5UdjdQayIsIm93bmVySWQiOiJ0ZWFtX1RUUGZyY1o3MlBhN3hkdmlPYUdUMnhKViIsInBhdGhuYW1lIjoiKiIsIm9wZXJhdGlvbnMiOlsiZ2V0IiwiaGVhZCJdLCJ2YWxpZFVudGlsIjoxNzg3MTY0Mzc0NzM3LCJpYXQiOjE3ODcxMjExNzUyNDF9.N44E0nTvC4G4oVco-2hCzigFsJSuCiQC5qcZpx-nMrY&vercel-blob-signature=zIumMIe2nxYLCro0r7-6F25DWWmKbXAz-89LmneSBww",
 
     problem:
       "Over 250 million Indian students can't afford personal tutors. The ones that turn to AI chatbots get generic, often hallucinated answers that aren't aligned to their actual curriculum. A student asking about photosynthesis doesn't need Wikipedia - they need the exact explanation from their NCERT Chapter 6 textbook, explained at their grade level, in a style that matches how they learn best.",
@@ -434,6 +436,7 @@ export const PROJECTS: Project[] = [
     live: "https://anoop-taskflow.vercel.app",
     github: "https://github.com/AnoopG7/TaskFlow",
     featured: true,
+    videoUrl: "https://mjbaxi8ucrntv7pk.private.blob.vercel-storage.com/TaskFlow.mov",
 
     problem:
       "Every to-do app is passive. They wait for you to open them, check off items, and manually prioritize. Nobody warns you that your 3-hour task is due in 2 hours. Nobody notices that you consistently underestimate design tasks by 40%. Nobody sends you a morning brief with your top 3 priorities. Traditional task management is a filing system - not a productivity partner.",
