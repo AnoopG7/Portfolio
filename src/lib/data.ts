@@ -484,6 +484,31 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    slug: "ai-leadgen",
+    title: "AI Lead Generation Platform",
+    subtitle: "SaaS for PropTech Lead Capture",
+    tagline:
+      "Deterministic AI agent orchestration engine with autonomous execution, multi-provider LLM routing, and full CRM dashboard.",
+    tech: ["OpenAI Function Calling", "FastAPI Async", "React + shadcn/ui", "PostgreSQL 16", "SQLAlchemy", "Docker", "Meta Graph API"],
+    live: "#",
+    github: "https://github.com/AnoopG7/AI-LeadGen",
+    featured: false,
+
+    problem: "PropTech teams lose leads because manual follow-up is slow, CRM tools are expensive, and Facebook ad leads sit untouched for hours.",
+    solution: "A deterministic AI agent orchestration engine with 8 custom tools, 10-turn autonomous execution, multi-provider LLM routing (Groq / Ollama), and a React CRM dashboard for lead management.",
+    impact: [
+      "~60% API cost reduction via Groq Llama-3 vs OpenAI-equivalent models",
+      "8 custom AI tools with 429 retry backoff and JSON recovery",
+      "16-table relational schema with timezone-aware timestamps",
+    ],
+    features: [
+      "Deterministic AI agent with 10-turn autonomous execution loop",
+      "Multi-provider LLM routing (Groq / Ollama) via single env variable",
+      "Meta Lead Ads webhook pipeline with automatic agent invocation",
+      "React CRM dashboard — lead management, property CRUD, meeting scheduler",
+    ],
+  },
+  {
     slug: "ai-lms",
     title: "AI-Powered LMS",
     subtitle: "Full-Stack MERN + AI Learning Platform",
@@ -558,31 +583,6 @@ export const PROJECTS: Project[] = [
       "JWT authentication with bcrypt password hashing",
     ],
   },
-  {
-    slug: "day-tracker",
-    title: "Day Tracker",
-    subtitle: "AI-Enhanced Productivity & Analytics App",
-    tagline:
-      "Track daily activities, nutrition & expenses with AI-powered macro analysis and interactive analytics dashboards.",
-    tech: ["AI Nutrition Analysis", "Groq LLM", "Analytics Dashboard", "Zustand", "MERN Stack", "90%+ Coverage"],
-    live: "https://anoop-day-tracker.vercel.app",
-    github: "https://github.com/AnoopG7/DayTracker",
-    featured: false,
-
-    problem: "Tracking nutrition, expenses, and daily habits across multiple apps creates fragmented data with no unified insights.",
-    solution: "A unified tracking platform with AI-powered nutrition estimation using Groq LLM and interactive multi-timeframe analytics dashboards.",
-    impact: [
-      "AI-powered nutrition estimation via Groq (LLaMA model)",
-      "90%+ backend test coverage with Jest & Supertest",
-      "Interactive analytics dashboards with multi-timeframe trends",
-    ],
-    features: [
-      "Daily activity, nutrition & expense tracking",
-      "AI-powered nutrition estimation via Groq LLM",
-      "Interactive analytics dashboards with trend analysis",
-      "90%+ backend test coverage",
-    ],
-  },
 ];
 
 // ── Journey / Timeline ──
@@ -601,7 +601,7 @@ export const JOURNEY: Milestone[] = [
   {
     year: "2024",
     title: "Full-Stack Projects",
-    description: "Built Building Management System & Day Tracker - learning backend architecture and testing.",
+    description: "Built Building Management System - learning backend architecture and testing.",
   },
   {
     year: "2025",
