@@ -41,19 +41,45 @@ function HomePage() {
   );
 }
 
-/** Reset scroll to top on every route change — works with Lenis */
+/** Reset scroll on route change; scroll to section if state.scrollTo is set */
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, state } = useLocation();
 
   useEffect(() => {
-    // Reset Lenis if available
+    const scrollTo = (state as { scrollTo?: string } | null)?.scrollTo;
+
+    if (scrollTo) {
+      // Reset to top first so getBoundingClientRect is accurate
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const lenis = (window as any).__lenis as Lenis | undefined;
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: true });
+      }
+      window.scrollTo(0, 0);
+
+      const timer = setTimeout(() => {
+        const el = document.querySelector(scrollTo) as HTMLElement | null;
+        if (!el) return;
+        const navbar = document.querySelector("nav");
+        const navbarBottom = navbar ? navbar.getBoundingClientRect().bottom : 0;
+        const y = el.getBoundingClientRect().top + window.scrollY - navbarBottom - 16;
+        if (lenis) {
+          lenis.scrollTo(y, { duration: 1.5 });
+        } else {
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+
+    // No scrollTo — just reset to top
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const lenis = (window as any).__lenis as Lenis | undefined;
     if (lenis) {
       lenis.scrollTo(0, { immediate: true });
     }
-    // Also reset native scroll as fallback
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, state]);
 
   return null;
 }

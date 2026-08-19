@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/data";
 import { Button } from "@/components/ui/button";
@@ -38,19 +39,31 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
+  const scrollToSection = (href: string) => {
+    const el = document.querySelector(href);
+    if (!el) return;
+    const navbar = document.querySelector("nav");
+    const navbarBottom = navbar ? navbar.getBoundingClientRect().bottom : 0;
+    const y = el.getBoundingClientRect().top + window.scrollY - navbarBottom - 16;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lenis = (window as any).__lenis as { scrollTo: (target: number, opts?: { duration?: number }) => void } | undefined;
+    if (lenis) {
+      lenis.scrollTo(y, { duration: 1.5 });
+    } else {
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setMobileOpen(false);
-    const el = document.querySelector(href);
-    if (!el) return;
-    // Use Lenis scrollTo if available, otherwise fall back to native
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const lenis = (window as any).__lenis as { scrollTo: (target: Element | string, opts?: { offset?: number; duration?: number }) => void } | undefined;
-    if (lenis) {
-      lenis.scrollTo(el, { offset: -80, duration: 1.5 });
-    } else {
-      el.scrollIntoView({ behavior: "smooth" });
+
+    if (isProjectPage) {
+      navigate("/", { state: { scrollTo: href } });
+      return;
     }
+
+    scrollToSection(href);
   };
 
   return (
@@ -69,12 +82,16 @@ export default function Navbar() {
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              const lenis = (window as any).__lenis as { scrollTo: (target: number, opts?: { duration?: number }) => void } | undefined;
-              if (lenis) {
-                lenis.scrollTo(0, { duration: 1.5 });
+              if (isProjectPage) {
+                navigate("/");
               } else {
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const lenis = (window as any).__lenis as { scrollTo: (target: number, opts?: { duration?: number }) => void } | undefined;
+                if (lenis) {
+                  lenis.scrollTo(0, { duration: 1.5 });
+                } else {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
               }
             }}
             className="font-display font-bold text-xl tracking-tight text-foreground hover:text-accent transition-colors mr-5"
