@@ -1,73 +1,68 @@
-# React + TypeScript + Vite
+# Anoop Gupta — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal portfolio showcasing AI/ML engineering work, built with React 19, Three.js, GSAP, and Tailwind CSS v4.
 
-Currently, two official plugins are available:
+**Live:** [anoopg-portfolio.vercel.app](https://anoopg-portfolio.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+| Layer | Technology |
+|-------|-----------|
+| Framework | React 19 + TypeScript 5.9 |
+| Build | Vite 7 + SWC |
+| Styling | Tailwind CSS v4 + shadcn/ui |
+| 3D | Three.js via @react-three/fiber + @react-three/drei |
+| Animations | GSAP (ScrollTrigger, SplitText) + Motion |
+| Smooth Scroll | Lenis |
+| Physics | Matter.js (FallingText) |
+| Routing | React Router DOM v7 |
+| Fonts | Syne (display), Inter (body), JetBrains Mono (mono) |
+| Icons | Lucide React + React Icons |
+| Deploy | Vercel |
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── App.tsx                    # Router, Lenis, GSAP setup, routes
+├── main.tsx                   # React root
+├── styles/globals.css         # Tailwind v4, theme tokens, dark mode
+├── lib/
+│   ├── data.ts                # All content (nav, bio, skills, projects, etc.)
+│   └── utils.ts               # cn() helper
+├── hooks/
+│   └── useSectionPin.ts       # GSAP ScrollTrigger pinning hook
+└── components/
+    ├── common/                # Navbar, Footer, ScrollProgress, GradientMesh
+    ├── hero/                  # NeuralNetwork (3D), CursorGlow (cursor trail)
+    ├── sections/              # Hero, About, Experience, Skills, Achievements,
+    │                          # Projects, ProjectDetail, Journey, Contact
+    ├── reactbits/             # CountUp, TextType, SplitText, FallingText
+    └── ui/                    # shadcn/ui components
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 3D Neural Network Hero
+Concentric shells of nodes using Fibonacci golden-angle distribution, structured edges (ring + radial + cross-link), slow rotation, and pulse animation. Lazy-loaded in its own async chunk. Responsive node counts (55 desktop, 30 mobile).
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Cursor Neural Trail
+Canvas-based particle trail that follows the mouse cursor. Spawns points along movement, connects nearby points with fading amber lines. Pauses on card hover. Skipped on touch devices.
+
+### GSAP Scroll Animations
+Every section uses ScrollTrigger reveal animations. Elements animate from `opacity: 0, y: 50, blur(3px)` into view. Skills section uses a falling badge animation with random rotation and stagger.
+
+### Hero Character Stagger
+Text split into individual character spans with staggered GSAP reveal — each character animates from `opacity: 0, y: 40, scale: 0.8, rotateX: 40` with `back.out(1.7)` easing.
+
+### Dark Mode
+Dual-theme system (warm cream light / near-black dark) with CSS custom properties. Persisted via localStorage. Pre-paint restore in index.html prevents flash.
+
+### Project Case Studies
+Featured projects have full case study pages (`/project/:slug`) with: problem, solution, architecture flow diagram, key decisions, features, impact metrics, and learnings.
+
+## License
+
+Built by Anoop Gupta. All rights reserved.
