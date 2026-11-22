@@ -258,6 +258,23 @@ export interface ArchNode {
   color: string; // tailwind color class like "blue" "green" "amber"
 }
 
+// ── Project detail building blocks ──
+export interface ProjectStat {
+  value: string;
+  label: string;
+}
+
+export interface ProjectStep {
+  title: string;
+  detail: string;
+}
+
+export interface ProjectChallenge {
+  title: string;
+  problem: string;
+  fix: string;
+}
+
 // ── Projects ──
 export interface Project {
   slug: string;
@@ -277,6 +294,9 @@ export interface Project {
   solution: string;
   impact: string[];
   architecture?: ArchNode[];
+  stats?: ProjectStat[];
+  howItWorks?: ProjectStep[];
+  challenges?: ProjectChallenge[];
   keyDecisions?: string[];
   features: string[];
   learnings?: string[];
@@ -324,6 +344,44 @@ export const PROJECTS: Project[] = [
       { label: "FastEmbed", detail: "nomic-embed-text, 768-dim, in-process", color: "amber" },
       { label: "Groq LLM", detail: "Answer, rewrite & enrich calls", color: "red" },
       { label: "Self-Correcting RAG", detail: "Search → Rewrite → Enrich", color: "cyan" },
+    ],
+
+    stats: [
+      { value: "80%+", label: "fewer LLM calls per question" },
+      { value: "91%", label: "right chapter in the top 5 results" },
+      { value: "1,581", label: "textbook passages indexed" },
+      { value: "$0", label: "monthly running cost" },
+    ],
+
+    howItWorks: [
+      { title: "Ask", detail: "The student asks a question in chat. Their profile (grade, preferred teaching style, weak areas) and the last few messages are loaded." },
+      { title: "Retrieve", detail: "The question is embedded with nomic-embed-text (768-dim, running inside the API) and pgvector's HNSW index returns the closest textbook passages for that subject." },
+      { title: "Self-correct", detail: "If fewer than 3 passages clear the similarity floor, an LLM rewrites the question into alternative search phrases and searches again." },
+      { title: "Enrich", detail: "The best passage gets one concrete example, one common misconception and one real-world connection, so the answer teaches instead of quoting." },
+      { title: "Answer", detail: "One LLM call writes the answer in the student's teaching style, with chapter, section and page citations saved alongside the chat." },
+    ],
+
+    challenges: [
+      {
+        title: "Search that returned nothing",
+        problem: "The first ingestion marked every passage unverified while search only returned verified ones, labelled most passages 'Introduction' and used page numbers relative to each PDF file.",
+        fix: "Rebuilt ingestion to read real chapter titles from the PDF headings and the printed page numbers from each page, producing 1,581 correctly tagged passages.",
+      },
+      {
+        title: "An index that quietly hurt accuracy",
+        problem: "A 58-question benchmark showed the IVFFlat index was probing about 1% of the table, dropping the right chapter in the top 5 from 91% to 55%.",
+        fix: "Migrated to an HNSW index and used the benchmark's measured similarity scores to lower the relevance floor from 0.65 to 0.55.",
+      },
+      {
+        title: "An agent that kept timing out",
+        problem: "The original ReAct agent needed 14+ LLM calls per question and regularly timed out.",
+        fix: "Replaced it with a fixed retrieve → rewrite → enrich → answer pipeline that needs 1–3 calls and never loops.",
+      },
+      {
+        title: "Fitting on a free server",
+        problem: "The free hosting tier has 512 MB of memory, with no room for a separate embedding service.",
+        fix: "Runs a quantized embedding model (~130 MB) inside the API process instead.",
+      },
     ],
 
     keyDecisions: [
@@ -391,6 +449,40 @@ export const PROJECTS: Project[] = [
       { label: "Backtesting Engines", detail: "Event-driven + Vectorized", color: "cyan" },
     ],
 
+    stats: [
+      { value: "12", label: "trading strategies" },
+      { value: "35+", label: "risk & return metrics" },
+      { value: "180", label: "walk-forward windows tested" },
+      { value: "14×", label: "faster parameter search" },
+    ],
+
+    howItWorks: [
+      { title: "Load data", detail: "Daily prices come from Yahoo Finance (with Alpha Vantage and NSE providers), cached and stored in SQLite." },
+      { title: "Generate signals", detail: "A strategy from the registry, such as EMA crossover or a trained ML model, turns prices into buy and sell signals." },
+      { title: "Backtest", detail: "The event-driven engine replays the market bar by bar, charging commission and slippage, applying stop-losses and position limits, and valuing open positions every day." },
+      { title: "Measure", detail: "Each run reports 35+ metrics, including Sharpe, Sortino, Calmar, max drawdown, VaR, CVaR and Kelly." },
+      { title: "Optimize", detail: "Grid, random or genetic-algorithm search finds the best parameters for a strategy." },
+      { title: "Validate", detail: "Walk-forward testing tunes on one window, tests on the next unseen window and rolls forward, showing whether the edge survives on new data." },
+    ],
+
+    challenges: [
+      {
+        title: "Strategies that only worked on paper",
+        problem: "A single backtest tunes and evaluates on the same data, so overfit settings look profitable.",
+        fix: "Walk-forward testing across 180 windows (4 strategies × 3 tickers, 2015–24) showed average Sharpe falling from 0.66 to 0.06, exposing Bollinger mean-reversion as overfit while EMA crossover held up.",
+      },
+      {
+        title: "ML models seeing the future",
+        problem: "Labels are built from future returns, so naive training lets a model learn from outcomes it couldn't have known yet.",
+        fix: "Models retrain on an expanding window and only use labels whose forward window has closed, an embargo enforced by a unit test.",
+      },
+      {
+        title: "Is the optimizer good enough?",
+        problem: "Brute-force grid search over three MACD parameters means 8,736 backtests.",
+        fix: "Measured the genetic optimizer against the full grid: 600 evaluations landed in the top 0.42% of all settings, 14× faster (26 s vs 369 s).",
+      },
+    ],
+
     keyDecisions: [
       "Two backtesting engines - event-driven for realistic bar-by-bar execution with commission, slippage and stop-losses, vectorized for fast parameter sweeps",
       "Walk-forward validation - tune on a rolling 2-year window, test on the next 6 months, repeat. It's the only way to see whether a strategy's edge survives on data it wasn't tuned on",
@@ -427,12 +519,13 @@ export const PROJECTS: Project[] = [
       "Python",
       "FastAPI",
       "PostgreSQL",
-      "Groq (Llama 3.3)",
+      "Groq (gpt-oss-120b)",
       "WhatsApp Cloud API",
     ],
     live: "#",
     github: "https://github.com/AnoopG7/AI-Sales-Agent",
     featured: true,
+    videoUrl: "https://nfvhlk7rxobcland.public.blob.vercel-storage.com/Sales-Agent.mov",
 
     problem:
       "Leads from ads go cold when nobody replies for hours. Sales reps spend their first conversations asking the same qualification questions, and the answers often never make it into the CRM.",
@@ -453,6 +546,44 @@ export const PROJECTS: Project[] = [
       { label: "Groq / Ollama", detail: "One OpenAI-compatible client", color: "amber" },
       { label: "PostgreSQL 16", detail: "SQLAlchemy async + Alembic", color: "purple" },
       { label: "React Dashboard", detail: "Leads, catalog, meetings", color: "cyan" },
+    ],
+
+    stats: [
+      { value: "9", label: "agent tools" },
+      { value: "7", label: "pipeline stages" },
+      { value: "≤10", label: "tool rounds per reply" },
+      { value: "24/7", label: "instant first response" },
+    ],
+
+    howItWorks: [
+      { title: "Receive", detail: "Meta's webhook delivers the WhatsApp message. The HMAC signature is verified and duplicate deliveries are dropped by message ID." },
+      { title: "Identify", detail: "The lead is found by phone number or created automatically, and the message is stored." },
+      { title: "Build context", detail: "The system prompt combines the persona, today's date, the live lead profile (what's known and what's missing), stage instructions and guardrails, plus the last 10 messages." },
+      { title: "Reason & act", detail: "The LLM calls tools such as product search, lead updates and demo booking. After any tool that changes the lead, the profile is reloaded and the prompt rebuilt." },
+      { title: "Reply", detail: "The final answer goes back on WhatsApp and is stored, so the lead, stage and meetings are ready for a sales rep." },
+    ],
+
+    challenges: [
+      {
+        title: "The agent re-asked answered questions",
+        problem: "The lead profile in the prompt was built once per message, so after saving the team size the model still saw it as missing.",
+        fix: "Reload the lead and rebuild the system prompt after every state-changing tool call.",
+      },
+      {
+        title: "Meta delivers the same message twice",
+        problem: "WhatsApp webhooks retry on slow responses, which would make the agent answer twice.",
+        fix: "Store each WhatsApp message ID and skip any message that has already been processed.",
+      },
+      {
+        title: "Demos booked at the wrong time",
+        problem: "Times without a timezone were saved in the database server's timezone, and the model didn't know today's date, so \"Tuesday\" could become any date.",
+        fix: "Interpret times in the meeting's timezone and give the agent today's date, so \"Tuesday at 11am IST\" lands on the right slot.",
+      },
+      {
+        title: "The LLM provider retired the model",
+        problem: "Groq removed the model the agent was built on.",
+        fix: "Because every call goes through one OpenAI-compatible client, switching to gpt-oss-120b was a one-line config change.",
+      },
     ],
 
     keyDecisions: [
@@ -489,9 +620,10 @@ export const PROJECTS: Project[] = [
       "React",
       "TypeScript",
     ],
-    live: "#",
+    live: "https://nfvhlk7rxobcland.public.blob.vercel-storage.com/Ark-Agent.mov",
     github: "https://github.com/AnoopG7/Ark-Agent",
     featured: true,
+    videoUrl: "https://nfvhlk7rxobcland.public.blob.vercel-storage.com/Ark-Agent.mov",
 
     problem:
       "During a flood, relief coordinators juggle depot stock, blocked roads, available teams and standard operating procedures under time pressure, and decisions made on one shift are easily lost by the next. An AI planner is only useful if it respects the rules, shows its reasoning and never dispatches anything without a human's sign-off.",
@@ -513,6 +645,45 @@ export const PROJECTS: Project[] = [
       { label: "Groq LLM", detail: "Tool calling", color: "amber" },
       { label: "Postgres + pgvector", detail: "Ops data, memory, HNSW index", color: "purple" },
       { label: "RAG", detail: "9 SOPs, bge-small embeddings", color: "cyan" },
+    ],
+
+    stats: [
+      { value: "7", label: "agent tools" },
+      { value: "8", label: "evaluation scenarios" },
+      { value: "121", label: "offline unit tests" },
+      { value: "100%", label: "of dispatches human-approved" },
+    ],
+
+    howItWorks: [
+      { title: "Recall", detail: "Wards mentioned in the request are matched to past decisions and rejections in long-term memory, so a new shift starts with context." },
+      { title: "Reason", detail: "The LLM decides its next step, and its reasoning is streamed live to the dashboard trace." },
+      { title: "Act", detail: "Read-only tools check stock at 3 depots, the status of 6 routes and available volunteer teams, and search 9 relief guidelines with citations." },
+      { title: "Validate", detail: "A proposed dispatch is checked in code against guideline minimums, team skills and availability, blocked or boat-only routes, stock and travel time. Violations go back to the agent." },
+      { title: "Approve", detail: "The graph pauses with a LangGraph interrupt, and the coordinator approves, revises or rejects the plan." },
+      { title: "Record", detail: "Approved plans reserve stock and create a task; every decision or rejection is saved so the next shift knows." },
+    ],
+
+    challenges: [
+      {
+        title: "Pausing and resuming safely",
+        problem: "LangGraph re-runs a node from the top when a paused run resumes, so a write before the pause would happen twice.",
+        fix: "The approval step asks for the human decision before any stock is reserved or task created.",
+      },
+      {
+        title: "Plans that broke the rules",
+        problem: "An LLM can propose a plan that uses a blocked road, a busy team or less water than the guidelines require.",
+        fix: "A deterministic validator rejects these before the coordinator ever sees them and tells the agent exactly what to fix.",
+      },
+      {
+        title: "Silent model turns",
+        problem: "The reasoning model sometimes ended a turn with neither a tool call nor any text.",
+        fix: "The agent re-asks with a nudge up to twice, then falls back to a clear message instead of failing silently.",
+      },
+      {
+        title: "Runaway loops and made-up sources",
+        problem: "An agent can loop indefinitely or cite guidelines it never looked up.",
+        fix: "A step limit of 8 ends the run cleanly, and plans may only cite passages retrieved during the same request.",
+      },
     ],
 
     keyDecisions: [

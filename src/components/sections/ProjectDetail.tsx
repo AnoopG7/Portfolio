@@ -17,6 +17,8 @@ import {
   Zap,
   BookOpen,
   TrendingUp,
+  Workflow,
+  Wrench,
 } from "lucide-react";
 
 export default function ProjectDetail() {
@@ -217,6 +219,25 @@ export default function ProjectDetail() {
           )}
         </div>
 
+        {/* ─── Key numbers ─── */}
+        {project.stats && project.stats.length > 0 && (
+          <div data-reveal className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10 md:mb-14">
+            {project.stats.map((stat) => (
+              <div
+                key={stat.label}
+                className="rounded-xl border border-border bg-card/40 px-4 py-4 text-center"
+              >
+                <p className="font-display text-2xl sm:text-3xl font-bold text-accent">
+                  {stat.value}
+                </p>
+                <p className="text-[11px] sm:text-xs text-muted-foreground mt-1 leading-snug">
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+
         <Separator className="mb-10 md:mb-14" />
 
         {/* ─── The Problem ─── */}
@@ -248,6 +269,33 @@ export default function ProjectDetail() {
             {project.solution}
           </p>
         </div>
+
+        {/* ─── How It Works ─── */}
+        {project.howItWorks && project.howItWorks.length > 0 && (
+          <div data-reveal className="mb-10 md:mb-14">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="size-9 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+                <Workflow className="size-4.5 text-accent" />
+              </div>
+              <h2 className="font-display text-xl sm:text-2xl font-bold">
+                How It Works
+              </h2>
+            </div>
+            <ol className="space-y-3">
+              {project.howItWorks.map((step, i) => (
+                <li key={step.title} className="flex gap-3 sm:gap-4">
+                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full border border-accent/30 bg-accent/10 font-mono text-xs font-semibold text-accent">
+                    {i + 1}
+                  </span>
+                  <p className="text-sm sm:text-base leading-relaxed pt-0.5">
+                    <span className="text-foreground font-medium">{step.title}</span>
+                    <span className="text-muted-foreground"> - {step.detail}</span>
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
 
         {/* ─── Architecture (featured only) ─── */}
         {isFeatured && project.architecture && project.architecture.length > 0 && (
@@ -328,6 +376,37 @@ export default function ProjectDetail() {
                   </div>
                 );
               })}
+            </div>
+          </div>
+        )}
+
+        {/* ─── Challenges & how I solved them ─── */}
+        {project.challenges && project.challenges.length > 0 && (
+          <div data-reveal className="mb-10 md:mb-14">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="size-9 rounded-lg bg-orange-500/10 flex items-center justify-center shrink-0">
+                <Wrench className="size-4.5 text-orange-400" />
+              </div>
+              <h2 className="font-display text-xl sm:text-2xl font-bold">
+                Challenges & How I Solved Them
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {project.challenges.map((c) => (
+                <div key={c.title} className="rounded-xl border border-border bg-card/40 p-4">
+                  <p className="text-sm sm:text-base font-semibold text-foreground mb-2">
+                    {c.title}
+                  </p>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-2">
+                    <span className="font-medium text-red-400">Problem: </span>
+                    {c.problem}
+                  </p>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                    <span className="font-medium text-green-400">Fix: </span>
+                    {c.fix}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         )}
