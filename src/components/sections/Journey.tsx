@@ -83,9 +83,14 @@ export default function Journey() {
                     <h3 className="font-display text-lg sm:text-xl md:text-2xl font-bold mt-1.5 mb-2 text-foreground group-hover:text-accent transition-colors duration-300">
                       {milestone.title}
                     </h3>
-                    <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
-                      {milestone.description}
-                    </p>
+                    <ul className="space-y-1.5 text-muted-foreground text-sm md:text-base leading-relaxed">
+                      {milestone.points.map((point, j) => (
+                        <li key={j} className="flex gap-2.5">
+                          <span className="mt-[0.6em] size-1.5 shrink-0 rounded-full bg-accent/60" aria-hidden="true" />
+                          <span>{point}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               );

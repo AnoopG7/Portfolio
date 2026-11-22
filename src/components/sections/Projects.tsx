@@ -260,12 +260,12 @@ export default function Projects() {
             Featured Projects
           </h2>
           <p className="text-muted-foreground text-xs sm:text-sm max-w-xs">
-            AI-powered and production-ready applications
+            LLM systems, AI agents and full-stack apps
           </p>
         </div>
 
         {/* Featured projects */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mb-8 sm:mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-8 sm:mb-12">
           {featured.map((project) => (
             <div key={project.slug} data-reveal className="h-full">
               <ProjectCard project={project} isFeatured />

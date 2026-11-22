@@ -5,24 +5,22 @@ import { ACHIEVEMENTS, type Achievement } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Trophy, Cloud, Brain, Bot } from "lucide-react";
+import { Trophy, Cloud, Brain, Bot, Users, Code2, Award } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Keyed by tag (not title) so editing a title never drops its icon.
 const ACHIEVEMENT_ICONS: Record<string, LucideIcon> = {
-  "Academic Excellence Award": Trophy,
-  "AWS Cloud Practitioner Essentials": Cloud,
-  "Machine Learning Specialization": Brain,
-  "Fullstack Generative & Agentic AI": Bot,
+  Academic: Trophy,
+  Leadership: Users,
+  Hackathons: Code2,
+  Coursera: Cloud,
+  "DeepLearning.AI": Brain,
+  Udemy: Bot,
 };
 
-const ACHIEVEMENT_ICON_COLORS: Record<string, string> = {
-  "Academic Excellence Award": "#f97316",
-  "AWS Cloud Practitioner Essentials": "#f97316",
-  "Machine Learning Specialization": "#f97316",
-  "Fullstack Generative & Agentic AI": "#f97316",
-};
+const ACHIEVEMENT_ICON_COLOR = "#f97316";
 
 export default function Achievements() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -80,14 +78,14 @@ export default function Achievements() {
 }
 
 function AchievementCard({ achievement }: { achievement: Achievement }) {
-  const Icon = ACHIEVEMENT_ICONS[achievement.title];
+  const Icon = ACHIEVEMENT_ICONS[achievement.tag] ?? Award;
 
   return (
     <div data-reveal className="h-full">
       <Card className="h-full group border-border bg-card/60 hover:border-accent/30 hover:bg-card transition-all duration-500">
         <CardContent className="flex flex-col items-center justify-center h-full p-4 md:p-5 text-center gap-2.5">
           <div className="size-10 rounded-xl bg-accent/10 flex items-center justify-center ring-1 ring-accent/20 group-hover:bg-accent/15 group-hover:ring-accent/30 transition-colors duration-300">
-            {Icon && <Icon className="size-5" style={{ color: ACHIEVEMENT_ICON_COLORS[achievement.title] }} />}
+            <Icon className="size-5" style={{ color: ACHIEVEMENT_ICON_COLOR }} />
           </div>
           <h3 className="font-display text-sm md:text-base font-bold text-foreground group-hover:text-accent transition-colors duration-300 leading-snug">
             {achievement.title}

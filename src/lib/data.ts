@@ -286,18 +286,17 @@ export const PROJECTS: Project[] = [
   {
     slug: "tutorx",
     title: "TutorX",
-    subtitle: "RAG Tutoring System for CBSE Students",
+    subtitle: "RAG Tutoring System",
     tagline:
-      "A RAG tutor that answers from the student's own NCERT textbook, cites the chapter, section and page, and runs for $0/month.",
+      "Gives students free, textbook-grounded answers with page citations, unlike chatbots that can’t show their sources.",
     tech: [
-      "Self-Correcting RAG",
-      "pgvector (HNSW)",
-      "nomic-embed-text",
-      "Query Rewriting",
-      "Chunk Enrichment",
-      "Retrieval Benchmark",
-      "Groq Cloud",
-      "FastAPI + React",
+      "Python",
+      "FastAPI",
+      "React",
+      "TypeScript",
+      "Supabase",
+      "pgvector",
+      "Groq",
     ],
     live: "https://anoop-tutorx.vercel.app",
     github: "https://github.com/AnoopG7/TutorX",
@@ -311,11 +310,11 @@ export const PROJECTS: Project[] = [
       "I built TutorX, a full-stack RAG tutor over 80 Class 9 NCERT textbook PDFs, split into 1,581 passages tagged by chapter, section and printed page. When a search comes back weak, an LLM rewrites the question into alternative queries and searches again; the best passage is then enriched with an example and a common misconception before one final LLM call writes the answer, personalized to the student's teaching-style preference, weak areas and recent conversation. Every answer carries chapter, section and page citations.",
 
     impact: [
-      "Cut LLM calls per question from 14+ (original ReAct agent, which timed out) to 1-3",
-      "Finds the right chapter in the top 5 results for 91% of a 58-question retrieval benchmark (78% as the top result)",
-      "Caught a vector-index misconfiguration that silently dropped that to 55%, and fixed it by migrating to HNSW",
-      "Chapter, section and page citations on every answer",
-      "$0/month on free tiers, with quantized embeddings that fit a 512 MB server",
+      "Built a multi-stage, self-correcting RAG tutor over CBSE textbooks that returns chapter, section and page citations with every answer, so students can verify the source",
+      "Replaced a ReAct agent that needed 14+ LLM calls per question and frequently timed out with a 1–3 call pipeline, cutting LLM calls by 80%+",
+      "Engineered context and memory management that combines textbook passages, the student’s learning profile and recent chat history into a single prompt",
+      "Weak searches are rewritten into alternative queries, and the best passage is enriched with an example and a common misconception before answering",
+      "Finds the right chapter in the top 5 results for 91% of a 58-question retrieval benchmark",
     ],
 
     architecture: [
@@ -357,16 +356,13 @@ export const PROJECTS: Project[] = [
     title: "TSRL",
     subtitle: "Trading Strategy Research Lab",
     tagline:
-      "A research platform that backtests trading strategies on historical data and tells you which ones only work on paper.",
+      "Flags overfit strategies before any money is risked by catching ones that look profitable in testing but lose money on new data.",
     tech: [
-      "Event-Driven Backtesting",
-      "Walk-Forward Validation",
-      "Genetic Algorithm Optimization",
-      "Random Forest & Gradient Boosting",
-      "35+ Risk Metrics",
-      "Scikit-learn",
+      "Python",
+      "scikit-learn",
       "FastAPI",
-      "React Dashboard",
+      "React",
+      "TypeScript",
     ],
     live: "#",
     github: "https://github.com/AnoopG7/TSRL",
@@ -380,11 +376,10 @@ export const PROJECTS: Project[] = [
       "I built TSRL, a full-stack research platform with 12 strategies, event-driven and vectorized backtesting engines that model commission, slippage, stop-losses and multi-asset rebalancing, grid / random / genetic-algorithm optimizers, walk-forward validation, and Random Forest / Gradient Boosting signal models - all behind an 8-page React dashboard.",
 
     impact: [
-      "Walk-forward testing over 180 train/test windows (4 strategies × 3 tickers, 2015-24): average Sharpe fell from 0.66 in-sample to 0.06 out-of-sample",
-      "Exposed Bollinger mean-reversion as overfit (Sharpe 0.95 → −0.06) while EMA crossover held up (0.68 → 0.54)",
-      "Genetic optimizer found a setting in the top 0.42% of an 8,736-point grid, 14× faster than brute force (26 s vs 369 s)",
-      "35+ risk and return metrics (Sharpe, Sortino, Calmar, VaR, CVaR, Kelly)",
-      "111 engineered features with leakage-safe walk-forward model retraining",
+      "Built a platform that tests trading strategies on years of historical market data, simulating real trading costs (fees, slippage, stop-losses) across 12 strategies and 35+ risk and return metrics",
+      "Added walk-forward testing (tuning on past data, then testing on unseen future data), which showed that strategies lose most of their edge on new data: average risk-adjusted return (Sharpe ratio) fell from 0.66 to 0.06",
+      "Trained Random Forest and Gradient Boosting models on 111 market signals, with safeguards that prevent the models from seeing future prices during training",
+      "Runs a full parameter search 14× faster than brute force (26 s vs 6 min)",
     ],
 
     architecture: [
@@ -425,17 +420,15 @@ export const PROJECTS: Project[] = [
   {
     slug: "ai-sales-agent",
     title: "AI Sales Agent",
-    subtitle: "WhatsApp Sales Agent for Lead Qualification",
+    subtitle: "AI Sales Agent for Lead Generation",
     tagline:
-      "A WhatsApp AI agent that replies to inbound leads instantly, qualifies them, recommends the right plan and books a demo call.",
+      "Automates the first-response and qualification work a sales rep does by hand: replies instantly at any hour, records leads in the CRM and books demo calls.",
     tech: [
-      "LLM Function Calling",
-      "9-Tool Agent Loop",
-      "FastAPI Async",
-      "PostgreSQL + SQLAlchemy",
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "Groq (Llama 3.3)",
       "WhatsApp Cloud API",
-      "Groq / Ollama",
-      "React + shadcn/ui",
     ],
     live: "#",
     github: "https://github.com/AnoopG7/AI-Sales-Agent",
@@ -448,10 +441,9 @@ export const PROJECTS: Project[] = [
       "I built a WhatsApp AI sales agent on raw LLM function calling. It answers every inbound message instantly, qualifies the lead (company, team size, use case, budget, timeline), recommends plans from the product catalog, books a demo call, emails a summary, and hands off to a human for custom pricing or contracts. An admin dashboard manages leads, the catalog and meetings.",
 
     impact: [
-      "Automates the first-response and qualification work a rep does by hand, at any hour",
-      "9-tool function-calling loop that moves each lead through a 7-stage pipeline to a booked demo call",
-      "Lead details saved straight to the database as the conversation happens",
-      "Agent name, company and currency configurable, so it can sell any catalog",
+      "Built a WhatsApp AI agent with 9 tools (product search, lead qualification, demo booking, human handoff) that moves each lead through a 7-stage pipeline, from first message to a booked demo call",
+      "Kept the agent’s view of each lead accurate by refreshing its context after every update, and capped tool rounds and chat history to control token costs",
+      "Records company, team size, budget and requirements in the CRM, and books demo calls, handing off to a human when needed",
     ],
 
     architecture: [
@@ -479,6 +471,71 @@ export const PROJECTS: Project[] = [
       "Switch between hosted Groq and local Ollama with one env variable",
       "Terminal simulator that runs the exact webhook code path for testing",
       "React admin dashboard with lead, product and meeting management",
+    ],
+  },
+  {
+    slug: "ark-agent",
+    title: "Ark-Agent",
+    subtitle: "Human-in-the-Loop Relief Planning Agent",
+    tagline:
+      "Plans flood-relief deliveries from live data and guidelines, and never dispatches anything without a coordinator’s approval.",
+    tech: [
+      "Python",
+      "LangGraph",
+      "FastAPI",
+      "PostgreSQL",
+      "pgvector",
+      "Groq",
+      "React",
+      "TypeScript",
+    ],
+    live: "#",
+    github: "https://github.com/AnoopG7/Ark-Agent",
+    featured: true,
+
+    problem:
+      "During a flood, relief coordinators juggle depot stock, blocked roads, available teams and standard operating procedures under time pressure, and decisions made on one shift are easily lost by the next. An AI planner is only useful if it respects the rules, shows its reasoning and never dispatches anything without a human's sign-off.",
+
+    solution:
+      "I built Ark, a LangGraph planning agent for a relief coordination centre. A coordinator types a request like \"Ward 7 needs drinking water for 300 people by evening\"; Ark recalls what earlier shifts decided about that ward, looks up the relevant guideline with RAG, checks stock at three depots, road status and volunteer teams, and plans around problems such as a blocked road. The plan is validated against live data and the guidelines, then the graph pauses for the coordinator to approve, revise or reject it. Every decision is stored so the next shift sees it, even after a restart.",
+
+    impact: [
+      "Built a LangGraph ReAct agent with 7 tools (stock, roads, teams, guideline search, memory, dispatch) that plans relief deliveries and routes around blocked roads",
+      "Paused every dispatch for human approval with a LangGraph interrupt, after validating the plan against live stock, routes, team skills and guideline minimums",
+      "Kept decisions across shifts and restarts with Postgres-backed short- and long-term memory, and cited guidelines via RAG over 9 SOPs",
+      "Covered 8 evaluation scenarios (blocked road, insufficient stock, step limit, memory, revisions) and 121 offline unit tests",
+    ],
+
+    architecture: [
+      { label: "React Dashboard", detail: "Chat, live trace, approval slip", color: "blue" },
+      { label: "FastAPI", detail: "Server-sent event streaming", color: "green" },
+      { label: "LangGraph", detail: "ReAct loop + interrupt()", color: "red" },
+      { label: "Groq LLM", detail: "Tool calling", color: "amber" },
+      { label: "Postgres + pgvector", detail: "Ops data, memory, HNSW index", color: "purple" },
+      { label: "RAG", detail: "9 SOPs, bge-small embeddings", color: "cyan" },
+    ],
+
+    keyDecisions: [
+      "Custom LangGraph nodes instead of a prebuilt agent - load_memory → reason ⇄ tools → approval → finalize_plan makes every transition explicit and testable",
+      "Validate before asking a human - a deterministic validator checks quantities, team skills, blocked routes, boat-only routes, stock and ETA, and sends violations back to the reasoning step",
+      "interrupt() before any write - LangGraph re-runs the approval node on resume, so nothing is reserved until the coordinator has decided",
+      "Two memory layers - a checkpointer keeps each conversation, and a long-term store keeps decisions and rejections per ward across shifts",
+      "Citations must be earned - a plan may only cite guideline passages actually retrieved in the current request",
+    ],
+
+    features: [
+      "7 tools - stock lookup, road status, team list, guideline search, recall and save facts, and a dispatch proposal",
+      "Human approval with approve, revise or reject, and a reason saved to memory",
+      "Plan validation against live operational data and guideline rules",
+      "Step limit that ends the run cleanly with a clear message",
+      "RAG over 9 relief SOPs with heading-aware chunks and citations",
+      "Live reasoning trace streamed to the dashboard",
+      "Docker Compose setup: Postgres 16 + pgvector, backend, frontend",
+    ],
+
+    learnings: [
+      "Human-in-the-loop is a state-machine problem - the hard part is making pause and resume safe, not asking the question",
+      "A validator turns an LLM planner from risky to usable - most bad plans are caught by plain code before a person ever sees them",
     ],
   },
   {
@@ -537,78 +594,34 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
-    slug: "ai-lms",
-    title: "AI-Powered LMS",
-    subtitle: "Full-Stack MERN + AI Learning Platform",
+    slug: "ai-video-dubbing",
+    title: "AI Video Dubbing",
+    subtitle: "Voice-Cloned English Dubbing Pipeline",
     tagline:
-      "Upload study materials, get AI-generated flashcards and quizzes with adaptive difficulty and real-time collaborative chat.",
-    tech: ["AI Quiz Generation", "Groq LLM", "Real-time WebSockets", "Socket.io", "MERN Stack", "Adaptive Difficulty"],
-    live: "https://anoop-lms.vercel.app",
-    github: "https://github.com/AnoopG7/ai-lms",
+      "Turns a YouTube video in another language into an English dub in the original speaker's cloned voice, on an 8 GB laptop.",
+    tech: ["Whisper", "XTTS v2 Voice Cloning", "Speaker Clustering", "FFmpeg", "Python"],
+    live: "#",
+    github: "https://github.com/AnoopG7/ai-video-dubbing",
     featured: false,
 
-    problem: "Students spend hours manually creating flashcards and practice quizzes from their study materials.",
-    solution: "An AI-driven LMS that converts uploaded PDFs/DOCX/TXT into flashcards and quizzes using Groq LLM, with real-time collaborative chat and adaptive difficulty.",
-    impact: [
-      "Automated flashcard & quiz generation from uploaded materials",
-      "Real-time collaborative chat with Socket.io",
-      "Adaptive difficulty-based question generation",
-    ],
-    features: [
-      "AI-driven flashcard & quiz generation from uploaded study materials",
-      "Real-time collaborative chat with Socket.io room-based broadcasting",
-      "Adaptive quiz system with attempt tracking and analytics",
-      "JWT authentication with secure file upload handling",
-    ],
-  },
-  {
-    slug: "sabdasparsh",
-    title: "SabdaSparsh",
-    subtitle: "Bilingual Literary Portfolio Platform",
-    tagline:
-      "A bilingual Hindi & English literary content platform with admin CMS, NextAuth, and Vercel Blob storage.",
-    tech: ["Next.js SSR", "NextAuth JWT", "Vercel Blob", "MongoDB", "Bilingual CMS"],
-    live: "https://sabdasparsh.vercel.app",
-    github: "https://github.com/AnoopG7/SabdaSparsh",
-    featured: false,
+    problem:
+      "Dubbing a video usually means a generic synthetic voice and speech that drifts out of sync with the original timing.",
 
-    problem: "Independent writers need a professional platform to publish bilingual literary content without the overhead of a full CMS.",
-    solution: "A full-stack bilingual platform with admin dashboard, NextAuth JWT authentication, and draft/publish workflow.",
-    impact: [
-      "Bilingual (Hindi & English) content management",
-      "Secure admin dashboard with draft/publish workflow",
-      "Vercel Blob storage for validated image uploads",
-    ],
-    features: [
-      "Bilingual (Hindi & English) literary content platform",
-      "Admin CMS with draft/publish workflow",
-      "NextAuth JWT authentication",
-      "Vercel Blob storage for image uploads",
-    ],
-  },
-  {
-    slug: "bms",
-    title: "Building Management System",
-    subtitle: "Smart Society Management Platform",
-    tagline:
-      "Role-based residential management with 57+ API endpoints and 229+ automated tests.",
-    tech: ["229+ Tests", "57+ API Endpoints", "RBAC", "OpenAPI/Swagger", "MERN Stack"],
-    live: "https://anoop-bms.vercel.app",
-    github: "https://github.com/AnoopG7/BMS",
-    featured: false,
+    solution:
+      "A 6-stage local pipeline: download the video, transcribe and translate it with Whisper, polish the translation, clone each speaker's voice with XTTS v2, time-stretch every generated line to fit its original slot, and remix the new audio into the video. Models load one at a time so it runs on a CPU with 8 GB of RAM.",
 
-    problem: "Residential societies manage operations manually - maintenance requests, billing, and communications are scattered across WhatsApp groups and spreadsheets.",
-    solution: "A full-stack management system with role-based access (Admin, Owner, Tenant), comprehensive REST APIs, and automated testing.",
     impact: [
-      "57+ RESTful API endpoints with OpenAPI/Swagger docs",
-      "229+ unit & integration tests with automated coverage",
-      "Role-based access control (Admin, Owner, Tenant)",
+      "Speech generated in each speaker's own cloned voice",
+      "Each dubbed line time-fitted to the original timestamps",
+      "Runs on an 8 GB RAM CPU by loading models one at a time",
     ],
+
     features: [
-      "Role-based access control - Admin, Owner, Tenant",
-      "57+ RESTful API endpoints with centralized error handling",
-      "229+ unit & integration tests with OpenAPI/Swagger docs",
-      "JWT authentication with bcrypt password hashing",
+      "Whisper transcription and translation from many source languages",
+      "Up to 2 speakers separated by vocal pitch, each cloned separately",
+      "Time alignment with chained FFmpeg atempo filters",
+      "Falls back to edge-tts voices if voice cloning fails",
+      "Fast preset for long videos",
     ],
   },
 ];
@@ -617,33 +630,44 @@ export const PROJECTS: Project[] = [
 export interface Milestone {
   year: string;
   title: string;
-  description: string;
+  points: string[];
 }
 
 export const JOURNEY: Milestone[] = [
   {
     year: "2024",
-    title: "Started B.Tech CSE",
-    description: "Began Computer Science Engineering at ITM Skills University, Navi Mumbai.",
-  },
-  {
-    year: "2024",
-    title: "Full-Stack Projects",
-    description: "Built Building Management System - learning backend architecture and testing.",
+    title: "Started B.Tech & Learnt the Fundamentals",
+    points: [
+      "Began B.Tech in Computer Science & Engineering (AI, ML & Data Science) at ITM Skills University",
+      "Learnt programming fundamentals in Python, C++ and Java",
+      "Built web foundations with HTML, CSS and JavaScript, then moved to the MERN stack",
+      "Joined the Developer Student Club core team",
+    ],
   },
   {
     year: "2025",
-    title: "Shipped Production Apps",
-    description: "Launched AI-Powered LMS and SabdaSparsh - integrating AI, real-time features, and CMS.",
+    title: "First Internship & Full-Stack Projects",
+    points: [
+      "Web Development Intern at CodeDev Verse, building the student-facing frontend of an early-stage LMS",
+      "Ranked 5th of 150 in Year 1 (Academic Excellence Award)",
+      "Sharpened my MERN stack skills and built more full-stack projects",
+    ],
   },
   {
     year: "2026",
-    title: "Built AI Systems",
-    description: "Built TutorX (RAG tutor, live), TSRL (trading strategy research lab), an AI sales agent for WhatsApp, and TaskFlow (AI task planner).",
+    title: "Building AI Systems",
+    points: [
+      "Learnt LLMs, RAG and AI agents through courses including the Machine Learning Specialization (DeepLearning.AI & Stanford) and Fullstack Generative & Agentic AI",
+      "Built TutorX (RAG tutor, live), TSRL (trading strategy research lab), an AI sales agent for WhatsApp and Ark-Agent (human-in-the-loop LangGraph planner)",
+      "Ranked 2nd of 150 in Year 2 (Academic Excellence Award)",
+    ],
   },
   {
     year: "Next →",
-    title: "Open to 6-month internships",
-    description: "Actively looking for 6-month internships (January – June 2027) in AI/ML engineering, LLM systems, or related roles.",
+    title: "Open to 6-Month Internships",
+    points: [
+      "Actively looking for a 6-month internship from January – June 2027",
+      "In AI/ML engineering, LLM systems or related roles",
+    ],
   },
 ];
