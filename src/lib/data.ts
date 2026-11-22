@@ -12,16 +12,16 @@ export const NAV_LINKS = [
 export const PERSONAL = {
   name: "Anoop Gupta",
   firstName: "Anoop",
-  role: "AI/ML Engineer & Full-Stack Developer",
+  role: "AI/ML Engineer | LLM Systems, RAG & AI Agents",
   tagline: "I build AI-powered apps that learn",
-  bio: "AI/ML engineer and full-stack developer with hands-on experience building production-grade AI systems, RAG architectures, multi-agent workflows, and scalable SaaS platforms. Skilled in LLM applications, backend architecture, cloud deployment, and production reliability.",
+  bio: "AI/ML engineering student who builds LLM applications end to end, from RAG pipelines and agents to the APIs and interfaces around them. Focused on making AI systems reliable: measuring retrieval quality, cutting LLM cost and testing models on unseen data.",
   email: "gupta.anoop2006@gmail.com",
   phone: "+91-7039386723",
   education: {
-    degree: "B.Tech in Computer Science Engineering (AI & ML Specialization)",
+    degree: "B.Tech in Computer Science & Engineering (Specialization: AI, ML & Data Science)",
     university: "ITM Skills University, Navi Mumbai",
     graduation: "2028",
-    cgpa: "9.5",
+    cgpa: "9.68",
   },
   socials: {
     github: "https://github.com/AnoopG7",
@@ -61,10 +61,10 @@ export interface ImpactPoint {
 }
 
 export const HERO_METRICS: ImpactPoint[] = [
-  { pre: "Cut AI running costs by", strong: "60%" },
-  { pre: "Use", strong: "14×", post: "fewer AI calls per answer" },
-  { pre: "Ground AI answers in", strong: "real data", post: "to stop hallucinations" },
-  { pre: "Managed ", strong: "Evals", post: "without compromising production" },
+  { pre: "Cut LLM calls per answer by", strong: "80%+" },
+  { pre: "Find the right source for", strong: "9 in 10", post: "questions" },
+  { pre: "Ground AI answers in", strong: "real data", post: "with citations" },
+  { pre: "Catch overfit strategies before they", strong: "cost money" },
 ] as const;
 
 // ── Current Focus ──
@@ -73,7 +73,7 @@ export const CURRENTLY_EXPLORING = "Artificial Intelligence, Machine Learning & 
 // ── Stats ──
 export const STATS = [
   { value: "15+", label: "AI & Full-Stack Projects" },
-  { value: "9.55", label: "CGPA" },
+  { value: "9.68", label: "CGPA" },
   { value: "10+", label: "AI-Powered Apps" },
   { value: "5+", label: "ML Models Built" },
 ] as const;
@@ -92,34 +92,19 @@ export interface Experience {
 
 export const EXPERIENCE: Experience[] = [
   {
-    role: "AI Engineer Intern",
-    company: "Shovihini Tech LLP",
-    location: "Remote",
-    period: "Apr 2026 – Jun 2026",
-    type: "Internship",
-    description:
-      "Built AI-powered applications using LLMs, RAG pipelines, vector embeddings, and NLP workflows.",
-    highlights: [
-      "Built AI-powered applications using LLMs, RAG pipelines, vector embeddings, and NLP workflows",
-      "Developed scalable backend services for AI inference and data processing using Python and FastAPI",
-      "Improved retrieval accuracy, latency, and response quality through prompt and pipeline optimization",
-    ],
-    tech: ["Python", "FastAPI", "LLMs", "RAG", "Vector Embeddings", "NLP"],
-  },
-  {
     role: "Web Development Intern",
     company: "CodeDev Verse",
     location: "Remote",
     period: "May 2025 – Jul 2025",
     type: "Internship",
     description:
-      "Developed responsive full-stack web applications using modern frontend and backend technologies.",
+      "Built the student-facing frontend of an early-stage LMS in React, TypeScript and Material UI.",
     highlights: [
-      "Developed responsive full-stack web applications using modern frontend and backend technologies",
-      "Built APIs, integrated databases, and implemented authentication workflows",
-      "Contributed to debugging, testing, deployment, and performance optimization",
+      "Built the student-facing frontend of an early-stage LMS in React, TypeScript and Material UI",
+      "Validated every form with React Hook Form and Zod, and connected pages to the REST backend through a shared Axios client",
+      "Delivered the core student journey, from sign-up and enrolment through learning and quizzes",
     ],
-    tech: ["React", "Node.js", "REST APIs", "Database Integration", "Authentication"],
+    tech: ["React", "TypeScript", "Material UI", "React Hook Form", "Zod", "Axios"],
   },
 ];
 
@@ -136,7 +121,24 @@ export interface SkillCategory {
 
 export const SKILLS: SkillCategory[] = [
   {
-    category: "AI / ML",
+    category: "Generative AI & LLMs",
+    skills: [
+      { name: "RAG Systems" },
+      { name: "AI Agents" },
+      { name: "Multi-Agent Workflows" },
+      { name: "Function Calling" },
+      { name: "Prompt Engineering" },
+      { name: "Embeddings & Semantic Search" },
+      { name: "LangChain" },
+      { name: "LangGraph" },
+      { name: "OpenAI" },
+      { name: "Anthropic" },
+      { name: "Groq" },
+      { name: "Ollama" },
+    ],
+  },
+  {
+    category: "Machine Learning",
     skills: [
       { name: "Python" },
       { name: "NumPy" },
@@ -146,10 +148,9 @@ export const SKILLS: SkillCategory[] = [
       { name: "TensorFlow" },
       { name: "PyTorch" },
       { name: "Hugging Face" },
-      { name: "LangChain" },
+      { name: "Feature Engineering" },
+      { name: "Model Evaluation" },
       { name: "Jupyter" },
-      { name: "RAG Systems" },
-      { name: "Multi-Agent Workflows" },
     ],
   },
   {
@@ -163,6 +164,8 @@ export const SKILLS: SkillCategory[] = [
       { name: "Node.js" },
       { name: "Express.js" },
       { name: "REST APIs" },
+      { name: "Kafka" },
+      { name: "Redis" },
       { name: "WebSockets" },
       { name: "Socket.io" },
       { name: "JWT Authentication" },
@@ -196,6 +199,7 @@ export const SKILLS: SkillCategory[] = [
       { name: "Supabase" },
       { name: "Firebase" },
       { name: "pgvector" },
+      { name: "Qdrant" },
     ],
   },
   {
@@ -206,6 +210,7 @@ export const SKILLS: SkillCategory[] = [
       { name: "Git" },
       { name: "GitHub" },
       { name: "GitHub Actions" },
+      { name: "Jenkins" },
       { name: "CI/CD" },
       { name: "Linux" },
       { name: "Nginx" },
@@ -238,9 +243,11 @@ export interface Achievement {
 }
 
 export const ACHIEVEMENTS: Achievement[] = [
-  { title: "Academic Excellence Award", tag: "Academic" },
+  { title: "Academic Excellence Award - 2nd of 150", tag: "Academic" },
+  { title: "Core Team Member, Developer Student Club", tag: "Leadership" },
+  { title: "AI/ML & software prototypes at 5+ hackathons", tag: "Hackathons" },
   { title: "AWS Cloud Practitioner Essentials", tag: "Coursera" },
-  { title: "Machine Learning Specialization", tag: "DeepLearning.AI" },
+  { title: "Machine Learning Specialization (in progress)", tag: "DeepLearning.AI" },
   { title: "Fullstack Generative & Agentic AI", tag: "Udemy" },
 ];
 
@@ -277,20 +284,88 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "tutorx",
+    title: "TutorX",
+    subtitle: "RAG Tutoring System for CBSE Students",
+    tagline:
+      "A RAG tutor that answers from the student's own NCERT textbook, cites the chapter, section and page, and runs for $0/month.",
+    tech: [
+      "Self-Correcting RAG",
+      "pgvector (HNSW)",
+      "nomic-embed-text",
+      "Query Rewriting",
+      "Chunk Enrichment",
+      "Retrieval Benchmark",
+      "Groq Cloud",
+      "FastAPI + React",
+    ],
+    live: "https://anoop-tutorx.vercel.app",
+    github: "https://github.com/AnoopG7/TutorX",
+    featured: true,
+    videoUrl: "https://nfvhlk7rxobcland.public.blob.vercel-storage.com/TutorX.mov",
+
+    problem:
+      "Most students can't afford a personal tutor, and general-purpose chatbots give answers that aren't tied to their curriculum and can't show where the answer came from. A student asking about photosynthesis needs the explanation from their own NCERT chapter, at their grade level, with a page they can check.",
+
+    solution:
+      "I built TutorX, a full-stack RAG tutor over 80 Class 9 NCERT textbook PDFs, split into 1,581 passages tagged by chapter, section and printed page. When a search comes back weak, an LLM rewrites the question into alternative queries and searches again; the best passage is then enriched with an example and a common misconception before one final LLM call writes the answer, personalized to the student's teaching-style preference, weak areas and recent conversation. Every answer carries chapter, section and page citations.",
+
+    impact: [
+      "Cut LLM calls per question from 14+ (original ReAct agent, which timed out) to 1-3",
+      "Finds the right chapter in the top 5 results for 91% of a 58-question retrieval benchmark (78% as the top result)",
+      "Caught a vector-index misconfiguration that silently dropped that to 55%, and fixed it by migrating to HNSW",
+      "Chapter, section and page citations on every answer",
+      "$0/month on free tiers, with quantized embeddings that fit a 512 MB server",
+    ],
+
+    architecture: [
+      { label: "React Frontend", detail: "Vercel", color: "blue" },
+      { label: "FastAPI Backend", detail: "Render free tier", color: "green" },
+      { label: "Supabase + pgvector", detail: "PostgreSQL, HNSW index", color: "purple" },
+      { label: "FastEmbed", detail: "nomic-embed-text, 768-dim, in-process", color: "amber" },
+      { label: "Groq LLM", detail: "Answer, rewrite & enrich calls", color: "red" },
+      { label: "Self-Correcting RAG", detail: "Search → Rewrite → Enrich", color: "cyan" },
+    ],
+
+    keyDecisions: [
+      "Deterministic pipeline over a ReAct agent - the original agent needed 14+ LLM calls per question and frequently timed out. A fixed retrieve → (rewrite) → (enrich) → answer pipeline needs 1-3 calls and never loops",
+      "Query rewriting only when retrieval is weak - if fewer than 3 passages clear the similarity floor, the LLM rewrites the question into alternative search phrases. Strong searches skip the extra call",
+      "Measure retrieval instead of guessing - a 58-question benchmark (hit@1 / hit@5 per subject) showed the IVFFlat index was probing about 1% of a small table and cutting hit@5 from 91% to 55%; HNSW fixed it, and the benchmark also set the similarity floor (0.65 → 0.55)",
+      "Embeddings in-process - a quantized nomic-embed-text model (~130 MB) runs inside the API, so there's no separate embedding service and it still fits Render's 512 MB free instance",
+      "Citations as structured data - sources are grouped by chapter and section with every contributing page, so the UI can show exactly where an answer came from",
+    ],
+
+    features: [
+      "Self-correcting retrieval - weak searches are rewritten and retried",
+      "Chunk enrichment - the top passage gains an example and a common misconception",
+      "Chapter, section and printed-page citations on every answer",
+      "Personalized answers - teaching style, weak areas, mastered topics and custom instructions",
+      "4 teaching styles - Definition-First, Analogy-First, Example-First, Socratic",
+      "Persistent chat sessions with auto-titles",
+      "Graceful fallback - database search, then local cosine search, then a clearly-marked ungrounded answer",
+      "Retrieval benchmark script reporting hit@1 / hit@5 per subject",
+    ],
+
+    learnings: [
+      "Measure retrieval before tuning prompts - the benchmark exposed an index problem that no amount of prompt engineering would have fixed",
+      "Cost optimization is an architecture problem - replacing the ReAct loop with a deterministic pipeline was cheaper, faster and more reliable at the same time",
+      "Ingestion quality decides answer quality - fixing chapter titles and page numbers in the source PDFs mattered as much as the model",
+    ],
+  },
+  {
     slug: "tsrl",
     title: "TSRL",
     subtitle: "Trading Strategy Research Lab",
     tagline:
-      "AI-powered quantitative trading platform for strategy research, backtesting, optimization & ML signal generation.",
+      "A research platform that backtests trading strategies on historical data and tells you which ones only work on paper.",
     tech: [
-      "ML Signal Generation",
-      "Quantitative Backtesting",
-      "Genetic Algorithm Optimization",
-      "AI Sentiment Analysis",
+      "Event-Driven Backtesting",
       "Walk-Forward Validation",
-      "50+ Risk Metrics",
+      "Genetic Algorithm Optimization",
+      "Random Forest & Gradient Boosting",
+      "35+ Risk Metrics",
       "Scikit-learn",
-      "FastAPI REST",
+      "FastAPI",
       "React Dashboard",
     ],
     live: "#",
@@ -299,216 +374,166 @@ export const PROJECTS: Project[] = [
     videoUrl: "https://nfvhlk7rxobcland.public.blob.vercel-storage.com/TSRL.mov",
 
     problem:
-      "Retail traders are flying blind. They don't have access to the institutional-grade backtesting, strategy optimization, and risk analytics that hedge funds use daily. Existing retail tools either cost hundreds per month or are too simplistic to validate whether a strategy actually works before risking real capital.",
+      "A strategy that looks profitable in a backtest often isn't. Tuning parameters on the same data you evaluate on finds settings that fit past noise, and retail tools rarely test strategies on data they haven't seen or model real trading costs.",
 
     solution:
-      "I built TSRL - a full-stack quantitative trading research platform that gives retail traders the same analytical firepower as institutional desks. It packages 12 battle-tested trading strategies, dual backtesting engines (event-driven for realistic fills, vectorized for speed), 3 optimization algorithms (Grid Search, Random Search, Genetic), walk-forward validation to catch overfitting, and ML-based signal generation - all accessible through an interactive dashboard with heatmaps, equity curves, and radar charts.",
+      "I built TSRL, a full-stack research platform with 12 strategies, event-driven and vectorized backtesting engines that model commission, slippage, stop-losses and multi-asset rebalancing, grid / random / genetic-algorithm optimizers, walk-forward validation, and Random Forest / Gradient Boosting signal models - all behind an 8-page React dashboard.",
 
     impact: [
-      "12 trading strategies implemented and backtested",
-      "50+ risk metrics (Sharpe, Sortino, Max Drawdown, VaR, CVaR, Kelly Criterion)",
-      "116 ML features engineered for signal generation",
-      "20+ REST API endpoints for backtesting, optimization & ML training",
-      "6 interactive analysis pages with real-time charting",
+      "Walk-forward testing over 180 train/test windows (4 strategies × 3 tickers, 2015-24): average Sharpe fell from 0.66 in-sample to 0.06 out-of-sample",
+      "Exposed Bollinger mean-reversion as overfit (Sharpe 0.95 → −0.06) while EMA crossover held up (0.68 → 0.54)",
+      "Genetic optimizer found a setting in the top 0.42% of an 8,736-point grid, 14× faster than brute force (26 s vs 369 s)",
+      "35+ risk and return metrics (Sharpe, Sortino, Calmar, VaR, CVaR, Kelly)",
+      "111 engineered features with leakage-safe walk-forward model retraining",
     ],
 
     architecture: [
-      { label: "React Dashboard", detail: "Charts, heatmaps, radar", color: "blue" },
-      { label: "FastAPI", detail: "REST API, 20+ endpoints", color: "green" },
+      { label: "React Dashboard", detail: "8 pages, charts & heatmaps", color: "blue" },
+      { label: "FastAPI", detail: "Backtest, optimize, ML, fundamentals", color: "green" },
       { label: "SQLAlchemy + SQLite", detail: "Alembic migrations", color: "purple" },
       { label: "Data Sources", detail: "Yahoo, Alpha Vantage, Finnhub, SEC", color: "amber" },
-      { label: "ML Pipeline", detail: "Scikit-learn, 116 features", color: "red" },
-      { label: "Backtesting Engine", detail: "Event-driven + Vectorized", color: "cyan" },
+      { label: "ML Pipeline", detail: "Scikit-learn, 111 features", color: "red" },
+      { label: "Backtesting Engines", detail: "Event-driven + Vectorized", color: "cyan" },
     ],
 
     keyDecisions: [
-      "Dual backtesting engines - event-driven for realistic order execution with slippage/commission modeling, vectorized for rapid parameter sweeps during optimization",
-      "Genetic algorithm optimization - converges 10x faster than grid search on large parameter spaces while avoiding local minima",
-      "Walk-forward validation - prevents the most common quant mistake: overfitting to historical data. Tests strategy robustness across rolling windows",
-      "Multi-source data aggregation - Yahoo Finance as primary (free, reliable), Alpha Vantage for fundamentals, Finnhub for news sentiment, SEC EDGAR for insider transactions",
-      "SQLite with Alembic - lightweight enough for a research tool but migration-ready for PostgreSQL if needed in production",
+      "Two backtesting engines - event-driven for realistic bar-by-bar execution with commission, slippage and stop-losses, vectorized for fast parameter sweeps",
+      "Walk-forward validation - tune on a rolling 2-year window, test on the next 6 months, repeat. It's the only way to see whether a strategy's edge survives on data it wasn't tuned on",
+      "Genetic algorithm next to grid search - 600 evaluations instead of 8,736, landing in the top 0.42% of the full grid",
+      "Leakage-safe ML - models retrain on an expanding window and only see labels whose forward window has closed (an embargo equal to the prediction horizon), enforced by a unit test",
+      "Multi-source data - Yahoo Finance for prices, Alpha Vantage and FMP for fundamentals, Finnhub for news, SEC filings for insider transactions",
     ],
 
     features: [
-      "12 trading strategies - EMA Crossover, RSI Mean Reversion, MACD, Bollinger Bands, ML-based signals & more",
-      "Dual backtesting - event-driven (realistic fills) & vectorized (fast execution)",
-      "3 optimization methods - Grid Search, Random Search, Genetic Algorithm",
-      "Walk-forward analysis - rolling & expanding window validation",
-      "Fundamental analysis - 5 financial pillars, Piotroski F-Score, Altman Z-Score",
-      "AI sentiment analysis - Finnhub + Alpha Vantage news pipeline",
-      "ML signal generation - Random Forest & Gradient Boosting with 116 features",
-      "Interactive dashboard - equity curves, drawdown charts, parameter heatmaps, radar charts",
-      "Company comparison - side-by-side analysis of up to 5 stocks",
-      "CLI interface - backtest, optimize, and fetch data from the terminal",
+      "12 strategies - EMA Crossover, RSI Mean Reversion, MACD, Bollinger Bands, MA Ribbon, Volume, ML-based & more",
+      "Event-driven & vectorized backtesting with commission, slippage, stop-loss / take-profit",
+      "Multi-asset portfolio backtests with rebalancing",
+      "3 optimizers - Grid Search, Random Search, Genetic Algorithm",
+      "Walk-forward analysis - rolling & expanding windows",
+      "Random Forest & Gradient Boosting signal models on 111 engineered features",
+      "Fundamental analysis - financial health scores, Piotroski F-Score, Altman Z-Score, news & insider activity",
+      "Interactive dashboard - equity curves, drawdowns, monthly-return heatmaps, parameter sensitivity",
+      "CLI for backtesting, optimization and data fetching",
     ],
 
     learnings: [
-      "Overfitting is the silent killer in quant finance - walk-forward validation revealed that several 'profitable' strategies were just curve-fitting noise",
-      "Feature engineering matters more than model selection - 116 carefully crafted features outperformed complex models with raw data",
-      "Event-driven backtesting is essential for realistic performance estimates - vectorized backtests consistently overstate returns by ignoring slippage and fill mechanics",
+      "Overfitting is the default, not the exception - most strategies lost nearly all of their risk-adjusted return once tested on unseen data",
+      "Some strategies are robust and some aren't - EMA crossover kept most of its edge while Bollinger mean-reversion flipped to a loss, which a single backtest would never show",
+      "Leakage hides in the details - an ML model that trains on labels whose future window hasn't closed yet looks great and is useless",
     ],
   },
   {
-    slug: "tutorx",
-    title: "TutorX",
-    subtitle: "AI-Powered CBSE Tutoring System",
+    slug: "ai-sales-agent",
+    title: "AI Sales Agent",
+    subtitle: "WhatsApp Sales Agent for Lead Qualification",
     tagline:
-      "A RAG-grounded AI tutor that reads NCERT textbooks, understands learning gaps, and teaches like a personal tutor - for $0/month.",
+      "A WhatsApp AI agent that replies to inbound leads instantly, qualifies them, recommends the right plan and books a demo call.",
     tech: [
-      "RAG Pipeline",
-      "LLaMA 3.3 70B",
-      "pgvector Embeddings",
-      "PDF Ingestion",
-      "Query Reformulation",
-      "Chunk Enrichment",
-      "Groq Cloud",
-      "Telegram Bot",
+      "LLM Function Calling",
+      "9-Tool Agent Loop",
+      "FastAPI Async",
+      "PostgreSQL + SQLAlchemy",
+      "WhatsApp Cloud API",
+      "Groq / Ollama",
+      "React + shadcn/ui",
     ],
-    live: "https://anoop-tutorx.vercel.app",
-    github: "https://github.com/AnoopG7/TutorX",
+    live: "#",
+    github: "https://github.com/AnoopG7/AI-Sales-Agent",
     featured: true,
-    videoUrl: "https://nfvhlk7rxobcland.public.blob.vercel-storage.com/TutorX.mov",
 
     problem:
-      "Over 250 million Indian students can't afford personal tutors. The ones that turn to AI chatbots get generic, often hallucinated answers that aren't aligned to their actual curriculum. A student asking about photosynthesis doesn't need Wikipedia - they need the exact explanation from their NCERT Chapter 6 textbook, explained at their grade level, in a style that matches how they learn best.",
+      "Leads from ads go cold when nobody replies for hours. Sales reps spend their first conversations asking the same qualification questions, and the answers often never make it into the CRM.",
 
     solution:
-      "I built TutorX - a full-stack RAG tutoring platform that ingests 80 NCERT textbook PDFs across 8 subjects, chunks them into a pgvector database, and answers student questions using a 3-stage intelligent retrieval pipeline. The system doesn't just find text - it reformulates weak queries, enriches retrieved chunks with pedagogical context (examples, misconceptions, real-world connections), and delivers personalized responses adapted to each student's teaching style, weak areas, and mastery level. All running on free-tier infrastructure at $0/month.",
+      "I built a WhatsApp AI sales agent on raw LLM function calling. It answers every inbound message instantly, qualifies the lead (company, team size, use case, budget, timeline), recommends plans from the product catalog, books a demo call, emails a summary, and hands off to a human for custom pricing or contracts. An admin dashboard manages leads, the catalog and meetings.",
 
     impact: [
-      "Reduced API calls from 14+ to 1 per query (vs. original ReAct agent design)",
-      "~2 second response latency on Groq cloud inference",
-      "$0/month operating cost on free-tier infrastructure",
-      "80 NCERT PDFs ingested across 8 subjects × 2 grades",
-      "4 teaching styles - Definition-First, Analogy-First, Example-First, Socratic",
+      "Automates the first-response and qualification work a rep does by hand, at any hour",
+      "9-tool function-calling loop that moves each lead through a 7-stage pipeline to a booked demo call",
+      "Lead details saved straight to the database as the conversation happens",
+      "Agent name, company and currency configurable, so it can sell any catalog",
     ],
 
     architecture: [
-      { label: "React Frontend", detail: "Vercel CDN", color: "blue" },
-      { label: "FastAPI Backend", detail: "Render free tier", color: "green" },
-      { label: "Supabase + pgvector", detail: "PostgreSQL, IVFFlat index", color: "purple" },
-      { label: "Ollama Embeddings", detail: "nomic-embed-text, 768-dim", color: "amber" },
-      { label: "Groq LLM", detail: "LLaMA 3.3 70B", color: "red" },
-      { label: "3-Stage RAG", detail: "Reformulate → Search → Enrich", color: "cyan" },
+      { label: "WhatsApp Cloud API", detail: "Inbound webhook + replies", color: "green" },
+      { label: "FastAPI", detail: "Async, HMAC-verified webhook", color: "blue" },
+      { label: "Agent Loop", detail: "9 tools, max 10 rounds", color: "red" },
+      { label: "Groq / Ollama", detail: "One OpenAI-compatible client", color: "amber" },
+      { label: "PostgreSQL 16", detail: "SQLAlchemy async + Alembic", color: "purple" },
+      { label: "React Dashboard", detail: "Leads, catalog, meetings", color: "cyan" },
     ],
 
     keyDecisions: [
-      "3-stage RAG over naive similarity search - initial vector search often fails on student queries ('how does photosynthesis work') because textbook language differs from conversational queries. Reformulation generates 4 alternative search phrasings and retries",
-      "Chunk enrichment before final LLM call - raw textbook excerpts are dry. Adding one example, one misconception, and one real-world connection transforms them into teaching-ready context",
-      "Deterministic pipeline over ReAct agent - the original design burned 14+ LLM calls per question. Restructuring into a deterministic 3-stage pipeline reduced it to 1 call (worst case: 3 calls)",
-      "pgvector with IVFFlat indexing over external vector databases - keeps everything in Supabase, eliminates another managed service, and cosine similarity over 768-dim embeddings is fast enough",
-      "Per-student teaching style adaptation - the system prompt dynamically adjusts explanation format based on the student's preference profile",
+      "Raw function calling instead of LangChain/LangGraph - the whole loop is one function, so every message, tool call and retry is visible and debuggable",
+      "Rebuild the system prompt after state-changing tools - otherwise the model keeps the lead profile from the start of the turn and re-asks questions it just saved the answers to",
+      "Bounded loop - at most 10 tool rounds and 10 history messages per reply, then a final tools-disabled call so the lead always gets an answer",
+      "Webhook hardening - HMAC signature verification rejects forged requests, and message-ID dedup stops Meta's retries from being processed twice",
+      "Catalog data only through tools - the prompt forbids inventing prices or features; everything the agent quotes comes from the database",
     ],
 
     features: [
-      "3-stage RAG pipeline - query reformulation, vector search, chunk enrichment",
-      "80 NCERT PDF ingestion - automated chunking (450 tokens, 50 overlap) with embedding",
-      "Personalized AI tutor - adapts to grade, subjects, weak topics & teaching style",
-      "4 teaching styles - Definition-First, Analogy-First, Example-First, Socratic",
-      "Supabase Auth - JWT, email verification, auto-profile creation",
-      "Telegram bot - cross-platform Q&A sharing the same agent loop",
-      "Conversation history - persistent chat with session management",
-      "Graceful fallback - 3-tier degradation (RPC → local cosine → general knowledge)",
-    ],
-
-    learnings: [
-      "Naive RAG is not enough - embedding similarity alone fails on 40%+ of student queries. Query reformulation was the single biggest accuracy improvement",
-      "Cost optimization is an architecture problem - switching from ReAct (14+ calls) to a deterministic pipeline (1 call) wasn't just cheaper, it was faster and more reliable",
-      "Teaching style matters as much as content accuracy - the same correct answer explained four different ways gets four different comprehension rates",
+      "9 tools - product search, plan details, currency conversion, lead updates, stage tracking, demo booking, email, human handoff",
+      "7-stage pipeline - greeting, qualification, discovery, proposal, demo scheduling, follow-up, closed",
+      "Seat-range matching - recommends plans that fit the lead's team size and budget",
+      "Retry with backoff on LLM rate limits",
+      "Switch between hosted Groq and local Ollama with one env variable",
+      "Terminal simulator that runs the exact webhook code path for testing",
+      "React admin dashboard with lead, product and meeting management",
     ],
   },
   {
     slug: "taskflow",
     title: "TaskFlow",
-    subtitle: "AI-Powered Proactive Daily Planner",
+    subtitle: "AI Task Planner with Telegram Alerts",
     tagline:
-      "An AI 'Chief of Staff' that doesn't just store your tasks - it plans your day, tracks your patterns, and reaches out before deadlines slip.",
+      "An AI task manager you talk to in plain language, that also messages you on Telegram before deadlines slip.",
     tech: [
-      "LLM Orchestration",
-      "Multi-Action AI Agent",
-      "Proactive Scheduling",
-      "Self-Improving Estimation",
+      "Multi-Action LLM Agent",
+      "Structured JSON Output",
       "Telegram Bot API",
+      "APScheduler",
       "Supabase RLS",
-      "LLaMA 3.3 70B",
-      "APScheduler Cron",
+      "FastAPI + React",
     ],
     live: "https://anoop-taskflow.vercel.app",
     github: "https://github.com/AnoopG7/TaskFlow",
-    featured: true,
+    featured: false,
     videoUrl: "https://nfvhlk7rxobcland.public.blob.vercel-storage.com/TaskFlow.mov",
 
     problem:
-      "Every to-do app is passive. They wait for you to open them, check off items, and manually prioritize. Nobody warns you that your 3-hour task is due in 2 hours. Nobody notices that you consistently underestimate design tasks by 40%. Nobody sends you a morning brief with your top 3 priorities. Traditional task management is a filing system - not a productivity partner.",
+      "To-do apps are passive: they wait for you to open them, and nobody warns you that a task is due in two hours.",
 
     solution:
-      "I built TaskFlow - a full-stack AI agent that acts as your personal chief of staff. A single LLM call can create a project, spawn 5 tasks, set priorities, assign deadlines, and respond naturally - all in one shot. The agent learns your estimation patterns (bias tracking across your last 30 tasks), auto-corrects future estimates, scans for overdue tasks hourly, and proactively sends you Telegram alerts with morning briefs and deadline warnings. All running on free-tier infrastructure.",
+      "I built TaskFlow, an AI task manager where one natural-language message (\"create a launch project with 5 tasks due this week\") becomes a list of typed actions in a single structured LLM call. A scheduler sends morning briefs and hourly due-date alerts on Telegram, and the same agent answers in both the web app and Telegram.",
 
     impact: [
-      "Single LLM call executes up to 12 action types atomically",
-      "Self-improving time estimation with historical bias tracking",
-      "Proactive daily morning briefs via Telegram (top 3 priorities + motivation)",
-      "Hourly deadline scans with color-coded Telegram alerts (🔴 overdue, 🟡 due soon)",
-      "30 REST API endpoints with 9-table Supabase schema",
+      "One LLM call turns a request into multiple task and project operations across 10 action types",
+      "Morning briefs and hourly due-within-24h alerts on Telegram, in each user's timezone",
+      "Row-level security so users can only ever read their own data",
     ],
 
     architecture: [
       { label: "React SPA", detail: "Vercel", color: "blue" },
       { label: "FastAPI Backend", detail: "Render free tier", color: "green" },
       { label: "Supabase", detail: "PostgreSQL + RLS", color: "purple" },
-      { label: "Groq LLM", detail: "LLaMA 3.3 70B", color: "red" },
-      { label: "Telegram Bot", detail: "Proactive alerts", color: "amber" },
+      { label: "Groq LLM", detail: "Structured action plans", color: "red" },
+      { label: "Telegram Bot", detail: "Alerts & chat", color: "amber" },
       { label: "APScheduler", detail: "Morning briefs, hourly scans", color: "cyan" },
     ],
 
     keyDecisions: [
-      "Single-call multi-action over ReAct tool-calling - instead of burning tokens on sequential tool calls, the LLM outputs a structured action plan in one pass. The backend executes actions deterministically, projects first (so IDs are available), then tasks",
-      "Self-improving estimation - the agent tracks bias = avg(actual/estimated) across the last 30 completed tasks and injects this correction factor into every future prompt. If you consistently underestimate by 1.4x, the agent learns and adjusts",
-      "APScheduler in-process over external cron - keeps the architecture simple. Morning briefs use a dedicated LLM call to generate personalized top-3 priorities with motivational context",
-      "Per-user timezone & DND settings - every scheduled action respects the user's timezone and quiet hours. No 3am Telegram alerts",
-      "Supabase RLS over application-level auth - Row-Level Security policies ensure users can only access their own data, even if the API layer has bugs",
+      "Structured multi-action output instead of tool-calling - the LLM returns a list of actions in one pass; the backend runs them in order, so tasks can reference a project created earlier in the same request",
+      "Per-action error isolation - one failed action doesn't stop the rest, and the reply reports what succeeded",
+      "Timezone-aware scheduling - briefs and alerts are scheduled in each user's own timezone",
+      "Supabase row-level security as a second line of defense behind the API",
     ],
 
     features: [
-      "12 AI action types - create/complete/delete tasks & projects, batch operations, linking",
-      "Self-improving time estimation - learns from your last 30 tasks' actual vs. estimated hours",
-      "Proactive morning briefs - LLM-generated daily top-3 priorities via Telegram",
-      "Hourly deadline scans - 🔴 overdue / 🟡 due-within-24h alerts on Telegram",
-      "Natural language chat - conversational task management in both web and Telegram",
-      "Dashboard - tasks, projects, productivity metrics, streaks",
-      "Multi-channel - React SPA + Telegram bot sharing the same agent loop",
-      "Per-user settings - timezone, work hours, DND, notification preferences",
-    ],
-
-    learnings: [
-      "Proactive > reactive - the hourly Telegram alerts caught more missed deadlines than any dashboard notification ever could. Meeting people where they already are (messaging apps) is better than expecting them to open your app",
-      "Structured JSON output is more reliable than tool-calling for multi-action scenarios - fewer parsing failures, lower token usage, and deterministic execution order",
-      "Estimation bias tracking was surprisingly accurate - after 20+ tasks, the correction factor stabilized and genuinely improved prediction quality",
-    ],
-  },
-  {
-    slug: "ai-leadgen",
-    title: "AI Lead Generation Platform",
-    subtitle: "SaaS for PropTech Lead Capture",
-    tagline:
-      "Deterministic AI agent orchestration engine with autonomous execution, multi-provider LLM routing, and full CRM dashboard.",
-    tech: ["OpenAI Function Calling", "FastAPI Async", "React + shadcn/ui", "PostgreSQL 16", "SQLAlchemy", "Docker", "Meta Graph API"],
-    live: "#",
-    github: "https://github.com/AnoopG7/AI-LeadGen",
-    featured: false,
-
-    problem: "PropTech teams lose leads because manual follow-up is slow, CRM tools are expensive, and Facebook ad leads sit untouched for hours.",
-    solution: "A deterministic AI agent orchestration engine with 8 custom tools, 10-turn autonomous execution, multi-provider LLM routing (Groq / Ollama), and a React CRM dashboard for lead management.",
-    impact: [
-      "~60% API cost reduction via Groq Llama-3 vs OpenAI-equivalent models",
-      "8 custom AI tools with 429 retry backoff and JSON recovery",
-      "16-table relational schema with timezone-aware timestamps",
-    ],
-    features: [
-      "Deterministic AI agent with 10-turn autonomous execution loop",
-      "Multi-provider LLM routing (Groq / Ollama) via single env variable",
-      "Meta Lead Ads webhook pipeline with automatic agent invocation",
-      "React CRM dashboard — lead management, property CRUD, meeting scheduler",
+      "10 action types - create, complete, delete and link tasks and projects, including bulk operations",
+      "Morning briefs and hourly due-date alerts on Telegram",
+      "Natural-language chat in the web app and on Telegram",
+      "Validated task status state machine",
+      "Dashboard with tasks and projects",
     ],
   },
   {
@@ -613,12 +638,12 @@ export const JOURNEY: Milestone[] = [
   },
   {
     year: "2026",
-    title: "Shipped AI Ready Production Systems",
-    description: "Built TutorX (RAG-powered CBSE tutoring), TaskFlow (proactive AI task manager), and AI Lead Gen Platform (conversational lead capture agent) - all running on production infrastructure.",
+    title: "Built AI Systems",
+    description: "Built TutorX (RAG tutor, live), TSRL (trading strategy research lab), an AI sales agent for WhatsApp, and TaskFlow (AI task planner).",
   },
   {
     year: "Next →",
-    title: "What's next...",
-    description: "Building more RAG pipelines, autonomous agents, and AI-powered apps that solve real problems.",
+    title: "Open to 6-month internships",
+    description: "Actively looking for 6-month internships (January – June 2027) in AI/ML engineering, LLM systems, or related roles.",
   },
 ];
