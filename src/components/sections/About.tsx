@@ -138,7 +138,7 @@ export default function About() {
                 className="border-border hover:border-accent/40 hover:text-accent w-full md:w-auto h-11 text-sm md:h-9 md:text-[13px]"
               >
                 <a
-                  href="https://docs.google.com/document/d/1l1JCMtIXjc08cTotmYwauvsy9et9JufH/edit?usp=sharing&ouid=101156247903130668222&rtpof=true&sd=true"
+                  href="https://drive.google.com/file/d/15oNBcIFDuVAyV5OXPfdXs-oY72K4LgD_/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

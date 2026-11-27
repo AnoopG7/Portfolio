@@ -12,9 +12,9 @@ export const NAV_LINKS = [
 export const PERSONAL = {
   name: "Anoop Gupta",
   firstName: "Anoop",
-  role: "AI/ML Engineer | LLM Systems, RAG & AI Agents",
+  role: "AI/ML Engineer | RAG, AI Agents & Generative AI",
   tagline: "I build AI-powered apps that learn",
-  bio: "AI/ML engineering student who builds LLM applications end to end, from RAG pipelines and agents to the APIs and interfaces around them. Focused on making AI systems reliable: measuring retrieval quality, cutting LLM cost and testing models on unseen data.",
+  bio: "AI/ML engineer building RAG systems, tool-using agents and ML models, and shipping them as working products with Python, FastAPI and React. Focused on retrieval accuracy, LLM cost and testing models on data they haven't seen.",
   email: "gupta.anoop2006@gmail.com",
   phone: "+91-7039386723",
   education: {
@@ -37,11 +37,11 @@ export const HERO = {
   headingLine1: "I design & build",
   headingLine2: "AI-powered systems",
   ctaHeading: "Let's build something amazing",
-  ctaSubtitle: "AI & full-stack developer: Python, FastAPI, and the MERN stack",
+  ctaSubtitle: "AI/ML engineer building RAG systems, AI agents and ML models with Python, FastAPI and React",
   subtitlePhrases: [
-    "Building AI-powered applications with Python & MERN",
-    "Turning data into intelligent, production-ready systems",
-    "Exploring ML models, LLMs & full-stack AI products",
+    "Building RAG systems and AI agents with Python & FastAPI",
+    "Turning data into reliable, measurable AI systems",
+    "Training ML models and testing them on unseen data",
   ],
 } as const;
 
@@ -50,7 +50,7 @@ export const FOCUS_AREAS = [
   "RAG pipelines",
   "AI agents",
   "Context-aware agents",
-  "Full-stack",
+  "ML models",
 ] as const;
 
 // ── Hero Impact Points ──
@@ -72,7 +72,7 @@ export const CURRENTLY_EXPLORING = "Artificial Intelligence, Machine Learning & 
 
 // ── Stats ──
 export const STATS = [
-  { value: "15+", label: "AI & Full-Stack Projects" },
+  { value: "15+", label: "Projects Built" },
   { value: "9.68", label: "CGPA" },
   { value: "10+", label: "AI-Powered Apps" },
   { value: "5+", label: "ML Models Built" },
@@ -98,11 +98,10 @@ export const EXPERIENCE: Experience[] = [
     period: "May 2025 – Jul 2025",
     type: "Internship",
     description:
-      "Built the student-facing frontend of an early-stage LMS in React, TypeScript and Material UI.",
+      "Built student-facing LMS workflows using React, TypeScript and Material UI.",
     highlights: [
-      "Built the student-facing frontend of an early-stage LMS in React, TypeScript and Material UI",
-      "Validated every form with React Hook Form and Zod, and connected pages to the REST backend through a shared Axios client",
-      "Delivered the core student journey, from sign-up and enrolment through learning and quizzes",
+      "Built student-facing LMS workflows using React, TypeScript and Material UI",
+      "Implemented validated forms with React Hook Form and Zod, and integrated REST APIs through a shared Axios client",
     ],
     tech: ["React", "TypeScript", "Material UI", "React Hook Form", "Zod", "Axios"],
   },
@@ -327,7 +326,7 @@ export const PROJECTS: Project[] = [
       "Most students can't afford a personal tutor, and general-purpose chatbots give answers that aren't tied to their curriculum and can't show where the answer came from. A student asking about photosynthesis needs the explanation from their own NCERT chapter, at their grade level, with a page they can check.",
 
     solution:
-      "I built TutorX, a full-stack RAG tutor over 80 Class 9 NCERT textbook PDFs, split into 1,581 passages tagged by chapter, section and printed page. When a search comes back weak, an LLM rewrites the question into alternative queries and searches again; the best passage is then enriched with an example and a common misconception before one final LLM call writes the answer, personalized to the student's teaching-style preference, weak areas and recent conversation. Every answer carries chapter, section and page citations.",
+      "I built TutorX, a RAG tutor over 80 Class 9 NCERT textbook PDFs, split into 1,581 passages tagged by chapter, section and printed page. When a search comes back weak, an LLM rewrites the question into alternative queries and searches again; the best passage is then enriched with an example and a common misconception before one final LLM call writes the answer, personalized to the student's teaching-style preference, weak areas and recent conversation. Every answer carries chapter, section and page citations.",
 
     impact: [
       "Built a multi-stage, self-correcting RAG tutor over CBSE textbooks that returns chapter, section and page citations with every answer, so students can verify the source",
@@ -431,7 +430,7 @@ export const PROJECTS: Project[] = [
       "A strategy that looks profitable in a backtest often isn't. Tuning parameters on the same data you evaluate on finds settings that fit past noise, and retail tools rarely test strategies on data they haven't seen or model real trading costs.",
 
     solution:
-      "I built TSRL, a full-stack research platform with 12 strategies, event-driven and vectorized backtesting engines that model commission, slippage, stop-losses and multi-asset rebalancing, grid / random / genetic-algorithm optimizers, walk-forward validation, and Random Forest / Gradient Boosting signal models - all behind an 8-page React dashboard.",
+      "I built TSRL, a research platform with 12 strategies, event-driven and vectorized backtesting engines that model commission, slippage, stop-losses and multi-asset rebalancing, grid / random / genetic-algorithm optimizers, walk-forward validation, and Random Forest / Gradient Boosting signal models - all behind an 8-page React dashboard.",
 
     impact: [
       "Built a platform that tests trading strategies on years of historical market data, simulating real trading costs (fees, slippage, stop-losses) across 12 strategies and 35+ risk and return metrics",

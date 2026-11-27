@@ -260,7 +260,7 @@ export default function Projects() {
             Featured Projects
           </h2>
           <p className="text-muted-foreground text-xs sm:text-sm max-w-xs">
-            LLM systems, AI agents and full-stack apps
+            RAG systems, AI agents and ML
           </p>
         </div>
 
